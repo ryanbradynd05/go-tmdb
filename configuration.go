@@ -6,19 +6,16 @@ import (
 
 // Config struct
 type Config struct {
-	Images     ImageConfig
+	Images struct {
+		BaseURL       string   `json:"base_url"`
+		SecureBaseURL string   `json:"secure_base_url"`
+		BackdropSizes []string `json:"backdrop_sizes"`
+		LogoSizes     []string `json:"logo_sizes"`
+		PosterSizes   []string `json:"poster_sizes"`
+		ProfileSizes  []string `json:"profile_sizes"`
+		StillSizes    []string `json:"still_sizes"`
+	}
 	ChangeKeys []string `json:"change_keys"`
-}
-
-// ImageConfig struct
-type ImageConfig struct {
-	BaseURL       string   `json:"base_url"`
-	SecureBaseURL string   `json:"secure_base_url"`
-	BackdropSizes []string `json:"backdrop_sizes"`
-	LogoSizes     []string `json:"logo_sizes"`
-	PosterSizes   []string `json:"poster_sizes"`
-	ProfileSizes  []string `json:"profile_sizes"`
-	StillSizes    []string `json:"still_sizes"`
 }
 
 // Configuration gets the system wide configuration information
