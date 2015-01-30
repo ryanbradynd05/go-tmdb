@@ -193,8 +193,8 @@ func (tmdb *TMDb) MovieVideos(id int) (*Videos, error) {
 	return result.(*Videos), err
 }
 
-// Translations struct
-type Translations struct {
+// TranslationsList struct
+type TranslationsList struct {
 	ID           int
 	Translations []struct {
 		Iso639_1    string `json:"iso_639_1"`
@@ -205,11 +205,11 @@ type Translations struct {
 
 // MovieTranslations gets the translations for a specific movie id
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidtranslations/get
-func (tmdb *TMDb) MovieTranslations(id int) (*Translations, error) {
-	var translations Translations
+func (tmdb *TMDb) MovieTranslations(id int) (*TranslationsList, error) {
+	var translations TranslationsList
 	url := fmt.Sprintf("%s/movie/%v/translations?api_key=%s", baseURL, id, tmdb.apiKey)
 	result, err := callTmdb(url, &translations)
-	return result.(*Translations), err
+	return result.(*TranslationsList), err
 }
 
 // PagedResults struct
@@ -278,8 +278,8 @@ func (tmdb *TMDb) MovieLists(id, page int) (*Lists, error) {
 	return result.(*Lists), err
 }
 
-// Changes struct
-type Changes struct {
+// ChangeList struct
+type ChangeList struct {
 	Changes []struct {
 		Key   string
 		Items []struct {
@@ -292,11 +292,11 @@ type Changes struct {
 
 // MovieChanges gets the changes for a specific movie id
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidchanges/get
-func (tmdb *TMDb) MovieChanges(id int) (*Changes, error) {
-	var changes Changes
+func (tmdb *TMDb) MovieChanges(id int) (*ChangeList, error) {
+	var changes ChangeList
 	url := fmt.Sprintf("%s/movie/%v/changes?api_key=%s", baseURL, id, tmdb.apiKey)
 	result, err := callTmdb(url, &changes)
-	return result.(*Changes), err
+	return result.(*ChangeList), err
 }
 
 // MovieLatest gets the latest movie
