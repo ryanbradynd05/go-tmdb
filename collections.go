@@ -12,7 +12,7 @@ type Collection struct {
 	PosterPath   string `json:"poster_path"`
 	Parts        []struct {
 		BackdropPath string `json:"backdrop_path"`
-		Id           int
+		ID           int
 		PosterPath   string `json:"poster_path"`
 		ReleaseDate  string `json:"release_date"`
 		Name         string
@@ -28,6 +28,7 @@ func (tmdb *TMDb) GetCollectionInfo(id int) (*Collection, error) {
 	return result.(*Collection), err
 }
 
+// CollectionImage struct
 type CollectionImage struct {
 	AspectRatio float32 `json:"aspect_ratio"`
 	FilePath    string  `json:"file_path"`

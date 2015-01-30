@@ -7,7 +7,7 @@ import (
 // Changes struct
 type Changes struct {
 	Results []struct {
-		Id    int
+		ID    int
 		Adult bool
 	}
 }
