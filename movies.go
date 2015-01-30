@@ -69,6 +69,25 @@ func (tmdb *TMDb) MovieInfo(id int) (*Movie, error) {
 	return result.(*Movie), err
 }
 
+// AccountState struct
+type AccountState struct {
+	ID        int
+	Favorite  bool
+	Watchlist bool
+	Rated     struct {
+		Value float32
+	}
+}
+
+// MovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
+func (tmdb *TMDb) MovieAccountStates(id int) (*AccountState, error) {
+	// TODO
+	var state AccountState
+	var err error
+	return &state, err
+}
+
 // AlternativeTitles struct
 type AlternativeTitles struct {
 	ID     int
@@ -297,6 +316,21 @@ func (tmdb *TMDb) MovieChanges(id int) (*ChangeList, error) {
 	url := fmt.Sprintf("%s/movie/%v/changes?api_key=%s", baseURL, id, tmdb.apiKey)
 	result, err := callTmdb(url, &changes)
 	return result.(*ChangeList), err
+}
+
+// RatingResponse struct
+type RatingResponse struct {
+	StatusCode    int    `json:"status_code"`
+	StatusMessage string `json:"status_message"`
+}
+
+// MovieRating lets users rate a movie
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
+func (tmdb *TMDb) MovieRating(id int) (*RatingResponse, error) {
+	// TODO
+	var rating RatingResponse
+	var err error
+	return &rating, err
 }
 
 // MovieLatest gets the latest movie

@@ -11,6 +11,12 @@ func (s *TmdbSuite) TestMovieInfo(c *C) {
 	c.Assert(result.ID, Equals, 550)
 }
 
+func (s *TmdbSuite) TestMovieAccountStates(c *C) {
+	// result, err := s.tmdb.MovieAccountStates(260346)
+	// s.baseTest(&result, err, c)
+	// TODO
+}
+
 func (s *TmdbSuite) TestMovieAlternativeTitles(c *C) {
 	result, err := s.tmdb.MovieAlternativeTitles(550)
 	s.baseTest(&result, err, c)
@@ -108,6 +114,12 @@ func (s *TmdbSuite) TestMovieChanges(c *C) {
 	result, err := s.tmdb.MovieChanges(260346)
 	s.baseTest(&result, err, c)
 	c.Assert(result.Changes, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestMovieRating(c *C) {
+	// result, err := s.tmdb.MovieRating(260346)
+	// s.baseTest(&result, err, c)
+	// TODO
 }
 
 func (s *TmdbSuite) TestMovieLatest(c *C) {
