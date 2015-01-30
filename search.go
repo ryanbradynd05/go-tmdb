@@ -8,7 +8,7 @@ import (
 // MovieSearchResults struct
 type MovieSearchResults struct {
 	Page         int
-	Results      []ShortMovie
+	Results      []MovieShort
 	TotalPages   int `json:"total_pages"`
 	TotalResults int `json:"total_results"`
 }

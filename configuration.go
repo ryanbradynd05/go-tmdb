@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-// Config struct
-type Config struct {
+// Configuration struct
+type Configuration struct {
 	Images struct {
 		BaseURL       string   `json:"base_url"`
 		SecureBaseURL string   `json:"secure_base_url"`
@@ -18,11 +18,11 @@ type Config struct {
 	ChangeKeys []string `json:"change_keys"`
 }
 
-// Configuration gets the system wide configuration information
+// GetConfiguration gets the system wide configuration information
 // http://docs.themoviedb.apiary.io/#reference/configuration/configuration/get
-func (tmdb *TMDb) Configuration() (*Config, error) {
-	var config Config
+func (tmdb *TMDb) GetConfiguration() (*Configuration, error) {
+	var config Configuration
 	url := fmt.Sprintf("%s/configuration?api_key=%s", baseURL, tmdb.apiKey)
 	result, err := callTmdb(url, &config)
-	return result.(*Config), err
+	return result.(*Configuration), err
 }
