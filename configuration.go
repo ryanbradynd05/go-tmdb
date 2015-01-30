@@ -22,7 +22,7 @@ type Configuration struct {
 // http://docs.themoviedb.apiary.io/#reference/configuration/configuration/get
 func (tmdb *TMDb) GetConfiguration() (*Configuration, error) {
 	var config Configuration
-	url := fmt.Sprintf("%s/configuration?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &config)
+	uri := fmt.Sprintf("%s/configuration?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &config)
 	return result.(*Configuration), err
 }

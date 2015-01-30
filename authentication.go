@@ -15,7 +15,7 @@ type AuthenticationToken struct {
 // http://docs.themoviedb.apiary.io/#reference/authentication/authenticationtokennew/get
 func (tmdb *TMDb) GetNewToken() (*AuthenticationToken, error) {
 	var token AuthenticationToken
-	url := fmt.Sprintf("%s/authentication/token/new?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &token)
+	uri := fmt.Sprintf("%s/authentication/token/new?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &token)
 	return result.(*AuthenticationToken), err
 }

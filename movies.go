@@ -64,8 +64,8 @@ type MovieShort struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieid/get
 func (tmdb *TMDb) GetMovieInfo(id int) (*Movie, error) {
 	var movie Movie
-	url := fmt.Sprintf("%s/movie/%v?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &movie)
+	uri := fmt.Sprintf("%s/movie/%v?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &movie)
 	return result.(*Movie), err
 }
 
@@ -101,8 +101,8 @@ type MovieAlternativeTitles struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidalternativetitles/get
 func (tmdb *TMDb) GetMovieAlternativeTitles(id int) (*MovieAlternativeTitles, error) {
 	var titles MovieAlternativeTitles
-	url := fmt.Sprintf("%s/movie/%v/alternative_titles?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &titles)
+	uri := fmt.Sprintf("%s/movie/%v/alternative_titles?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &titles)
 	return result.(*MovieAlternativeTitles), err
 }
 
@@ -124,8 +124,8 @@ type MovieCredits struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidcredits/get
 func (tmdb *TMDb) GetMovieCredits(id int) (*MovieCredits, error) {
 	var credits MovieCredits
-	url := fmt.Sprintf("%s/movie/%v/credits?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &credits)
+	uri := fmt.Sprintf("%s/movie/%v/credits?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &credits)
 	return result.(*MovieCredits), err
 }
 
@@ -147,8 +147,8 @@ type MovieImages struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidimages/get
 func (tmdb *TMDb) GetMovieImages(id int) (*MovieImages, error) {
 	var images MovieImages
-	url := fmt.Sprintf("%s/movie/%v/images?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &images)
+	uri := fmt.Sprintf("%s/movie/%v/images?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &images)
 	return result.(*MovieImages), err
 }
 
@@ -165,8 +165,8 @@ type MovieKeywords struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidkeywords/get
 func (tmdb *TMDb) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	var keywords MovieKeywords
-	url := fmt.Sprintf("%s/movie/%v/keywords?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &keywords)
+	uri := fmt.Sprintf("%s/movie/%v/keywords?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &keywords)
 	return result.(*MovieKeywords), err
 }
 
@@ -184,8 +184,8 @@ type MovieReleases struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidreleases/get
 func (tmdb *TMDb) GetMovieReleases(id int) (*MovieReleases, error) {
 	var releases MovieReleases
-	url := fmt.Sprintf("%s/movie/%v/releases?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &releases)
+	uri := fmt.Sprintf("%s/movie/%v/releases?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &releases)
 	return result.(*MovieReleases), err
 }
 
@@ -207,8 +207,8 @@ type MovieVideos struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidvideos/get
 func (tmdb *TMDb) GetMovieVideos(id int) (*MovieVideos, error) {
 	var videos MovieVideos
-	url := fmt.Sprintf("%s/movie/%v/videos?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &videos)
+	uri := fmt.Sprintf("%s/movie/%v/videos?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &videos)
 	return result.(*MovieVideos), err
 }
 
@@ -226,8 +226,8 @@ type MovieTranslations struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidtranslations/get
 func (tmdb *TMDb) GetMovieTranslations(id int) (*MovieTranslations, error) {
 	var translations MovieTranslations
-	url := fmt.Sprintf("%s/movie/%v/translations?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &translations)
+	uri := fmt.Sprintf("%s/movie/%v/translations?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &translations)
 	return result.(*MovieTranslations), err
 }
 
@@ -243,8 +243,8 @@ type MoviePagedResults struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidsimilar/get
 func (tmdb *TMDb) GetSimilarMovies(id, page int) (*MoviePagedResults, error) {
 	var similar MoviePagedResults
-	url := fmt.Sprintf("%s/movie/%v/similar?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
-	result, err := callTmdb(url, &similar)
+	uri := fmt.Sprintf("%s/movie/%v/similar?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
+	result, err := callTmdb(uri, &similar)
 	return result.(*MoviePagedResults), err
 }
 
@@ -266,8 +266,8 @@ type MovieReviews struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidreviews/get
 func (tmdb *TMDb) GetMovieReviews(id, page int) (*MovieReviews, error) {
 	var reviews MovieReviews
-	url := fmt.Sprintf("%s/movie/%v/reviews?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
-	result, err := callTmdb(url, &reviews)
+	uri := fmt.Sprintf("%s/movie/%v/reviews?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
+	result, err := callTmdb(uri, &reviews)
 	return result.(*MovieReviews), err
 }
 
@@ -292,8 +292,8 @@ type MovieLists struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidlists/get
 func (tmdb *TMDb) GetMovieLists(id, page int) (*MovieLists, error) {
 	var lists MovieLists
-	url := fmt.Sprintf("%s/movie/%v/lists?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
-	result, err := callTmdb(url, &lists)
+	uri := fmt.Sprintf("%s/movie/%v/lists?page=%v&api_key=%s", baseURL, id, page, tmdb.apiKey)
+	result, err := callTmdb(uri, &lists)
 	return result.(*MovieLists), err
 }
 
@@ -313,8 +313,8 @@ type MovieChanges struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidchanges/get
 func (tmdb *TMDb) GetMovieChanges(id int) (*MovieChanges, error) {
 	var changes MovieChanges
-	url := fmt.Sprintf("%s/movie/%v/changes?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(url, &changes)
+	uri := fmt.Sprintf("%s/movie/%v/changes?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &changes)
 	return result.(*MovieChanges), err
 }
 
@@ -337,8 +337,8 @@ func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
 // http://docs.themoviedb.apiary.io/#reference/movies/movielatest/get
 func (tmdb *TMDb) GetLatestMovie() (*Movie, error) {
 	var movie Movie
-	url := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &movie)
+	uri := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &movie)
 	return result.(*Movie), err
 }
 
@@ -358,8 +358,8 @@ type MovieDatedResults struct {
 // http://docs.themoviedb.apiary.io/#reference/movies/movieupcoming/get
 func (tmdb *TMDb) GetUpcomingMovies() (*MovieDatedResults, error) {
 	var upcoming MovieDatedResults
-	url := fmt.Sprintf("%s/movie/upcoming?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &upcoming)
+	uri := fmt.Sprintf("%s/movie/upcoming?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &upcoming)
 	return result.(*MovieDatedResults), err
 }
 
@@ -367,8 +367,8 @@ func (tmdb *TMDb) GetUpcomingMovies() (*MovieDatedResults, error) {
 // http://docs.themoviedb.apiary.io/#reference/movies/movienowplaying/get
 func (tmdb *TMDb) GetNowPlayingMovies() (*MovieDatedResults, error) {
 	var nowPlaying MovieDatedResults
-	url := fmt.Sprintf("%s/movie/now_playing?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &nowPlaying)
+	uri := fmt.Sprintf("%s/movie/now_playing?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &nowPlaying)
 	return result.(*MovieDatedResults), err
 }
 
@@ -376,8 +376,8 @@ func (tmdb *TMDb) GetNowPlayingMovies() (*MovieDatedResults, error) {
 // http://docs.themoviedb.apiary.io/#reference/movies/moviepopular/get
 func (tmdb *TMDb) GetPopularMovies() (*MoviePagedResults, error) {
 	var popular MoviePagedResults
-	url := fmt.Sprintf("%s/movie/popular?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &popular)
+	uri := fmt.Sprintf("%s/movie/popular?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &popular)
 	return result.(*MoviePagedResults), err
 }
 
@@ -385,7 +385,7 @@ func (tmdb *TMDb) GetPopularMovies() (*MoviePagedResults, error) {
 // http://docs.themoviedb.apiary.io/#reference/movies/movietoprated/get
 func (tmdb *TMDb) GetTopRatedMovies() (*MoviePagedResults, error) {
 	var topRated MoviePagedResults
-	url := fmt.Sprintf("%s/movie/top_rated?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(url, &topRated)
+	uri := fmt.Sprintf("%s/movie/top_rated?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := callTmdb(uri, &topRated)
 	return result.(*MoviePagedResults), err
 }
