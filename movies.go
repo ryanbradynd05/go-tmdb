@@ -233,6 +233,7 @@ func (tmdb *TMDb) GetMovieTranslations(id int) (*MovieTranslations, error) {
 
 // MoviePagedResults struct
 type MoviePagedResults struct {
+	ID           int
 	Page         int
 	Results      []MovieShort
 	TotalPages   int `json:"total_pages"`

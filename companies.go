@@ -1,0 +1,38 @@
+package tmdb
+
+import (
+	"fmt"
+)
+
+// Company struct
+type Company struct {
+	Description   string
+	Headquarters  string
+	Homepage      string
+	ID            int
+	LogoPath      string `json:"logo_path"`
+	Name          string
+	ParentCompany struct {
+		Name     string
+		ID       int
+		LogoPath string `json:"logo_path"`
+	} `json:"parent_company"`
+}
+
+// GetCompanyInfo gets all of the basic information about a company
+// http://docs.themoviedb.apiary.io/#reference/companies/companyid/get
+func (tmdb *TMDb) GetCompanyInfo(id int) (*Company, error) {
+	var companyInfo Company
+	uri := fmt.Sprintf("%s/company/%v?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &companyInfo)
+	return result.(*Company), err
+}
+
+// GetCompanyMovies gets the list of movies associated with a particular company
+// http://docs.themoviedb.apiary.io/#reference/companies/companyidmovies/get
+func (tmdb *TMDb) GetCompanyMovies(id int) (*MoviePagedResults, error) {
+	var movies MoviePagedResults
+	uri := fmt.Sprintf("%s/company/%v/movies?api_key=%s", baseURL, id, tmdb.apiKey)
+	result, err := callTmdb(uri, &movies)
+	return result.(*MoviePagedResults), err
+}
