@@ -4,31 +4,35 @@ import (
 	. "gopkg.in/check.v1"
 )
 
+const darkKnightID int = 49026
+const fightClubID int = 550
+const takenThreeID int = 260346
+
 func (s *TmdbSuite) TestGetMovieInfo(c *C) {
-	result, err := s.tmdb.GetMovieInfo(550)
+	result, err := s.tmdb.GetMovieInfo(fightClubID)
 	s.baseTest(&result, err, c)
 	c.Assert(result.Title, Equals, "Fight Club")
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 }
 
 func (s *TmdbSuite) TestGetMovieAccountStates(c *C) {
-	// result, err := s.tmdb.GetMovieAccountStates(260346)
+	// result, err := s.tmdb.GetMovieAccountStates(takenThreeID)
 	// s.baseTest(&result, err, c)
 	// TODO
 }
 
 func (s *TmdbSuite) TestGetMovieAlternativeTitles(c *C) {
-	result, err := s.tmdb.GetMovieAlternativeTitles(550)
+	result, err := s.tmdb.GetMovieAlternativeTitles(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Titles, Not(HasLen), 0)
 	c.Assert(result.Titles[0].Iso3166_1, Equals, "PL")
 }
 
 func (s *TmdbSuite) TestGetMovieCredits(c *C) {
-	result, err := s.tmdb.GetMovieCredits(550)
+	result, err := s.tmdb.GetMovieCredits(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Cast, Not(HasLen), 0)
 	c.Assert(result.Cast[0].CastID, Equals, 4)
 	c.Assert(result.Cast[0].Character, Equals, "The Narrator")
@@ -36,27 +40,27 @@ func (s *TmdbSuite) TestGetMovieCredits(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieImages(c *C) {
-	result, err := s.tmdb.GetMovieImages(550)
+	result, err := s.tmdb.GetMovieImages(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Backdrops, Not(HasLen), 0)
 	c.Assert(result.Backdrops[0].Height, Equals, 720)
 	c.Assert(result.Backdrops[0].Iso639_1, Equals, "xx")
 }
 
 func (s *TmdbSuite) TestGetMovieKeywords(c *C) {
-	result, err := s.tmdb.GetMovieKeywords(550)
+	result, err := s.tmdb.GetMovieKeywords(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Keywords, Not(HasLen), 0)
 	c.Assert(result.Keywords[0].ID, Equals, 825)
 	c.Assert(result.Keywords[0].Name, Equals, "support group")
 }
 
 func (s *TmdbSuite) TestGetMovieReleases(c *C) {
-	result, err := s.tmdb.GetMovieReleases(550)
+	result, err := s.tmdb.GetMovieReleases(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Countries, Not(HasLen), 0)
 	c.Assert(result.Countries[0].Iso3166_1, Equals, "US")
 	c.Assert(result.Countries[0].Certification, Equals, "R")
@@ -64,9 +68,9 @@ func (s *TmdbSuite) TestGetMovieReleases(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieVideos(c *C) {
-	result, err := s.tmdb.GetMovieVideos(550)
+	result, err := s.tmdb.GetMovieVideos(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Results, Not(HasLen), 0)
 	c.Assert(result.Results[0].Iso639_1, Equals, "en")
 	c.Assert(result.Results[0].Site, Equals, "YouTube")
@@ -74,9 +78,9 @@ func (s *TmdbSuite) TestGetMovieVideos(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieTranslations(c *C) {
-	result, err := s.tmdb.GetMovieTranslations(550)
+	result, err := s.tmdb.GetMovieTranslations(fightClubID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Translations, Not(HasLen), 0)
 	c.Assert(result.Translations[0].Iso639_1, Equals, "en")
 	c.Assert(result.Translations[0].EnglishName, Equals, "English")
@@ -84,7 +88,7 @@ func (s *TmdbSuite) TestGetMovieTranslations(c *C) {
 }
 
 func (s *TmdbSuite) TestGetSimilarMovies(c *C) {
-	result, err := s.tmdb.GetSimilarMovies(550, 1)
+	result, err := s.tmdb.GetSimilarMovies(fightClubID, 1)
 	s.baseTest(&result, err, c)
 	c.Assert(result.Page, Equals, 1)
 	c.Assert(result.Results, Not(HasLen), 0)
@@ -93,16 +97,17 @@ func (s *TmdbSuite) TestGetSimilarMovies(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieReviews(c *C) {
-	result, err := s.tmdb.GetMovieReviews(49026, 1)
+	result, err := s.tmdb.GetMovieReviews(darkKnightID, 1)
 	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, darkKnightID)
 	c.Assert(result.Page, Equals, 1)
 	c.Assert(result.Results, Not(HasLen), 0)
 }
 
 func (s *TmdbSuite) TestGetMovieLists(c *C) {
-	result, err := s.tmdb.GetMovieLists(550, 1)
+	result, err := s.tmdb.GetMovieLists(fightClubID, 1)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, 550)
+	c.Assert(result.ID, Equals, fightClubID)
 	c.Assert(result.Results, Not(HasLen), 0)
 	c.Assert(result.Page, Equals, 1)
 	c.Assert(result.Results[0].ID, Equals, "522effe419c2955e9922fcf3")
@@ -111,13 +116,13 @@ func (s *TmdbSuite) TestGetMovieLists(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieChanges(c *C) {
-	result, err := s.tmdb.GetMovieChanges(260346)
+	result, err := s.tmdb.GetMovieChanges(takenThreeID)
 	s.baseTest(&result, err, c)
-	c.Assert(result.Changes, Not(HasLen), 0)
+	c.Assert(result.Changes, NotNil)
 }
 
 func (s *TmdbSuite) TestSetMovieRating(c *C) {
-	// result, err := s.tmdb.SetMovieRating(260346)
+	// result, err := s.tmdb.SetMovieRating(takenThreeID)
 	// s.baseTest(&result, err, c)
 	// TODO
 }
@@ -125,7 +130,7 @@ func (s *TmdbSuite) TestSetMovieRating(c *C) {
 func (s *TmdbSuite) TestGetLatestMovie(c *C) {
 	result, err := s.tmdb.GetLatestMovie()
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Not(Equals), 550)
+	c.Assert(result.ID, Not(Equals), fightClubID)
 }
 
 func (s *TmdbSuite) TestGetUpcomingMovies(c *C) {
