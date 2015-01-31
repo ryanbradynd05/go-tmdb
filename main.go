@@ -2,6 +2,7 @@ package tmdb
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -38,4 +39,15 @@ func callTmdb(url string, payload interface{}) (interface{}, error) {
 	}
 	json.Unmarshal(body, &payload)
 	return payload, err
+}
+
+func getOptionsString(options map[string]string, availableOptions map[string]struct{}) string {
+	var optionsString = ""
+	for key, val := range options {
+		if _, ok := availableOptions[key]; ok {
+			newString := fmt.Sprintf("%s&%s=%s", optionsString, key, val)
+			optionsString = newString
+		}
+	}
+	return optionsString
 }
