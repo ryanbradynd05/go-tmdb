@@ -12,6 +12,7 @@ type Company struct {
 	ID            int
 	LogoPath      string `json:"logo_path"`
 	Name          string
+	Movies        *MoviePagedResults `json:",omitempty"`
 	ParentCompany struct {
 		Name     string
 		ID       int
@@ -21,18 +22,26 @@ type Company struct {
 
 // GetCompanyInfo gets all of the basic information about a company
 // http://docs.themoviedb.apiary.io/#reference/companies/companyid/get
-func (tmdb *TMDb) GetCompanyInfo(id int) (*Company, error) {
+func (tmdb *TMDb) GetCompanyInfo(id int, options map[string]string) (*Company, error) {
+	var availableOptions = map[string]struct{}{
+		"append_to_response": {}}
 	var companyInfo Company
-	uri := fmt.Sprintf("%s/company/%v?api_key=%s", baseURL, id, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/company/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &companyInfo)
 	return result.(*Company), err
 }
 
 // GetCompanyMovies gets the list of movies associated with a particular company
 // http://docs.themoviedb.apiary.io/#reference/companies/companyidmovies/get
-func (tmdb *TMDb) GetCompanyMovies(id int) (*MoviePagedResults, error) {
+func (tmdb *TMDb) GetCompanyMovies(id int, options map[string]string) (*MoviePagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":               {},
+		"language":           {},
+		"append_to_response": {}}
 	var movies MoviePagedResults
-	uri := fmt.Sprintf("%s/company/%v/movies?api_key=%s", baseURL, id, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/company/%v/movies?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &movies)
 	return result.(*MoviePagedResults), err
 }
