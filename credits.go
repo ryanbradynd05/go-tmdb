@@ -38,9 +38,12 @@ type Credit struct {
 
 // GetCreditInfo gets the detailed information about a particular credit record
 // http://docs.themoviedb.apiary.io/#reference/credits/creditcreditid/get
-func (tmdb *TMDb) GetCreditInfo(id string) (*Credit, error) {
+func (tmdb *TMDb) GetCreditInfo(id string, options map[string]string) (*Credit, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {}}
 	var creditInfo Credit
-	uri := fmt.Sprintf("%s/credit/%v?api_key=%s", baseURL, id, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/credit/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &creditInfo)
 	return result.(*Credit), err
 }
