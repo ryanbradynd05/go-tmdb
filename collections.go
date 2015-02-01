@@ -9,21 +9,26 @@ type Collection struct {
 	BackdropPath string `json:"backdrop_path"`
 	ID           int
 	Name         string
-	PosterPath   string `json:"poster_path"`
+	PosterPath   string            `json:"poster_path"`
+	Images       *CollectionImages `json:",omitempty"`
 	Parts        []struct {
 		BackdropPath string `json:"backdrop_path"`
 		ID           int
 		PosterPath   string `json:"poster_path"`
 		ReleaseDate  string `json:"release_date"`
-		Name         string
+		Title        string
 	}
 }
 
 // GetCollectionInfo gets the basic collection information for a specific collection id
 // http://docs.themoviedb.apiary.io/#reference/collections/collectionid/get
-func (tmdb *TMDb) GetCollectionInfo(id int) (*Collection, error) {
+func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collection, error) {
+	var availableOptions = map[string]struct{}{
+		"language":           {},
+		"append_to_response": {}}
 	var collection Collection
-	uri := fmt.Sprintf("%s/collection/%v?api_key=%s", baseURL, id, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/collection/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &collection)
 	return result.(*Collection), err
 }
@@ -48,9 +53,14 @@ type CollectionImages struct {
 
 // GetCollectionImages gets a list of people ids that have been edited
 // http://docs.themoviedb.apiary.io/#reference/collections/collectionidimages/get
-func (tmdb *TMDb) GetCollectionImages(id int) (*CollectionImages, error) {
+func (tmdb *TMDb) GetCollectionImages(id int, options map[string]string) (*CollectionImages, error) {
+	var availableOptions = map[string]struct{}{
+		"language":               {},
+		"append_to_response":     {},
+		"include_image_language": {}}
 	var images CollectionImages
-	uri := fmt.Sprintf("%s/collection/%v/images?api_key=%s", baseURL, id, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/collection/%v/images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &images)
 	return result.(*CollectionImages), err
 }

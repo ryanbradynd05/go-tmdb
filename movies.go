@@ -69,24 +69,24 @@ func (tmdb *TMDb) GetMovieInfo(id int) (*Movie, error) {
 	return result.(*Movie), err
 }
 
-// MovieAccountState struct
-type MovieAccountState struct {
-	ID        int
-	Favorite  bool
-	Watchlist bool
-	Rated     struct {
-		Value float32
-	}
-}
+// // MovieAccountState struct
+// type MovieAccountState struct {
+// 	ID        int
+// 	Favorite  bool
+// 	Watchlist bool
+// 	Rated     struct {
+// 		Value float32
+// 	}
+// }
 
-// GetMovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
-func (tmdb *TMDb) GetMovieAccountStates(id int) (*MovieAccountState, error) {
-	// TODO
-	var state MovieAccountState
-	var err error
-	return &state, err
-}
+// // GetMovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
+// // http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
+// func (tmdb *TMDb) GetMovieAccountStates(id int) (*MovieAccountState, error) {
+// 	// TODO
+// 	var state MovieAccountState
+// 	var err error
+// 	return &state, err
+// }
 
 // MovieAlternativeTitles struct
 type MovieAlternativeTitles struct {
@@ -319,20 +319,20 @@ func (tmdb *TMDb) GetMovieChanges(id int) (*MovieChanges, error) {
 	return result.(*MovieChanges), err
 }
 
-// MovieRating struct
-type MovieRating struct {
-	StatusCode    int    `json:"status_code"`
-	StatusMessage string `json:"status_message"`
-}
+// // MovieRating struct
+// type MovieRating struct {
+// 	StatusCode    int    `json:"status_code"`
+// 	StatusMessage string `json:"status_message"`
+// }
 
-// SetMovieRating lets users rate a movie
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
-func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
-	// TODO
-	var rating MovieRating
-	var err error
-	return &rating, err
-}
+// // SetMovieRating lets users rate a movie
+// // http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
+// func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
+// 	// TODO
+// 	var rating MovieRating
+// 	var err error
+// 	return &rating, err
+// }
 
 // GetLatestMovie gets the latest movie
 // http://docs.themoviedb.apiary.io/#reference/movies/movielatest/get
