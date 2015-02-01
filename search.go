@@ -15,10 +15,18 @@ type MovieSearchResults struct {
 
 // SearchMovie searches for movies by title
 // http://docs.themoviedb.apiary.io/#reference/search/searchmovie/get
-func (tmdb *TMDb) SearchMovie(name string) (*MovieSearchResults, error) {
+func (tmdb *TMDb) SearchMovie(name string, options map[string]string) (*MovieSearchResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":                 {},
+		"language":             {},
+		"include_adult":        {},
+		"year":                 {},
+		"primary_release_year": {},
+		"search_type":          {}}
 	var movies MovieSearchResults
 	safeName := url.QueryEscape(name)
-	uri := fmt.Sprintf("%s/search/movie?query=%s&api_key=%s", baseURL, safeName, tmdb.apiKey)
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/search/movie?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
 	result, err := callTmdb(uri, &movies)
 	return result.(*MovieSearchResults), err
 }
