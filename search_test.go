@@ -80,8 +80,6 @@ func (s *TmdbSuite) TestSearchMulti(c *C) {
 	c.Assert(page5Result.Results, Not(HasLen), 0)
 	c.Assert(page5Result.TotalPages, Equals, result.TotalPages)
 	c.Assert(page5Result.TotalResults, Equals, result.TotalResults)
-	c.Assert(page5Result.Results[0].ID, Equals, 6582)
-	c.Assert(page5Result.Results[0].Name, Equals, "American Gladiators")
 }
 
 func (s *TmdbSuite) TestSearchPerson(c *C) {

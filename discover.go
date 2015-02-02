@@ -35,7 +35,7 @@ func (tmdb *TMDb) DiscoverMovie(options map[string]string) (*MoviePagedResults, 
 	optionsString := getOptionsString(options, availableOptions)
 	var results MoviePagedResults
 	uri := fmt.Sprintf("%s/discover/movie?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &results)
+	result, err := getTmdb(uri, &results)
 	return result.(*MoviePagedResults), err
 }
 
@@ -56,6 +56,6 @@ func (tmdb *TMDb) DiscoverMovie(options map[string]string) (*MoviePagedResults, 
 // 	optionsString := getOptionsString(options, availableOptions)
 // 	var results TvPagedResults
 // 	uri := fmt.Sprintf("%s/discover/tv?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-// 	result, err := callTmdb(uri, &results)
+// 	result, err := getTmdb(uri, &results)
 // 	return result.(*TvPagedResults), err
 // }

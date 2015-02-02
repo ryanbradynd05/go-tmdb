@@ -23,7 +23,7 @@ func (tmdb *TMDb) GetChangesMovie(options map[string]string) (*Changes, error) {
 	var movieChanges Changes
 	optionsString := getOptionsString(options, changeOptions)
 	uri := fmt.Sprintf("%s/movie/changes?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &movieChanges)
+	result, err := getTmdb(uri, &movieChanges)
 	return result.(*Changes), err
 }
 
@@ -33,7 +33,7 @@ func (tmdb *TMDb) GetChangesPerson(options map[string]string) (*Changes, error) 
 	var personChanges Changes
 	optionsString := getOptionsString(options, changeOptions)
 	uri := fmt.Sprintf("%s/person/changes?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &personChanges)
+	result, err := getTmdb(uri, &personChanges)
 	return result.(*Changes), err
 }
 
@@ -43,6 +43,6 @@ func (tmdb *TMDb) GetChangesTv(options map[string]string) (*Changes, error) {
 	var tvChanges Changes
 	optionsString := getOptionsString(options, changeOptions)
 	uri := fmt.Sprintf("%s/tv/changes?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &tvChanges)
+	result, err := getTmdb(uri, &tvChanges)
 	return result.(*Changes), err
 }

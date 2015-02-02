@@ -17,6 +17,6 @@ type Job struct {
 func (tmdb *TMDb) GetJobList() (*Job, error) {
 	var jobList Job
 	uri := fmt.Sprintf("%s/job/list?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(uri, &jobList)
+	result, err := getTmdb(uri, &jobList)
 	return result.(*Job), err
 }

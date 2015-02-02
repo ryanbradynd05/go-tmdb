@@ -47,7 +47,7 @@ func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collect
 	var collection Collection
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/collection/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &collection)
+	result, err := getTmdb(uri, &collection)
 	return result.(*Collection), err
 }
 
@@ -61,6 +61,6 @@ func (tmdb *TMDb) GetCollectionImages(id int, options map[string]string) (*Colle
 	var images CollectionImages
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/collection/%v/images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &images)
+	result, err := getTmdb(uri, &images)
 	return result.(*CollectionImages), err
 }

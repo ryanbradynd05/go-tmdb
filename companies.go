@@ -28,7 +28,7 @@ func (tmdb *TMDb) GetCompanyInfo(id int, options map[string]string) (*Company, e
 	var companyInfo Company
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/company/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &companyInfo)
+	result, err := getTmdb(uri, &companyInfo)
 	return result.(*Company), err
 }
 
@@ -42,6 +42,6 @@ func (tmdb *TMDb) GetCompanyMovies(id int, options map[string]string) (*MoviePag
 	var movies MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/company/%v/movies?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &movies)
+	result, err := getTmdb(uri, &movies)
 	return result.(*MoviePagedResults), err
 }

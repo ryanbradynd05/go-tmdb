@@ -15,6 +15,6 @@ type Network struct {
 func (tmdb *TMDb) GetNetworkInfo(id int) (*Network, error) {
 	var networkInfo Network
 	uri := fmt.Sprintf("%s/network/%v?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(uri, &networkInfo)
+	result, err := getTmdb(uri, &networkInfo)
 	return result.(*Network), err
 }

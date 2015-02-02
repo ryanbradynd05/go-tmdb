@@ -21,6 +21,6 @@ type Review struct {
 func (tmdb *TMDb) GetReviewInfo(id string) (*Review, error) {
 	var reviewInfo Review
 	uri := fmt.Sprintf("%s/review/%v?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := callTmdb(uri, &reviewInfo)
+	result, err := getTmdb(uri, &reviewInfo)
 	return result.(*Review), err
 }

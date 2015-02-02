@@ -142,7 +142,7 @@ func (tmdb *TMDb) SearchCollection(name string, options map[string]string) (*Col
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/collection?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &collections)
+	result, err := getTmdb(uri, &collections)
 	return result.(*CollectionSearchResults), err
 }
 
@@ -155,7 +155,7 @@ func (tmdb *TMDb) SearchCompany(name string, options map[string]string) (*Compan
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/company?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &companies)
+	result, err := getTmdb(uri, &companies)
 	return result.(*CompanySearchResults), err
 }
 
@@ -168,7 +168,7 @@ func (tmdb *TMDb) SearchKeyword(name string, options map[string]string) (*Keywor
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/keyword?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &keywords)
+	result, err := getTmdb(uri, &keywords)
 	return result.(*KeywordSearchResults), err
 }
 
@@ -182,7 +182,7 @@ func (tmdb *TMDb) SearchList(name string, options map[string]string) (*ListSearc
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/list?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &lists)
+	result, err := getTmdb(uri, &lists)
 	return result.(*ListSearchResults), err
 }
 
@@ -200,7 +200,7 @@ func (tmdb *TMDb) SearchMovie(name string, options map[string]string) (*MovieSea
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/movie?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &movies)
+	result, err := getTmdb(uri, &movies)
 	return result.(*MovieSearchResults), err
 }
 
@@ -215,7 +215,7 @@ func (tmdb *TMDb) SearchMulti(name string, options map[string]string) (*MultiSea
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/multi?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &multis)
+	result, err := getTmdb(uri, &multis)
 	return result.(*MultiSearchResults), err
 }
 
@@ -230,7 +230,7 @@ func (tmdb *TMDb) SearchPerson(name string, options map[string]string) (*PersonS
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/person?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &people)
+	result, err := getTmdb(uri, &people)
 	return result.(*PersonSearchResults), err
 }
 
@@ -246,6 +246,6 @@ func (tmdb *TMDb) SearchTv(name string, options map[string]string) (*TvSearchRes
 	safeName := url.QueryEscape(name)
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/search/tv?query=%s&api_key=%s%s", baseURL, safeName, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &shows)
+	result, err := getTmdb(uri, &shows)
 	return result.(*TvSearchResults), err
 }

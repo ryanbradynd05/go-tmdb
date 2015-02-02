@@ -12,6 +12,6 @@ type Timezones []map[string][]string
 func (tmdb *TMDb) GetTimezonesList() (*Timezones, error) {
 	var timezoneList Timezones
 	uri := fmt.Sprintf("%s/timezones/list?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(uri, &timezoneList)
+	result, err := getTmdb(uri, &timezoneList)
 	return result.(*Timezones), err
 }

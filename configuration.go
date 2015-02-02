@@ -23,6 +23,6 @@ type Configuration struct {
 func (tmdb *TMDb) GetConfiguration() (*Configuration, error) {
 	var config Configuration
 	uri := fmt.Sprintf("%s/configuration?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(uri, &config)
+	result, err := getTmdb(uri, &config)
 	return result.(*Configuration), err
 }

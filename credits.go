@@ -44,6 +44,6 @@ func (tmdb *TMDb) GetCreditInfo(id string, options map[string]string) (*Credit, 
 	var creditInfo Credit
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/credit/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &creditInfo)
+	result, err := getTmdb(uri, &creditInfo)
 	return result.(*Credit), err
 }

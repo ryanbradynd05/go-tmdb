@@ -16,6 +16,6 @@ type AuthenticationToken struct {
 func (tmdb *TMDb) GetNewToken() (*AuthenticationToken, error) {
 	var token AuthenticationToken
 	uri := fmt.Sprintf("%s/authentication/token/new?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := callTmdb(uri, &token)
+	result, err := getTmdb(uri, &token)
 	return result.(*AuthenticationToken), err
 }

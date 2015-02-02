@@ -28,7 +28,7 @@ func ToJSON(payload interface{}) (string, error) {
 	return string(jsonRes), nil
 }
 
-func callTmdb(url string, payload interface{}) (interface{}, error) {
+func getTmdb(url string, payload interface{}) (interface{}, error) {
 	res, err := http.Get(url)
 	if err != nil {
 		return payload, err
