@@ -20,19 +20,6 @@ type Collection struct {
 	}
 }
 
-// GetCollectionInfo gets the basic collection information for a specific collection id
-// http://docs.themoviedb.apiary.io/#reference/collections/collectionid/get
-func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collection, error) {
-	var availableOptions = map[string]struct{}{
-		"language":           {},
-		"append_to_response": {}}
-	var collection Collection
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/collection/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := callTmdb(uri, &collection)
-	return result.(*Collection), err
-}
-
 // CollectionImage struct
 type CollectionImage struct {
 	AspectRatio float32 `json:"aspect_ratio"`
@@ -49,6 +36,19 @@ type CollectionImages struct {
 	Name       string
 	PosterPath string `json:"poster_path"`
 	Posters    []CollectionImage
+}
+
+// GetCollectionInfo gets the basic collection information for a specific collection id
+// http://docs.themoviedb.apiary.io/#reference/collections/collectionid/get
+func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collection, error) {
+	var availableOptions = map[string]struct{}{
+		"language":           {},
+		"append_to_response": {}}
+	var collection Collection
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/collection/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := callTmdb(uri, &collection)
+	return result.(*Collection), err
 }
 
 // GetCollectionImages gets a list of people ids that have been edited
