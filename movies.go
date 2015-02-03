@@ -193,8 +193,8 @@ type MovieReleases struct {
 	Similar           *MoviePagedResults      `json:",omitempty"`
 	Reviews           *MovieReviews           `json:",omitempty"`
 	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieKeywords          `json:",omitempty"`
-	Rating            *MovieChanges           `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MovieVideos struct
@@ -218,8 +218,8 @@ type MovieVideos struct {
 	Similar           *MoviePagedResults      `json:",omitempty"`
 	Reviews           *MovieReviews           `json:",omitempty"`
 	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieKeywords          `json:",omitempty"`
-	Rating            *MovieChanges           `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MoviePagedResults struct
@@ -248,8 +248,8 @@ type MovieTranslations struct {
 	Similar           *MoviePagedResults      `json:",omitempty"`
 	Reviews           *MovieReviews           `json:",omitempty"`
 	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieKeywords          `json:",omitempty"`
-	Rating            *MovieChanges           `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MovieReviews struct
@@ -273,8 +273,8 @@ type MovieReviews struct {
 	Translations      *MovieTranslations      `json:",omitempty"`
 	Similar           *MoviePagedResults      `json:",omitempty"`
 	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieKeywords          `json:",omitempty"`
-	Rating            *MovieChanges           `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MovieLists struct
@@ -301,8 +301,8 @@ type MovieLists struct {
 	Translations      *MovieTranslations      `json:",omitempty"`
 	Similar           *MoviePagedResults      `json:",omitempty"`
 	Reviews           *MovieReviews           `json:",omitempty"`
-	Changes           *MovieKeywords          `json:",omitempty"`
-	Rating            *MovieChanges           `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MovieRating struct
