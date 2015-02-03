@@ -3,7 +3,7 @@
 [GoDoc](https://godoc.org/github.com/ryanbradynd05/go-tmdb)  --  [Code Coverage Report](http://rawgit.com/ryanbradynd05/go-tmdb/master/coverage/coverage_report.html)
 =================================
 
-A Go Wrapper for the API of ["The Movie DB"](http://www.themoviedb.org/). Complete [documentation](https://godoc.org/github.com/ryanbradynd05/go-tmdb) and [test suite](http://rawgit.com/ryanbradynd05/go-tmdb/master/coverage/coverage_report.html) are included.
+A Go Wrapper for the API of [The Movie DB](http://www.themoviedb.org/). Complete [documentation](https://godoc.org/github.com/ryanbradynd05/go-tmdb) and [test suite](http://rawgit.com/ryanbradynd05/go-tmdb/master/coverage/coverage_report.html) are included.
 
 An **api_key** is needed to use the API. Register for one at [themoviedb.org](https://www.themoviedb.org/documentation/api).
 
@@ -57,7 +57,7 @@ fightClubJson, err := TMDb.ToJSON(fightClubInfo)
 
 ## Available methods
 
-All themoviedb.org API v3 methods are included. For examples on how to call each function, refer to that function's tests. For documentation of the ["The Movie DB"](http://www.themoviedb.org/) API, see their [documentation](http://docs.themoviedb.apiary.io/).
+All themoviedb.org API v3 methods are included. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
 
 ## License 
 
