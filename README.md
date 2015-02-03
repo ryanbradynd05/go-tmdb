@@ -9,7 +9,7 @@ An **api_key** is needed to use the API. Register for one at [themoviedb.org](ht
 
 ## How to install
 
-```go
+```shell
 go get github.com/ryanbradynd05/go-tmdb
 ```
 
