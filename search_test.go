@@ -69,8 +69,6 @@ func (s *TmdbSuite) TestSearchMulti(c *C) {
 	c.Assert(result.Results, Not(HasLen), 0)
 	c.Assert(result.TotalPages > 50, Equals, true)
 	c.Assert(result.TotalResults > 1100, Equals, true)
-	c.Assert(result.Results[1].ID, Equals, 1433)
-	c.Assert(result.Results[1].Name, Equals, "American Dad!")
 
 	var options = make(map[string]string)
 	options["page"] = "5"
