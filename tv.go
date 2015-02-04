@@ -56,6 +56,37 @@ type TV struct {
 	Credits           *TvCredits           `json:",omitempty"`
 	Images            *TvImages            `json:",omitempty"`
 	Keywords          *TvKeywords          `json:",omitempty"`
+	Similar           *TvPagedResults      `json:",omitempty"`
+}
+
+// TvShort struct
+type TvShort struct {
+	Adult        bool
+	BackdropPath string `json:"backdrop_path"`
+	ID           int
+	OriginalName string `json:"original_name"`
+	Popularity   float32
+	PosterPath   string `json:"poster_path"`
+	FirstAirDate string `json:"first_air_date"`
+	Name         string
+	Video        bool
+	VoteAverage  float32 `json:"vote_average"`
+	VoteCount    uint32  `json:"vote_count"`
+}
+
+// TvPagedResults struct
+type TvPagedResults struct {
+	ID                int
+	Page              int
+	Results           []TvShort
+	TotalPages        int                  `json:"total_pages"`
+	TotalResults      int                  `json:"total_results"`
+	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
+	Changes           *TvChanges           `json:",omitempty"`
+	Credits           *TvCredits           `json:",omitempty"`
+	Images            *TvImages            `json:",omitempty"`
+	Keywords          *TvKeywords          `json:",omitempty"`
+	Similar           *TvPagedResults      `json:",omitempty"`
 }
 
 // TvAccountState struct
@@ -104,6 +135,7 @@ type TvCredits struct {
 	Changes           *TvChanges           `json:",omitempty"`
 	Images            *TvImages            `json:",omitempty"`
 	Keywords          *TvKeywords          `json:",omitempty"`
+	Similar           *TvPagedResults      `json:",omitempty"`
 }
 
 // TvImage struct
@@ -135,6 +167,7 @@ type TvKeywords struct {
 	Changes           *TvChanges           `json:",omitempty"`
 	Credits           *TvCredits           `json:",omitempty"`
 	Images            *TvImages            `json:",omitempty"`
+	Similar           *TvPagedResults      `json:",omitempty"`
 }
 
 // GetTvInfo gets the primary information about a TV series by id
@@ -207,8 +240,8 @@ func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, err
 	return result.(*TvImages), err
 }
 
-// GetTvKeywords for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidkeywords/get
+// GetTvKeywords for a specific TV show id
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidkeywords/get
 func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords, error) {
 	var availableOptions = map[string]struct{}{
 		"append_to_response": {}}
@@ -217,4 +250,18 @@ func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords,
 	uri := fmt.Sprintf("%s/tv/%v/keywords?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &keywords)
 	return result.(*TvKeywords), err
+}
+
+// GetSimilarTv gets the similar TV shows for a specific tv id
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidsimilar/get
+func (tmdb *TMDb) GetSimilarTv(id int, options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":               {},
+		"language":           {},
+		"append_to_response": {}}
+	var similar TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &similar)
+	return result.(*TvPagedResults), err
 }

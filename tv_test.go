@@ -20,8 +20,8 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(len(result.Seasons), Equals, result.NumberOfSeasons+1)
 
 	var options = make(map[string]string)
-	// options["append_to_response"] = "account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,changes,ratings"
-	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords"
+	// options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations,videos,ratings"
+	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar"
 	allResult, err := s.tmdb.GetTvInfo(gameOfThronesID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.ID, Equals, gameOfThronesID)
@@ -31,10 +31,9 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(allResult.Credits, NotNil)
 	c.Assert(allResult.Images, NotNil)
 	c.Assert(allResult.Keywords, NotNil)
-	// c.Assert(allResult.Releases, NotNil)
-	// c.Assert(allResult.Videos, NotNil)
+	c.Assert(allResult.Similar, NotNil)
 	// c.Assert(allResult.Translations, NotNil)
-	// c.Assert(allResult.Similar, NotNil)
+	// c.Assert(allResult.Videos, NotNil)
 	// c.Assert(allResult.Reviews, NotNil)
 	// c.Assert(allResult.Lists, NotNil)
 }
@@ -104,4 +103,20 @@ func (s *TmdbSuite) TestGetTvKeywords(c *C) {
 	c.Assert(result.Results, Not(HasLen), 0)
 	c.Assert(result.Results[0].ID, Equals, 6091)
 	c.Assert(result.Results[0].Name, Equals, "war")
+}
+
+func (s *TmdbSuite) TestGetSimilarTv(c *C) {
+	result, err := s.tmdb.GetSimilarTv(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+	c.Assert(result.Results[0].ID, Equals, 44217)
+	c.Assert(result.Results[0].Name, Equals, "Vikings")
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetSimilarTv(gameOfThronesID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.Page, Equals, 1)
+	c.Assert(engResult.Results, Not(HasLen), 0)
 }
