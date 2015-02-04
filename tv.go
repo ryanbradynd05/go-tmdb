@@ -55,6 +55,7 @@ type TV struct {
 	Changes           *TvChanges           `json:",omitempty"`
 	Credits           *TvCredits           `json:",omitempty"`
 	Images            *TvImages            `json:",omitempty"`
+	Keywords          *TvKeywords          `json:",omitempty"`
 }
 
 // TvAccountState struct
@@ -102,6 +103,7 @@ type TvCredits struct {
 	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
 	Changes           *TvChanges           `json:",omitempty"`
 	Images            *TvImages            `json:",omitempty"`
+	Keywords          *TvKeywords          `json:",omitempty"`
 }
 
 // TvImage struct
@@ -120,6 +122,19 @@ type TvImages struct {
 	ID        int
 	Backdrops []TvImage
 	Posters   []TvImage
+}
+
+// TvKeywords struct
+type TvKeywords struct {
+	ID      int
+	Results []struct {
+		ID   int
+		Name string
+	}
+	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
+	Changes           *TvChanges           `json:",omitempty"`
+	Credits           *TvCredits           `json:",omitempty"`
+	Images            *TvImages            `json:",omitempty"`
 }
 
 // GetTvInfo gets the primary information about a TV series by id
@@ -190,4 +205,16 @@ func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, err
 	uri := fmt.Sprintf("%s/tv/%v/images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &images)
 	return result.(*TvImages), err
+}
+
+// GetTvKeywords for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidkeywords/get
+func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords, error) {
+	var availableOptions = map[string]struct{}{
+		"append_to_response": {}}
+	var keywords TvKeywords
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/keywords?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &keywords)
+	return result.(*TvKeywords), err
 }

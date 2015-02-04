@@ -21,7 +21,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 
 	var options = make(map[string]string)
 	// options["append_to_response"] = "account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,changes,ratings"
-	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images"
+	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords"
 	allResult, err := s.tmdb.GetTvInfo(gameOfThronesID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.ID, Equals, gameOfThronesID)
@@ -30,7 +30,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(allResult.Changes, NotNil)
 	c.Assert(allResult.Credits, NotNil)
 	c.Assert(allResult.Images, NotNil)
-	// c.Assert(allResult.Keywords, NotNil)
+	c.Assert(allResult.Keywords, NotNil)
 	// c.Assert(allResult.Releases, NotNil)
 	// c.Assert(allResult.Videos, NotNil)
 	// c.Assert(allResult.Translations, NotNil)
@@ -95,4 +95,13 @@ func (s *TmdbSuite) TestGetTvImages(c *C) {
 	c.Assert(engResult.Backdrops[0].Iso639_1, Equals, "en")
 	c.Assert(len(engResult.Backdrops) <= allBackdropsLength, Equals, true)
 	c.Assert(len(engResult.Posters) <= allPostersLength, Equals, true)
+}
+
+func (s *TmdbSuite) TestGetTvKeywords(c *C) {
+	result, err := s.tmdb.GetTvKeywords(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.Results, Not(HasLen), 0)
+	c.Assert(result.Results[0].ID, Equals, 6091)
+	c.Assert(result.Results[0].Name, Equals, "war")
 }
