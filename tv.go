@@ -53,6 +53,7 @@ type TV struct {
 	VoteCount         uint32               `json:"vote_count"`
 	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
 	Changes           *TvChanges           `json:",omitempty"`
+	Credits           *TvCredits           `json:",omitempty"`
 }
 
 // TvAccountState struct
@@ -84,6 +85,21 @@ type TvChanges struct {
 			Time   string
 		}
 	}
+}
+
+// TvCredits struct
+type TvCredits struct {
+	ID   int
+	Cast []struct {
+		Character   string
+		CreditID    string `json:"credit_id"`
+		ID          int
+		Name        string
+		Order       int
+		ProfilePath string `json:"profile_path"`
+	}
+	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
+	Changes           *TvChanges           `json:",omitempty"`
 }
 
 // GetTvInfo gets the primary information about a TV series by id
@@ -130,4 +146,17 @@ func (tmdb *TMDb) GetTvChanges(id int, options map[string]string) (*TvChanges, e
 	json, _ := ToJSON(result)
 	fmt.Printf("Result: %v\nURL: %v", json, uri)
 	return result.(*TvChanges), err
+}
+
+// GetTvCredits for a specific TV show id
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidcredits/get
+func (tmdb *TMDb) GetTvCredits(id int, options map[string]string) (*TvCredits, error) {
+	var availableOptions = map[string]struct{}{
+		"language":           {},
+		"append_to_response": {}}
+	var credits TvCredits
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &credits)
+	return result.(*TvCredits), err
 }

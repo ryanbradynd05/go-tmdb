@@ -66,3 +66,13 @@ func (s *TmdbSuite) TestGetTvChanges(c *C) {
 	c.Assert(janResult.Changes, NotNil)
 	c.Assert(len(janResult.Changes) >= allResultLength, Equals, true)
 }
+
+func (s *TmdbSuite) TestGetTvCredits(c *C) {
+	result, err := s.tmdb.GetTvCredits(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.Cast, Not(HasLen), 0)
+	c.Assert(result.Cast[0].CastID, Equals, 4)
+	c.Assert(result.Cast[0].Character, Equals, "The Narrator")
+	c.Assert(result.Cast[0].Name, Equals, "Edward Norton")
+}
