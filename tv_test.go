@@ -21,15 +21,15 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 
 	var options = make(map[string]string)
 	// options["append_to_response"] = "account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,changes,ratings"
-	options["append_to_response"] = "account_states,alternative_titles,changes"
+	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images"
 	allResult, err := s.tmdb.GetTvInfo(gameOfThronesID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.ID, Equals, gameOfThronesID)
 	c.Assert(allResult.Name, Equals, "Game of Thrones")
 	c.Assert(allResult.AlternativeTitles, NotNil)
 	c.Assert(allResult.Changes, NotNil)
-	// c.Assert(allResult.Credits, NotNil)
-	// c.Assert(allResult.Images, NotNil)
+	c.Assert(allResult.Credits, NotNil)
+	c.Assert(allResult.Images, NotNil)
 	// c.Assert(allResult.Keywords, NotNil)
 	// c.Assert(allResult.Releases, NotNil)
 	// c.Assert(allResult.Videos, NotNil)

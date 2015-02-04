@@ -54,6 +54,7 @@ type TV struct {
 	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
 	Changes           *TvChanges           `json:",omitempty"`
 	Credits           *TvCredits           `json:",omitempty"`
+	Images            *TvImages            `json:",omitempty"`
 }
 
 // TvAccountState struct
@@ -100,6 +101,7 @@ type TvCredits struct {
 	}
 	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
 	Changes           *TvChanges           `json:",omitempty"`
+	Images            *TvImages            `json:",omitempty"`
 }
 
 // TvImage struct
