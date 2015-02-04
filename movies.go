@@ -224,11 +224,23 @@ type MovieVideos struct {
 
 // MoviePagedResults struct
 type MoviePagedResults struct {
-	ID           int
-	Page         int
-	Results      []MovieShort
-	TotalPages   int `json:"total_pages"`
-	TotalResults int `json:"total_results"`
+	ID                int
+	Page              int
+	Results           []MovieShort
+	TotalPages        int                     `json:"total_pages"`
+	TotalResults      int                     `json:"total_results"`
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Releases          *MovieReleases          `json:",omitempty"`
+	Videos            *MovieVideos            `json:",omitempty"`
+	Translations      *MovieTranslations      `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Reviews           *MovieReviews           `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // MovieTranslations struct
