@@ -102,6 +102,24 @@ type TvCredits struct {
 	Changes           *TvChanges           `json:",omitempty"`
 }
 
+// TvImage struct
+type TvImage struct {
+	FilePath    string `json:"file_path"`
+	Width       int
+	Height      int
+	Iso639_1    string  `json:"iso_639_1"`
+	AspectRatio float32 `json:"aspect_ratio"`
+	VoteAverage float32 `json:"vote_average"`
+	VoteCount   uint32  `json:"vote_count"`
+}
+
+// TvImages struct
+type TvImages struct {
+	ID        int
+	Backdrops []TvImage
+	Posters   []TvImage
+}
+
 // GetTvInfo gets the primary information about a TV series by id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvid/get
 func (tmdb *TMDb) GetTvInfo(id int, options map[string]string) (*TV, error) {
@@ -143,8 +161,6 @@ func (tmdb *TMDb) GetTvChanges(id int, options map[string]string) (*TvChanges, e
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &changes)
-	json, _ := ToJSON(result)
-	fmt.Printf("Result: %v\nURL: %v", json, uri)
 	return result.(*TvChanges), err
 }
 
@@ -159,4 +175,17 @@ func (tmdb *TMDb) GetTvCredits(id int, options map[string]string) (*TvCredits, e
 	uri := fmt.Sprintf("%s/tv/%v/credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &credits)
 	return result.(*TvCredits), err
+}
+
+// GetTvImages for a TV series
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidimages/get
+func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, error) {
+	var availableOptions = map[string]struct{}{
+		"language":               {},
+		"include_image_language": {}}
+	var images TvImages
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &images)
+	return result.(*TvImages), err
 }

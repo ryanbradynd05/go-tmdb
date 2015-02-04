@@ -72,7 +72,27 @@ func (s *TmdbSuite) TestGetTvCredits(c *C) {
 	s.baseTest(&result, err, c)
 	c.Assert(result.ID, Equals, gameOfThronesID)
 	c.Assert(result.Cast, Not(HasLen), 0)
-	c.Assert(result.Cast[0].CastID, Equals, 4)
-	c.Assert(result.Cast[0].Character, Equals, "The Narrator")
-	c.Assert(result.Cast[0].Name, Equals, "Edward Norton")
+	c.Assert(result.Cast[0].Character, Equals, "Tyrion Lannister")
+	c.Assert(result.Cast[0].Name, Equals, "Peter Dinklage")
+}
+
+func (s *TmdbSuite) TestGetTvImages(c *C) {
+	result, err := s.tmdb.GetTvImages(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.Backdrops, Not(HasLen), 0)
+	c.Assert(result.Posters, Not(HasLen), 0)
+	allBackdropsLength := len(result.Backdrops)
+	allPostersLength := len(result.Posters)
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetTvImages(gameOfThronesID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.ID, Equals, gameOfThronesID)
+	c.Assert(engResult.Backdrops, Not(HasLen), 0)
+	c.Assert(engResult.Posters, Not(HasLen), 0)
+	c.Assert(engResult.Backdrops[0].Iso639_1, Equals, "en")
+	c.Assert(len(engResult.Backdrops) <= allBackdropsLength, Equals, true)
+	c.Assert(len(engResult.Posters) <= allPostersLength, Equals, true)
 }
