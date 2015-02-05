@@ -184,6 +184,20 @@ type TvTranslations struct {
 	}
 }
 
+// TvVideos struct
+type TvVideos struct {
+	ID      int
+	Results []struct {
+		ID       int
+		Iso639_1 string `json:"iso_639_1"`
+		Key      string
+		Name     string
+		Site     string
+		Size     int
+		Type     string
+	}
+}
+
 // GetTvInfo gets the primary information about a TV series by id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvid/get
 func (tmdb *TMDb) GetTvInfo(id int, options map[string]string) (*TV, error) {
@@ -206,7 +220,7 @@ func (tmdb *TMDb) GetTvInfo(id int, options map[string]string) (*TV, error) {
 //  return &state, err
 // }
 
-// GetTvAlternativeTitles for a specific show id
+// GetTvAlternativeTitles gets the alternative titles for a specific show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidalternativetitles/get
 func (tmdb *TMDb) GetTvAlternativeTitles(id int) (*TvAlternativeTitles, error) {
 	var titles TvAlternativeTitles
@@ -215,7 +229,7 @@ func (tmdb *TMDb) GetTvAlternativeTitles(id int) (*TvAlternativeTitles, error) {
 	return result.(*TvAlternativeTitles), err
 }
 
-// GetTvChanges for a specific show id
+// GetTvChanges gets the changes for a specific show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidchanges/get
 func (tmdb *TMDb) GetTvChanges(id int, options map[string]string) (*TvChanges, error) {
 	var availableOptions = map[string]struct{}{
@@ -228,7 +242,7 @@ func (tmdb *TMDb) GetTvChanges(id int, options map[string]string) (*TvChanges, e
 	return result.(*TvChanges), err
 }
 
-// GetTvCredits for a specific TV show id
+// GetTvCredits gets the credits for a specific TV show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidcredits/get
 func (tmdb *TMDb) GetTvCredits(id int, options map[string]string) (*TvCredits, error) {
 	var availableOptions = map[string]struct{}{
@@ -241,7 +255,7 @@ func (tmdb *TMDb) GetTvCredits(id int, options map[string]string) (*TvCredits, e
 	return result.(*TvCredits), err
 }
 
-// GetTvImages for a TV series
+// GetTvImages gets the images for a TV series
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidimages/get
 func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, error) {
 	var availableOptions = map[string]struct{}{
@@ -254,7 +268,7 @@ func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, err
 	return result.(*TvImages), err
 }
 
-// GetTvKeywords for a specific TV show id
+// GetTvKeywords gets the keywords for a specific TV show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidkeywords/get
 func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords, error) {
 	var availableOptions = map[string]struct{}{
@@ -287,4 +301,16 @@ func (tmdb *TMDb) GetTvTranslations(id int) (*TvTranslations, error) {
 	uri := fmt.Sprintf("%s/tv/%v/translations?api_key=%s", baseURL, id, tmdb.apiKey)
 	result, err := getTmdb(uri, &translations)
 	return result.(*TvTranslations), err
+}
+
+// GetTvVideos gets the videos that have been added to a TV series
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidvideos/get
+func (tmdb *TMDb) GetTvVideos(id int, options map[string]string) (*TvVideos, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {}}
+	var videos TvVideos
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/videos?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &videos)
+	return result.(*TvVideos), err
 }

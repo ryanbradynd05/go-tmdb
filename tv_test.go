@@ -130,3 +130,20 @@ func (s *TmdbSuite) TestGetTvTranslations(c *C) {
 	c.Assert(result.Translations[0].EnglishName, Equals, "English")
 	c.Assert(result.Translations[0].Name, Equals, "English")
 }
+
+func (s *TmdbSuite) TestGetTvVideos(c *C) {
+	result, err := s.tmdb.GetTvVideos(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.Results, Not(HasLen), 0)
+	allResultsLength := len(result.Results)
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetTvVideos(gameOfThronesID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.ID, Equals, gameOfThronesID)
+	c.Assert(engResult.Results, Not(HasLen), 0)
+	c.Assert(engResult.Results[0].Iso639_1, Equals, "en")
+	c.Assert(len(engResult.Results) <= allResultsLength, Equals, true)
+}
