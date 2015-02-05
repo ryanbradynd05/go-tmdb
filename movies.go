@@ -72,6 +72,39 @@ type MovieShort struct {
 	VoteCount     uint32  `json:"vote_count"`
 }
 
+// MovieDatedResults struct
+type MovieDatedResults struct {
+	Dates struct {
+		Minimum string
+		Maximum string
+	}
+	Page         int
+	Results      []MovieShort
+	TotalPages   int `json:"total_pages"`
+	TotalResults int `json:"total_results"`
+}
+
+// MoviePagedResults struct
+type MoviePagedResults struct {
+	ID                int
+	Page              int
+	Results           []MovieShort
+	TotalPages        int                     `json:"total_pages"`
+	TotalResults      int                     `json:"total_results"`
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Releases          *MovieReleases          `json:",omitempty"`
+	Videos            *MovieVideos            `json:",omitempty"`
+	Translations      *MovieTranslations      `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Reviews           *MovieReviews           `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
+}
+
 // MovieAccountState struct
 type MovieAccountState struct {
 	ID        int
@@ -100,6 +133,18 @@ type MovieAlternativeTitles struct {
 	Lists        *MovieLists        `json:",omitempty"`
 	Changes      *MovieChanges      `json:",omitempty"`
 	Rating       *MovieRating       `json:",omitempty"`
+}
+
+// MovieChanges struct
+type MovieChanges struct {
+	Changes []struct {
+		Key   string
+		Items []struct {
+			ID     string
+			Action string
+			Time   string
+		}
+	}
 }
 
 // MovieCredits struct
@@ -176,119 +221,6 @@ type MovieKeywords struct {
 	Rating            *MovieRating            `json:",omitempty"`
 }
 
-// MovieReleases struct
-type MovieReleases struct {
-	ID        int
-	Countries []struct {
-		Iso3166_1     string `json:"iso_3166_1"`
-		Certification string
-		ReleaseDate   string `json:"release_date"`
-	}
-	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
-	Credits           *MovieCredits           `json:",omitempty"`
-	Images            *MovieImages            `json:",omitempty"`
-	Keywords          *MovieKeywords          `json:",omitempty"`
-	Videos            *MovieVideos            `json:",omitempty"`
-	Translations      *MovieTranslations      `json:",omitempty"`
-	Similar           *MoviePagedResults      `json:",omitempty"`
-	Reviews           *MovieReviews           `json:",omitempty"`
-	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieChanges           `json:",omitempty"`
-	Rating            *MovieRating            `json:",omitempty"`
-}
-
-// MovieVideos struct
-type MovieVideos struct {
-	ID      int
-	Results []struct {
-		ID       int
-		Iso639_1 string `json:"iso_639_1"`
-		Key      string
-		Name     string
-		Site     string
-		Size     int
-		Type     string
-	}
-	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
-	Credits           *MovieCredits           `json:",omitempty"`
-	Images            *MovieImages            `json:",omitempty"`
-	Keywords          *MovieKeywords          `json:",omitempty"`
-	Releases          *MovieReleases          `json:",omitempty"`
-	Translations      *MovieTranslations      `json:",omitempty"`
-	Similar           *MoviePagedResults      `json:",omitempty"`
-	Reviews           *MovieReviews           `json:",omitempty"`
-	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieChanges           `json:",omitempty"`
-	Rating            *MovieRating            `json:",omitempty"`
-}
-
-// MoviePagedResults struct
-type MoviePagedResults struct {
-	ID                int
-	Page              int
-	Results           []MovieShort
-	TotalPages        int                     `json:"total_pages"`
-	TotalResults      int                     `json:"total_results"`
-	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
-	Credits           *MovieCredits           `json:",omitempty"`
-	Images            *MovieImages            `json:",omitempty"`
-	Keywords          *MovieKeywords          `json:",omitempty"`
-	Releases          *MovieReleases          `json:",omitempty"`
-	Videos            *MovieVideos            `json:",omitempty"`
-	Translations      *MovieTranslations      `json:",omitempty"`
-	Similar           *MoviePagedResults      `json:",omitempty"`
-	Reviews           *MovieReviews           `json:",omitempty"`
-	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieChanges           `json:",omitempty"`
-	Rating            *MovieRating            `json:",omitempty"`
-}
-
-// MovieTranslations struct
-type MovieTranslations struct {
-	ID           int
-	Translations []struct {
-		Iso639_1    string `json:"iso_639_1"`
-		Name        string
-		EnglishName string `json:"english_name"`
-	}
-	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
-	Credits           *MovieCredits           `json:",omitempty"`
-	Images            *MovieImages            `json:",omitempty"`
-	Keywords          *MovieKeywords          `json:",omitempty"`
-	Releases          *MovieReleases          `json:",omitempty"`
-	Videos            *MovieVideos            `json:",omitempty"`
-	Similar           *MoviePagedResults      `json:",omitempty"`
-	Reviews           *MovieReviews           `json:",omitempty"`
-	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieChanges           `json:",omitempty"`
-	Rating            *MovieRating            `json:",omitempty"`
-}
-
-// MovieReviews struct
-type MovieReviews struct {
-	ID      int
-	Page    int
-	Results []struct {
-		ID      string
-		Author  string
-		Content string
-		URL     string
-	}
-	TotalPages        int                     `json:"total_pages"`
-	TotalResults      int                     `json:"total_results"`
-	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
-	Credits           *MovieCredits           `json:",omitempty"`
-	Images            *MovieImages            `json:",omitempty"`
-	Keywords          *MovieKeywords          `json:",omitempty"`
-	Releases          *MovieReleases          `json:",omitempty"`
-	Videos            *MovieVideos            `json:",omitempty"`
-	Translations      *MovieTranslations      `json:",omitempty"`
-	Similar           *MoviePagedResults      `json:",omitempty"`
-	Lists             *MovieLists             `json:",omitempty"`
-	Changes           *MovieChanges           `json:",omitempty"`
-	Rating            *MovieRating            `json:",omitempty"`
-}
-
 // MovieLists struct
 type MovieLists struct {
 	ID      int
@@ -323,28 +255,96 @@ type MovieRating struct {
 	StatusMessage string `json:"status_message"`
 }
 
-// MovieChanges struct
-type MovieChanges struct {
-	Changes []struct {
-		Key   string
-		Items []struct {
-			ID     string
-			Action string
-			Time   string
-		}
+// MovieReleases struct
+type MovieReleases struct {
+	ID        int
+	Countries []struct {
+		Iso3166_1     string `json:"iso_3166_1"`
+		Certification string
+		ReleaseDate   string `json:"release_date"`
 	}
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Videos            *MovieVideos            `json:",omitempty"`
+	Translations      *MovieTranslations      `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Reviews           *MovieReviews           `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
-// MovieDatedResults struct
-type MovieDatedResults struct {
-	Dates struct {
-		Minimum string
-		Maximum string
+// MovieReviews struct
+type MovieReviews struct {
+	ID      int
+	Page    int
+	Results []struct {
+		ID      string
+		Author  string
+		Content string
+		URL     string
 	}
-	Page         int
-	Results      []MovieShort
-	TotalPages   int `json:"total_pages"`
-	TotalResults int `json:"total_results"`
+	TotalPages        int                     `json:"total_pages"`
+	TotalResults      int                     `json:"total_results"`
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Releases          *MovieReleases          `json:",omitempty"`
+	Videos            *MovieVideos            `json:",omitempty"`
+	Translations      *MovieTranslations      `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
+}
+
+// MovieTranslations struct
+type MovieTranslations struct {
+	ID           int
+	Translations []struct {
+		Iso639_1    string `json:"iso_639_1"`
+		Name        string
+		EnglishName string `json:"english_name"`
+	}
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Releases          *MovieReleases          `json:",omitempty"`
+	Videos            *MovieVideos            `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Reviews           *MovieReviews           `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
+}
+
+// MovieVideos struct
+type MovieVideos struct {
+	ID      int
+	Results []struct {
+		ID       int
+		Iso639_1 string `json:"iso_639_1"`
+		Key      string
+		Name     string
+		Site     string
+		Size     int
+		Type     string
+	}
+	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
+	Credits           *MovieCredits           `json:",omitempty"`
+	Images            *MovieImages            `json:",omitempty"`
+	Keywords          *MovieKeywords          `json:",omitempty"`
+	Releases          *MovieReleases          `json:",omitempty"`
+	Translations      *MovieTranslations      `json:",omitempty"`
+	Similar           *MoviePagedResults      `json:",omitempty"`
+	Reviews           *MovieReviews           `json:",omitempty"`
+	Lists             *MovieLists             `json:",omitempty"`
+	Changes           *MovieChanges           `json:",omitempty"`
+	Rating            *MovieRating            `json:",omitempty"`
 }
 
 // GetMovieInfo for a specific movie id
@@ -380,6 +380,19 @@ func (tmdb *TMDb) GetMovieAlternativeTitles(id int, options map[string]string) (
 	uri := fmt.Sprintf("%s/movie/%v/alternative_titles?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &titles)
 	return result.(*MovieAlternativeTitles), err
+}
+
+// GetMovieChanges for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidchanges/get
+func (tmdb *TMDb) GetMovieChanges(id int, options map[string]string) (*MovieChanges, error) {
+	var availableOptions = map[string]struct{}{
+		"start_date": {},
+		"end_date":   {}}
+	var changes MovieChanges
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &changes)
+	return result.(*MovieChanges), err
 }
 
 // GetMovieCredits for a specific movie id
@@ -420,6 +433,20 @@ func (tmdb *TMDb) GetMovieKeywords(id int, options map[string]string) (*MovieKey
 	return result.(*MovieKeywords), err
 }
 
+// GetMovieLists that the movie belongs to
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidlists/get
+func (tmdb *TMDb) GetMovieLists(id int, options map[string]string) (*MovieLists, error) {
+	var availableOptions = map[string]struct{}{
+		"page":               {},
+		"language":           {},
+		"append_to_response": {}}
+	var lists MovieLists
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/%v/lists?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &lists)
+	return result.(*MovieLists), err
+}
+
 // GetMovieReleases for a specific movie id
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidreleases/get
 func (tmdb *TMDb) GetMovieReleases(id int, options map[string]string) (*MovieReleases, error) {
@@ -430,45 +457,6 @@ func (tmdb *TMDb) GetMovieReleases(id int, options map[string]string) (*MovieRel
 	uri := fmt.Sprintf("%s/movie/%v/releases?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &releases)
 	return result.(*MovieReleases), err
-}
-
-// GetMovieVideos for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidvideos/get
-func (tmdb *TMDb) GetMovieVideos(id int, options map[string]string) (*MovieVideos, error) {
-	var availableOptions = map[string]struct{}{
-		"language":           {},
-		"append_to_response": {}}
-	var videos MovieVideos
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/videos?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &videos)
-	return result.(*MovieVideos), err
-}
-
-// GetMovieTranslations for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidtranslations/get
-func (tmdb *TMDb) GetMovieTranslations(id int, options map[string]string) (*MovieTranslations, error) {
-	var availableOptions = map[string]struct{}{
-		"append_to_response": {}}
-	var translations MovieTranslations
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/translations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &translations)
-	return result.(*MovieTranslations), err
-}
-
-// GetSimilarMovies for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidsimilar/get
-func (tmdb *TMDb) GetSimilarMovies(id int, options map[string]string) (*MoviePagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":               {},
-		"language":           {},
-		"append_to_response": {}}
-	var similar MoviePagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &similar)
-	return result.(*MoviePagedResults), err
 }
 
 // GetMovieReviews for a specific movie id
@@ -485,31 +473,29 @@ func (tmdb *TMDb) GetMovieReviews(id int, options map[string]string) (*MovieRevi
 	return result.(*MovieReviews), err
 }
 
-// GetMovieLists that the movie belongs to
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidlists/get
-func (tmdb *TMDb) GetMovieLists(id int, options map[string]string) (*MovieLists, error) {
+// GetMovieTranslations for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidtranslations/get
+func (tmdb *TMDb) GetMovieTranslations(id int, options map[string]string) (*MovieTranslations, error) {
 	var availableOptions = map[string]struct{}{
-		"page":               {},
-		"language":           {},
 		"append_to_response": {}}
-	var lists MovieLists
+	var translations MovieTranslations
 	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/lists?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &lists)
-	return result.(*MovieLists), err
+	uri := fmt.Sprintf("%s/movie/%v/translations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &translations)
+	return result.(*MovieTranslations), err
 }
 
-// GetMovieChanges for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidchanges/get
-func (tmdb *TMDb) GetMovieChanges(id int, options map[string]string) (*MovieChanges, error) {
+// GetMovieVideos for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidvideos/get
+func (tmdb *TMDb) GetMovieVideos(id int, options map[string]string) (*MovieVideos, error) {
 	var availableOptions = map[string]struct{}{
-		"start_date": {},
-		"end_date":   {}}
-	var changes MovieChanges
+		"language":           {},
+		"append_to_response": {}}
+	var videos MovieVideos
 	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &changes)
-	return result.(*MovieChanges), err
+	uri := fmt.Sprintf("%s/movie/%v/videos?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &videos)
+	return result.(*MovieVideos), err
 }
 
 // // SetMovieRating lets users rate a movie
@@ -528,19 +514,6 @@ func (tmdb *TMDb) GetLatestMovie() (*Movie, error) {
 	uri := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
 	result, err := getTmdb(uri, &movie)
 	return result.(*Movie), err
-}
-
-// GetUpcomingMovies by release date
-// http://docs.themoviedb.apiary.io/#reference/movies/movieupcoming/get
-func (tmdb *TMDb) GetUpcomingMovies(options map[string]string) (*MovieDatedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {}}
-	var upcoming MovieDatedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/upcoming?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &upcoming)
-	return result.(*MovieDatedResults), err
 }
 
 // GetNowPlayingMovies that have been, or are being released this week
@@ -569,6 +542,20 @@ func (tmdb *TMDb) GetPopularMovies(options map[string]string) (*MoviePagedResult
 	return result.(*MoviePagedResults), err
 }
 
+// GetSimilarMovies for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidsimilar/get
+func (tmdb *TMDb) GetSimilarMovies(id int, options map[string]string) (*MoviePagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":               {},
+		"language":           {},
+		"append_to_response": {}}
+	var similar MoviePagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &similar)
+	return result.(*MoviePagedResults), err
+}
+
 // GetTopRatedMovies gets the list of top rated movies
 // http://docs.themoviedb.apiary.io/#reference/movies/movietoprated/get
 func (tmdb *TMDb) GetTopRatedMovies(options map[string]string) (*MoviePagedResults, error) {
@@ -580,4 +567,17 @@ func (tmdb *TMDb) GetTopRatedMovies(options map[string]string) (*MoviePagedResul
 	uri := fmt.Sprintf("%s/movie/top_rated?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &topRated)
 	return result.(*MoviePagedResults), err
+}
+
+// GetUpcomingMovies by release date
+// http://docs.themoviedb.apiary.io/#reference/movies/movieupcoming/get
+func (tmdb *TMDb) GetUpcomingMovies(options map[string]string) (*MovieDatedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var upcoming MovieDatedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/upcoming?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &upcoming)
+	return result.(*MovieDatedResults), err
 }
