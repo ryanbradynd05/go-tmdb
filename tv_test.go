@@ -21,7 +21,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 
 	var options = make(map[string]string)
 	// options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations,videos,ratings"
-	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar"
+	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations"
 	allResult, err := s.tmdb.GetTvInfo(gameOfThronesID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.ID, Equals, gameOfThronesID)
@@ -32,7 +32,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(allResult.Images, NotNil)
 	c.Assert(allResult.Keywords, NotNil)
 	c.Assert(allResult.Similar, NotNil)
-	// c.Assert(allResult.Translations, NotNil)
+	c.Assert(allResult.Translations, NotNil)
 	// c.Assert(allResult.Videos, NotNil)
 	// c.Assert(allResult.Reviews, NotNil)
 	// c.Assert(allResult.Lists, NotNil)
@@ -119,4 +119,14 @@ func (s *TmdbSuite) TestGetSimilarTv(c *C) {
 	s.baseTest(&engResult, err, c)
 	c.Assert(engResult.Page, Equals, 1)
 	c.Assert(engResult.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetTvTranslations(c *C) {
+	result, err := s.tmdb.GetTvTranslations(gameOfThronesID)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.Translations, Not(HasLen), 0)
+	c.Assert(result.Translations[0].Iso639_1, Equals, "en")
+	c.Assert(result.Translations[0].EnglishName, Equals, "English")
+	c.Assert(result.Translations[0].Name, Equals, "English")
 }
