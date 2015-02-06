@@ -433,6 +433,15 @@ func (tmdb *TMDb) GetMovieKeywords(id int, options map[string]string) (*MovieKey
 	return result.(*MovieKeywords), err
 }
 
+// GetMovieLatest gets the latest movie
+// http://docs.themoviedb.apiary.io/#reference/movies/movielatest/get
+func (tmdb *TMDb) GetMovieLatest() (*Movie, error) {
+	var movie Movie
+	uri := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := getTmdb(uri, &movie)
+	return result.(*Movie), err
+}
+
 // GetMovieLists that the movie belongs to
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidlists/get
 func (tmdb *TMDb) GetMovieLists(id int, options map[string]string) (*MovieLists, error) {
@@ -445,6 +454,32 @@ func (tmdb *TMDb) GetMovieLists(id int, options map[string]string) (*MovieLists,
 	uri := fmt.Sprintf("%s/movie/%v/lists?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &lists)
 	return result.(*MovieLists), err
+}
+
+// GetMovieNowPlaying that have been, or are being released this week
+// http://docs.themoviedb.apiary.io/#reference/movies/movienowplaying/get
+func (tmdb *TMDb) GetMovieNowPlaying(options map[string]string) (*MovieDatedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var nowPlaying MovieDatedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/now_playing?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &nowPlaying)
+	return result.(*MovieDatedResults), err
+}
+
+// GetMoviePopular gets the list of popular movies on The Movie Database
+// http://docs.themoviedb.apiary.io/#reference/movies/moviepopular/get
+func (tmdb *TMDb) GetMoviePopular(options map[string]string) (*MoviePagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var popular MoviePagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/popular?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &popular)
+	return result.(*MoviePagedResults), err
 }
 
 // GetMovieReleases for a specific movie id
@@ -473,6 +508,33 @@ func (tmdb *TMDb) GetMovieReviews(id int, options map[string]string) (*MovieRevi
 	return result.(*MovieReviews), err
 }
 
+// GetMovieSimilar for a specific movie id
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidsimilar/get
+func (tmdb *TMDb) GetMovieSimilar(id int, options map[string]string) (*MoviePagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":               {},
+		"language":           {},
+		"append_to_response": {}}
+	var similar MoviePagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &similar)
+	return result.(*MoviePagedResults), err
+}
+
+// GetMovieTopRated gets the list of top rated movies
+// http://docs.themoviedb.apiary.io/#reference/movies/movietoprated/get
+func (tmdb *TMDb) GetMovieTopRated(options map[string]string) (*MoviePagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var topRated MoviePagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/top_rated?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &topRated)
+	return result.(*MoviePagedResults), err
+}
+
 // GetMovieTranslations for a specific movie id
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidtranslations/get
 func (tmdb *TMDb) GetMovieTranslations(id int, options map[string]string) (*MovieTranslations, error) {
@@ -498,80 +560,9 @@ func (tmdb *TMDb) GetMovieVideos(id int, options map[string]string) (*MovieVideo
 	return result.(*MovieVideos), err
 }
 
-// // SetMovieRating lets users rate a movie
-// // http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
-// func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
-// 	// TODO
-// 	var rating MovieRating
-// 	var err error
-// 	return &rating, err
-// }
-
-// GetLatestMovie gets the latest movie
-// http://docs.themoviedb.apiary.io/#reference/movies/movielatest/get
-func (tmdb *TMDb) GetLatestMovie() (*Movie, error) {
-	var movie Movie
-	uri := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &movie)
-	return result.(*Movie), err
-}
-
-// GetNowPlayingMovies that have been, or are being released this week
-// http://docs.themoviedb.apiary.io/#reference/movies/movienowplaying/get
-func (tmdb *TMDb) GetNowPlayingMovies(options map[string]string) (*MovieDatedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {}}
-	var nowPlaying MovieDatedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/now_playing?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &nowPlaying)
-	return result.(*MovieDatedResults), err
-}
-
-// GetPopularMovies gets the list of popular movies on The Movie Database
-// http://docs.themoviedb.apiary.io/#reference/movies/moviepopular/get
-func (tmdb *TMDb) GetPopularMovies(options map[string]string) (*MoviePagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {}}
-	var popular MoviePagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/popular?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &popular)
-	return result.(*MoviePagedResults), err
-}
-
-// GetSimilarMovies for a specific movie id
-// http://docs.themoviedb.apiary.io/#reference/movies/movieidsimilar/get
-func (tmdb *TMDb) GetSimilarMovies(id int, options map[string]string) (*MoviePagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":               {},
-		"language":           {},
-		"append_to_response": {}}
-	var similar MoviePagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &similar)
-	return result.(*MoviePagedResults), err
-}
-
-// GetTopRatedMovies gets the list of top rated movies
-// http://docs.themoviedb.apiary.io/#reference/movies/movietoprated/get
-func (tmdb *TMDb) GetTopRatedMovies(options map[string]string) (*MoviePagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {}}
-	var topRated MoviePagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/movie/top_rated?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &topRated)
-	return result.(*MoviePagedResults), err
-}
-
-// GetUpcomingMovies by release date
+// GetMovieUpcoming by release date
 // http://docs.themoviedb.apiary.io/#reference/movies/movieupcoming/get
-func (tmdb *TMDb) GetUpcomingMovies(options map[string]string) (*MovieDatedResults, error) {
+func (tmdb *TMDb) GetMovieUpcoming(options map[string]string) (*MovieDatedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
 		"language": {}}
@@ -581,3 +572,12 @@ func (tmdb *TMDb) GetUpcomingMovies(options map[string]string) (*MovieDatedResul
 	result, err := getTmdb(uri, &upcoming)
 	return result.(*MovieDatedResults), err
 }
+
+// // SetMovieRating lets users rate a movie
+// // http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
+// func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
+// 	// TODO
+// 	var rating MovieRating
+// 	var err error
+// 	return &rating, err
+// }

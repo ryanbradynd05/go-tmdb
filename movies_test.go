@@ -47,6 +47,21 @@ func (s *TmdbSuite) TestGetMovieAlternativeTitles(c *C) {
 	c.Assert(result.Titles[0].Iso3166_1, Equals, "PL")
 }
 
+func (s *TmdbSuite) TestGetMovieChanges(c *C) {
+	result, err := s.tmdb.GetMovieChanges(takenThreeID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Changes, NotNil)
+	allResultLength := len(result.Changes)
+
+	var janOptions = make(map[string]string)
+	janOptions["start_date"] = "2015-01-01"
+	janOptions["end_date"] = "2015-01-14"
+	janResult, err := s.tmdb.GetMovieChanges(takenThreeID, janOptions)
+	s.baseTest(&janResult, err, c)
+	c.Assert(janResult.Changes, NotNil)
+	c.Assert(len(janResult.Changes) >= allResultLength, Equals, true)
+}
+
 func (s *TmdbSuite) TestGetMovieCredits(c *C) {
 	result, err := s.tmdb.GetMovieCredits(fightClubID, nil)
 	s.baseTest(&result, err, c)
@@ -87,72 +102,10 @@ func (s *TmdbSuite) TestGetMovieKeywords(c *C) {
 	c.Assert(result.Keywords[0].Name, Equals, "support group")
 }
 
-func (s *TmdbSuite) TestGetMovieReleases(c *C) {
-	result, err := s.tmdb.GetMovieReleases(fightClubID, nil)
+func (s *TmdbSuite) TestGetMovieLatest(c *C) {
+	result, err := s.tmdb.GetMovieLatest()
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, fightClubID)
-	c.Assert(result.Countries, Not(HasLen), 0)
-	c.Assert(result.Countries[0].Iso3166_1, Equals, "US")
-	c.Assert(result.Countries[0].Certification, Equals, "R")
-	c.Assert(result.Countries[0].ReleaseDate, Equals, "1999-10-14")
-}
-
-func (s *TmdbSuite) TestGetMovieVideos(c *C) {
-	result, err := s.tmdb.GetMovieVideos(fightClubID, nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, fightClubID)
-	c.Assert(result.Results, Not(HasLen), 0)
-	allResultsLength := len(result.Results)
-
-	var engOptions = make(map[string]string)
-	engOptions["language"] = "en"
-	engResult, err := s.tmdb.GetMovieVideos(fightClubID, engOptions)
-	s.baseTest(&engResult, err, c)
-	c.Assert(engResult.ID, Equals, fightClubID)
-	c.Assert(engResult.Results, Not(HasLen), 0)
-	c.Assert(engResult.Results[0].Iso639_1, Equals, "en")
-	c.Assert(len(engResult.Results) <= allResultsLength, Equals, true)
-}
-
-func (s *TmdbSuite) TestGetMovieTranslations(c *C) {
-	result, err := s.tmdb.GetMovieTranslations(fightClubID, nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, fightClubID)
-	c.Assert(result.Translations, Not(HasLen), 0)
-	c.Assert(result.Translations[0].Iso639_1, Equals, "en")
-	c.Assert(result.Translations[0].EnglishName, Equals, "English")
-	c.Assert(result.Translations[0].Name, Equals, "English")
-}
-
-func (s *TmdbSuite) TestGetSimilarMovies(c *C) {
-	result, err := s.tmdb.GetSimilarMovies(fightClubID, nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-	c.Assert(result.Results[0].ID, Equals, 807)
-	c.Assert(result.Results[0].Title, Equals, "Se7en")
-
-	var engOptions = make(map[string]string)
-	engOptions["language"] = "en"
-	engResult, err := s.tmdb.GetSimilarMovies(fightClubID, engOptions)
-	s.baseTest(&engResult, err, c)
-	c.Assert(engResult.Page, Equals, 1)
-	c.Assert(engResult.Results, Not(HasLen), 0)
-}
-
-func (s *TmdbSuite) TestGetMovieReviews(c *C) {
-	result, err := s.tmdb.GetMovieReviews(darkKnightID, nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, darkKnightID)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var engOptions = make(map[string]string)
-	engOptions["language"] = "en"
-	engResult, err := s.tmdb.GetMovieReviews(darkKnightID, engOptions)
-	s.baseTest(&engResult, err, c)
-	c.Assert(engResult.ID, Equals, darkKnightID)
-	c.Assert(engResult.Page, Equals, 1)
+	c.Assert(result.ID, Not(Equals), fightClubID)
 }
 
 func (s *TmdbSuite) TestGetMovieLists(c *C) {
@@ -175,85 +128,132 @@ func (s *TmdbSuite) TestGetMovieLists(c *C) {
 	c.Assert(len(spanishResult.Results) < allResultLength, Equals, true)
 }
 
-func (s *TmdbSuite) TestGetMovieChanges(c *C) {
-	result, err := s.tmdb.GetMovieChanges(takenThreeID, nil)
+func (s *TmdbSuite) TestGetMovieNowPlaying(c *C) {
+	result, err := s.tmdb.GetMovieNowPlaying(nil)
 	s.baseTest(&result, err, c)
-	c.Assert(result.Changes, NotNil)
-	allResultLength := len(result.Changes)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
 
-	var janOptions = make(map[string]string)
-	janOptions["start_date"] = "2015-01-01"
-	janOptions["end_date"] = "2015-01-14"
-	janResult, err := s.tmdb.GetMovieChanges(takenThreeID, janOptions)
-	s.baseTest(&janResult, err, c)
-	c.Assert(janResult.Changes, NotNil)
-	c.Assert(len(janResult.Changes) >= allResultLength, Equals, true)
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetMovieNowPlaying(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetMoviePopular(c *C) {
+	result, err := s.tmdb.GetMoviePopular(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetMoviePopular(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetMovieReleases(c *C) {
+	result, err := s.tmdb.GetMovieReleases(fightClubID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, fightClubID)
+	c.Assert(result.Countries, Not(HasLen), 0)
+	c.Assert(result.Countries[0].Iso3166_1, Equals, "US")
+	c.Assert(result.Countries[0].Certification, Equals, "R")
+	c.Assert(result.Countries[0].ReleaseDate, Equals, "1999-10-14")
+}
+
+func (s *TmdbSuite) TestGetMovieReviews(c *C) {
+	result, err := s.tmdb.GetMovieReviews(darkKnightID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, darkKnightID)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetMovieReviews(darkKnightID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.ID, Equals, darkKnightID)
+	c.Assert(engResult.Page, Equals, 1)
+}
+
+func (s *TmdbSuite) TestGetMovieSimilar(c *C) {
+	result, err := s.tmdb.GetMovieSimilar(fightClubID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+	c.Assert(result.Results[0].ID, Equals, 807)
+	c.Assert(result.Results[0].Title, Equals, "Se7en")
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetMovieSimilar(fightClubID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.Page, Equals, 1)
+	c.Assert(engResult.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetMovieTopRated(c *C) {
+	result, err := s.tmdb.GetMovieTopRated(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetMovieTopRated(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetMovieTranslations(c *C) {
+	result, err := s.tmdb.GetMovieTranslations(fightClubID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, fightClubID)
+	c.Assert(result.Translations, Not(HasLen), 0)
+	c.Assert(result.Translations[0].Iso639_1, Equals, "en")
+	c.Assert(result.Translations[0].EnglishName, Equals, "English")
+	c.Assert(result.Translations[0].Name, Equals, "English")
+}
+
+func (s *TmdbSuite) TestGetMovieUpcoming(c *C) {
+	result, err := s.tmdb.GetMovieUpcoming(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetMovieUpcoming(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetMovieVideos(c *C) {
+	result, err := s.tmdb.GetMovieVideos(fightClubID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, fightClubID)
+	c.Assert(result.Results, Not(HasLen), 0)
+	allResultsLength := len(result.Results)
+
+	var engOptions = make(map[string]string)
+	engOptions["language"] = "en"
+	engResult, err := s.tmdb.GetMovieVideos(fightClubID, engOptions)
+	s.baseTest(&engResult, err, c)
+	c.Assert(engResult.ID, Equals, fightClubID)
+	c.Assert(engResult.Results, Not(HasLen), 0)
+	c.Assert(engResult.Results[0].Iso639_1, Equals, "en")
+	c.Assert(len(engResult.Results) <= allResultsLength, Equals, true)
 }
 
 func (s *TmdbSuite) TestSetMovieRating(c *C) {
 	// result, err := s.tmdb.SetMovieRating(takenThreeID)
 	// s.baseTest(&result, err, c)
 	// TODO
-}
-
-func (s *TmdbSuite) TestGetLatestMovie(c *C) {
-	result, err := s.tmdb.GetLatestMovie()
-	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Not(Equals), fightClubID)
-}
-
-func (s *TmdbSuite) TestGetUpcomingMovies(c *C) {
-	result, err := s.tmdb.GetUpcomingMovies(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var page2Options = make(map[string]string)
-	page2Options["page"] = "2"
-	page2Result, err := s.tmdb.GetUpcomingMovies(page2Options)
-	s.baseTest(&page2Result, err, c)
-	c.Assert(page2Result.Page, Equals, 2)
-	c.Assert(page2Result.Results, Not(HasLen), 0)
-}
-
-func (s *TmdbSuite) TestGetNowPlayingMovies(c *C) {
-	result, err := s.tmdb.GetNowPlayingMovies(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var page2Options = make(map[string]string)
-	page2Options["page"] = "2"
-	page2Result, err := s.tmdb.GetNowPlayingMovies(page2Options)
-	s.baseTest(&page2Result, err, c)
-	c.Assert(page2Result.Page, Equals, 2)
-	c.Assert(page2Result.Results, Not(HasLen), 0)
-}
-
-func (s *TmdbSuite) TestGetPopularMovies(c *C) {
-	result, err := s.tmdb.GetPopularMovies(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var page2Options = make(map[string]string)
-	page2Options["page"] = "2"
-	page2Result, err := s.tmdb.GetPopularMovies(page2Options)
-	s.baseTest(&page2Result, err, c)
-	c.Assert(page2Result.Page, Equals, 2)
-	c.Assert(page2Result.Results, Not(HasLen), 0)
-}
-
-func (s *TmdbSuite) TestGetTopRatedMovies(c *C) {
-	result, err := s.tmdb.GetTopRatedMovies(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var page2Options = make(map[string]string)
-	page2Options["page"] = "2"
-	page2Result, err := s.tmdb.GetTopRatedMovies(page2Options)
-	s.baseTest(&page2Result, err, c)
-	c.Assert(page2Result.Page, Equals, 2)
-	c.Assert(page2Result.Results, Not(HasLen), 0)
 }
