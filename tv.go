@@ -340,3 +340,17 @@ func (tmdb *TMDb) GetOnTheAirTv(options map[string]string) (*TvPagedResults, err
 	result, err := getTmdb(uri, &onAir)
 	return result.(*TvPagedResults), err
 }
+
+// GetAiringTodayTv gets the list of TV shows that air today
+// http://docs.themoviedb.apiary.io/#reference/tv/tvairingtoday/get
+func (tmdb *TMDb) GetAiringTodayTv(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {},
+		"timezone": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/airing_today?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
+}

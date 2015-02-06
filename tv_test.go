@@ -165,3 +165,19 @@ func (s *TmdbSuite) TestGetOnTheAirTv(c *C) {
 	c.Assert(page2Result.Page, Equals, 2)
 	c.Assert(page2Result.Results, Not(HasLen), 0)
 }
+
+func (s *TmdbSuite) TestGetAiringTodayTv(c *C) {
+	result, err := s.tmdb.GetAiringTodayTv(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var pacificOptions = make(map[string]string)
+	pacificOptions["timezone"] = "America/Los_Angeles"
+	pacificResult, err := s.tmdb.GetAiringTodayTv(pacificOptions)
+	s.baseTest(&pacificResult, err, c)
+	c.Assert(pacificResult.Page, Equals, 1)
+	c.Assert(pacificResult.Results, Not(HasLen), 0)
+	c.Assert(pacificResult.TotalPages, Equals, result.TotalPages)
+	c.Assert(pacificResult.TotalResults, Equals, result.TotalResults)
+}
