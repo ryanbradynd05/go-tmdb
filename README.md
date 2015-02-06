@@ -57,7 +57,7 @@ fightClubJson, err := TMDb.ToJSON(fightClubInfo)
 
 ## Available methods
 
-All themoviedb.org API v3 methods are included. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
+All themoviedb.org API v3 methods that don't require authentication are included. The POST and DELETE APIs are not included yet. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
 
 ## License 
 
