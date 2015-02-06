@@ -58,6 +58,7 @@ type TV struct {
 	Keywords          *TvKeywords          `json:",omitempty"`
 	Similar           *TvPagedResults      `json:",omitempty"`
 	Translations      *TvTranslations      `json:",omitempty"`
+	Videos            *TvVideos            `json:",omitempty"`
 }
 
 // TvShort struct
@@ -77,7 +78,7 @@ type TvShort struct {
 
 // TvPagedResults struct
 type TvPagedResults struct {
-	ID                int
+	ID                int `json:",omitempty"`
 	Page              int
 	Results           []TvShort
 	TotalPages        int                  `json:"total_pages"`
@@ -89,6 +90,7 @@ type TvPagedResults struct {
 	Keywords          *TvKeywords          `json:",omitempty"`
 	Similar           *TvPagedResults      `json:",omitempty"`
 	Translations      *TvTranslations      `json:",omitempty"`
+	Videos            *TvVideos            `json:",omitempty"`
 }
 
 // TvAccountState struct
@@ -139,6 +141,7 @@ type TvCredits struct {
 	Keywords          *TvKeywords          `json:",omitempty"`
 	Similar           *TvPagedResults      `json:",omitempty"`
 	Translations      *TvTranslations      `json:",omitempty"`
+	Videos            *TvVideos            `json:",omitempty"`
 }
 
 // TvImage struct
@@ -172,6 +175,7 @@ type TvKeywords struct {
 	Images            *TvImages            `json:",omitempty"`
 	Similar           *TvPagedResults      `json:",omitempty"`
 	Translations      *TvTranslations      `json:",omitempty"`
+	Videos            *TvVideos            `json:",omitempty"`
 }
 
 // TvTranslations struct
@@ -322,4 +326,17 @@ func (tmdb *TMDb) GetLatestTv() (*TV, error) {
 	uri := fmt.Sprintf("%s/tv/latest?api_key=%s", baseURL, tmdb.apiKey)
 	result, err := getTmdb(uri, &tv)
 	return result.(*TV), err
+}
+
+// GetOnTheAirTv gets the list of TV shows that are currently on the air
+// http://docs.themoviedb.apiary.io/#reference/tv/tvontheair/get
+func (tmdb *TMDb) GetOnTheAirTv(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/on_the_air?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
 }

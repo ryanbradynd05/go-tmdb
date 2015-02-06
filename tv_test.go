@@ -21,8 +21,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(len(result.Seasons), Equals, result.NumberOfSeasons+1)
 
 	var options = make(map[string]string)
-	// options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations,videos,ratings"
-	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations"
+	options["append_to_response"] = "account_states,alternative_titles,changes,credits,images,keywords,similar,translations,videos"
 	allResult, err := s.tmdb.GetTvInfo(gameOfThronesID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.ID, Equals, gameOfThronesID)
@@ -34,9 +33,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	c.Assert(allResult.Keywords, NotNil)
 	c.Assert(allResult.Similar, NotNil)
 	c.Assert(allResult.Translations, NotNil)
-	// c.Assert(allResult.Videos, NotNil)
-	// c.Assert(allResult.Reviews, NotNil)
-	// c.Assert(allResult.Lists, NotNil)
+	c.Assert(allResult.Videos, NotNil)
 }
 
 func (s *TmdbSuite) TestGetTvAccountStates(c *C) {
@@ -153,4 +150,18 @@ func (s *TmdbSuite) TestGetLatestTv(c *C) {
 	result, err := s.tmdb.GetLatestTv()
 	s.baseTest(&result, err, c)
 	c.Assert(result.ID, Not(Equals), seinfeldID)
+}
+
+func (s *TmdbSuite) TestGetOnTheAirTv(c *C) {
+	result, err := s.tmdb.GetOnTheAirTv(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetOnTheAirTv(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
 }
