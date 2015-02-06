@@ -224,6 +224,20 @@ func (tmdb *TMDb) GetTvInfo(id int, options map[string]string) (*TV, error) {
 //  return &state, err
 // }
 
+// GetTvAiringToday gets the list of TV shows that air today
+// http://docs.themoviedb.apiary.io/#reference/tv/tvairingtoday/get
+func (tmdb *TMDb) GetTvAiringToday(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {},
+		"timezone": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/airing_today?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
+}
+
 // GetTvAlternativeTitles gets the alternative titles for a specific show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidalternativetitles/get
 func (tmdb *TMDb) GetTvAlternativeTitles(id int) (*TvAlternativeTitles, error) {
@@ -284,9 +298,31 @@ func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords,
 	return result.(*TvKeywords), err
 }
 
-// GetSimilarTv gets the similar TV shows for a specific tv show id
+// GetTvLatest gets the latest TV show
+// http://docs.themoviedb.apiary.io/#reference/tv/tvlatest/get
+func (tmdb *TMDb) GetTvLatest() (*TV, error) {
+	var tv TV
+	uri := fmt.Sprintf("%s/tv/latest?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := getTmdb(uri, &tv)
+	return result.(*TV), err
+}
+
+// GetTvOnTheAir gets the list of TV shows that are currently on the air
+// http://docs.themoviedb.apiary.io/#reference/tv/tvontheair/get
+func (tmdb *TMDb) GetTvOnTheAir(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/on_the_air?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
+}
+
+// GetTvSimilar gets the similar TV shows for a specific tv show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidsimilar/get
-func (tmdb *TMDb) GetSimilarTv(id int, options map[string]string) (*TvPagedResults, error) {
+func (tmdb *TMDb) GetTvSimilar(id int, options map[string]string) (*TvPagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":               {},
 		"language":           {},
@@ -317,40 +353,4 @@ func (tmdb *TMDb) GetTvVideos(id int, options map[string]string) (*TvVideos, err
 	uri := fmt.Sprintf("%s/tv/%v/videos?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &videos)
 	return result.(*TvVideos), err
-}
-
-// GetLatestTv gets the latest TV show
-// http://docs.themoviedb.apiary.io/#reference/tv/tvlatest/get
-func (tmdb *TMDb) GetLatestTv() (*TV, error) {
-	var tv TV
-	uri := fmt.Sprintf("%s/tv/latest?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &tv)
-	return result.(*TV), err
-}
-
-// GetOnTheAirTv gets the list of TV shows that are currently on the air
-// http://docs.themoviedb.apiary.io/#reference/tv/tvontheair/get
-func (tmdb *TMDb) GetOnTheAirTv(options map[string]string) (*TvPagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {}}
-	var onAir TvPagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/tv/on_the_air?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &onAir)
-	return result.(*TvPagedResults), err
-}
-
-// GetAiringTodayTv gets the list of TV shows that air today
-// http://docs.themoviedb.apiary.io/#reference/tv/tvairingtoday/get
-func (tmdb *TMDb) GetAiringTodayTv(options map[string]string) (*TvPagedResults, error) {
-	var availableOptions = map[string]struct{}{
-		"page":     {},
-		"language": {},
-		"timezone": {}}
-	var onAir TvPagedResults
-	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/tv/airing_today?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &onAir)
-	return result.(*TvPagedResults), err
 }

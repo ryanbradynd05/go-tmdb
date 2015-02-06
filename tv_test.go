@@ -42,6 +42,22 @@ func (s *TmdbSuite) TestGetTvAccountStates(c *C) {
 	// TODO
 }
 
+func (s *TmdbSuite) TestGetTvAiringToday(c *C) {
+	result, err := s.tmdb.GetTvAiringToday(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var pacificOptions = make(map[string]string)
+	pacificOptions["timezone"] = "America/Los_Angeles"
+	pacificResult, err := s.tmdb.GetTvAiringToday(pacificOptions)
+	s.baseTest(&pacificResult, err, c)
+	c.Assert(pacificResult.Page, Equals, 1)
+	c.Assert(pacificResult.Results, Not(HasLen), 0)
+	c.Assert(pacificResult.TotalPages, Equals, result.TotalPages)
+	c.Assert(pacificResult.TotalResults, Equals, result.TotalResults)
+}
+
 func (s *TmdbSuite) TestGetTvAlternativeTitles(c *C) {
 	result, err := s.tmdb.GetTvAlternativeTitles(gameOfThronesID)
 	s.baseTest(&result, err, c)
@@ -103,8 +119,28 @@ func (s *TmdbSuite) TestGetTvKeywords(c *C) {
 	c.Assert(result.Results[0].Name, Equals, "war")
 }
 
-func (s *TmdbSuite) TestGetSimilarTv(c *C) {
-	result, err := s.tmdb.GetSimilarTv(gameOfThronesID, nil)
+func (s *TmdbSuite) TestGetTvLatest(c *C) {
+	result, err := s.tmdb.GetTvLatest()
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Not(Equals), seinfeldID)
+}
+
+func (s *TmdbSuite) TestGetTvOnTheAir(c *C) {
+	result, err := s.tmdb.GetTvOnTheAir(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetTvOnTheAir(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
+func (s *TmdbSuite) TestGetTvSimilar(c *C) {
+	result, err := s.tmdb.GetTvSimilar(gameOfThronesID, nil)
 	s.baseTest(&result, err, c)
 	c.Assert(result.Page, Equals, 1)
 	c.Assert(result.Results, Not(HasLen), 0)
@@ -113,7 +149,7 @@ func (s *TmdbSuite) TestGetSimilarTv(c *C) {
 
 	var engOptions = make(map[string]string)
 	engOptions["language"] = "en"
-	engResult, err := s.tmdb.GetSimilarTv(gameOfThronesID, engOptions)
+	engResult, err := s.tmdb.GetTvSimilar(gameOfThronesID, engOptions)
 	s.baseTest(&engResult, err, c)
 	c.Assert(engResult.Page, Equals, 1)
 	c.Assert(engResult.Results, Not(HasLen), 0)
@@ -144,40 +180,4 @@ func (s *TmdbSuite) TestGetTvVideos(c *C) {
 	c.Assert(engResult.Results, Not(HasLen), 0)
 	c.Assert(engResult.Results[0].Iso639_1, Equals, "en")
 	c.Assert(len(engResult.Results) <= allResultsLength, Equals, true)
-}
-
-func (s *TmdbSuite) TestGetLatestTv(c *C) {
-	result, err := s.tmdb.GetLatestTv()
-	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Not(Equals), seinfeldID)
-}
-
-func (s *TmdbSuite) TestGetOnTheAirTv(c *C) {
-	result, err := s.tmdb.GetOnTheAirTv(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var page2Options = make(map[string]string)
-	page2Options["page"] = "2"
-	page2Result, err := s.tmdb.GetOnTheAirTv(page2Options)
-	s.baseTest(&page2Result, err, c)
-	c.Assert(page2Result.Page, Equals, 2)
-	c.Assert(page2Result.Results, Not(HasLen), 0)
-}
-
-func (s *TmdbSuite) TestGetAiringTodayTv(c *C) {
-	result, err := s.tmdb.GetAiringTodayTv(nil)
-	s.baseTest(&result, err, c)
-	c.Assert(result.Page, Equals, 1)
-	c.Assert(result.Results, Not(HasLen), 0)
-
-	var pacificOptions = make(map[string]string)
-	pacificOptions["timezone"] = "America/Los_Angeles"
-	pacificResult, err := s.tmdb.GetAiringTodayTv(pacificOptions)
-	s.baseTest(&pacificResult, err, c)
-	c.Assert(pacificResult.Page, Equals, 1)
-	c.Assert(pacificResult.Results, Not(HasLen), 0)
-	c.Assert(pacificResult.TotalPages, Equals, result.TotalPages)
-	c.Assert(pacificResult.TotalResults, Equals, result.TotalResults)
 }
