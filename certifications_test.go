@@ -9,10 +9,10 @@ func (s *TmdbSuite) TestGetCertificationsMovieList(c *C) {
 	s.baseTest(&movieResult, err, c)
 	usMovieCerts := movieResult.Certifications["US"]
 	c.Assert(usMovieCerts, NotNil)
-	// usMovieCertsOpts := "NR|G|PG|PG-13|R|NC-17"
-	// for _, movieCert := range usMovieCerts {
-	// 	c.Assert(movieCert.Certification, Matches, usMovieCertsOpts)
-	// }
+	usMovieCertsOpts := "NR|G|PG|PG-13|R|NC-17"
+	for _, movieCert := range usMovieCerts {
+		c.Assert(movieCert.Certification, Matches, usMovieCertsOpts)
+	}
 }
 
 func (s *TmdbSuite) TestGetCertificationsTvList(c *C) {
@@ -20,8 +20,8 @@ func (s *TmdbSuite) TestGetCertificationsTvList(c *C) {
 	s.baseTest(&tvResult, err, c)
 	usTvCerts := tvResult.Certifications["US"]
 	c.Assert(usTvCerts, NotNil)
-	// usTvCertsOpts := "NR|TV-Y|TV-Y7|TV-G|TV-PG|TV-14|TV-MA"
-	// for _, tvCert := range usTvCerts {
-	// 	c.Assert(tvCert.Certification, Matches, usTvCertsOpts)
-	// }
+	usTvCertsOpts := "NR|TV-Y|TV-Y7|TV-G|TV-PG|TV-14|TV-MA"
+	for _, tvCert := range usTvCerts {
+		c.Assert(tvCert.Certification, Matches, usTvCertsOpts)
+	}
 }
