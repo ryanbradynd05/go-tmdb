@@ -314,3 +314,12 @@ func (tmdb *TMDb) GetTvVideos(id int, options map[string]string) (*TvVideos, err
 	result, err := getTmdb(uri, &videos)
 	return result.(*TvVideos), err
 }
+
+// GetLatestTv gets the latest TV show
+// http://docs.themoviedb.apiary.io/#reference/tv/tvlatest/get
+func (tmdb *TMDb) GetLatestTv() (*TV, error) {
+	var tv TV
+	uri := fmt.Sprintf("%s/tv/latest?api_key=%s", baseURL, tmdb.apiKey)
+	result, err := getTmdb(uri, &tv)
+	return result.(*TV), err
+}

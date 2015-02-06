@@ -5,6 +5,7 @@ import (
 )
 
 const gameOfThronesID int = 1399
+const seinfeldID int = 1400
 
 func (s *TmdbSuite) TestGetTvInfo(c *C) {
 	result, err := s.tmdb.GetTvInfo(gameOfThronesID, nil)
@@ -146,4 +147,10 @@ func (s *TmdbSuite) TestGetTvVideos(c *C) {
 	c.Assert(engResult.Results, Not(HasLen), 0)
 	c.Assert(engResult.Results[0].Iso639_1, Equals, "en")
 	c.Assert(len(engResult.Results) <= allResultsLength, Equals, true)
+}
+
+func (s *TmdbSuite) TestGetLatestTv(c *C) {
+	result, err := s.tmdb.GetLatestTv()
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Not(Equals), seinfeldID)
 }
