@@ -334,6 +334,19 @@ func (tmdb *TMDb) GetTvSimilar(id int, options map[string]string) (*TvPagedResul
 	return result.(*TvPagedResults), err
 }
 
+// GetTvTopRated gets the list of top rated TV shows
+// http://docs.themoviedb.apiary.io/#reference/tv/tvtoprated/get
+func (tmdb *TMDb) GetTvTopRated(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/top_rated?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
+}
+
 // GetTvTranslations gets the list of translations that exist for a TV series
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidtranslations/get
 func (tmdb *TMDb) GetTvTranslations(id int) (*TvTranslations, error) {
