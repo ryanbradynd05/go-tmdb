@@ -54,8 +54,6 @@ func (s *TmdbSuite) TestGetTvAiringToday(c *C) {
 	s.baseTest(&pacificResult, err, c)
 	c.Assert(pacificResult.Page, Equals, 1)
 	c.Assert(pacificResult.Results, Not(HasLen), 0)
-	c.Assert(pacificResult.TotalPages, Equals, result.TotalPages)
-	c.Assert(pacificResult.TotalResults, Equals, result.TotalResults)
 }
 
 func (s *TmdbSuite) TestGetTvAlternativeTitles(c *C) {
