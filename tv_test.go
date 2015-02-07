@@ -139,6 +139,20 @@ func (s *TmdbSuite) TestGetTvOnTheAir(c *C) {
 	c.Assert(page2Result.Results, Not(HasLen), 0)
 }
 
+func (s *TmdbSuite) TestGetTvPopular(c *C) {
+	result, err := s.tmdb.GetTvPopular(nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.Page, Equals, 1)
+	c.Assert(result.Results, Not(HasLen), 0)
+
+	var page2Options = make(map[string]string)
+	page2Options["page"] = "2"
+	page2Result, err := s.tmdb.GetTvPopular(page2Options)
+	s.baseTest(&page2Result, err, c)
+	c.Assert(page2Result.Page, Equals, 2)
+	c.Assert(page2Result.Results, Not(HasLen), 0)
+}
+
 func (s *TmdbSuite) TestGetTvSimilar(c *C) {
 	result, err := s.tmdb.GetTvSimilar(gameOfThronesID, nil)
 	s.baseTest(&result, err, c)

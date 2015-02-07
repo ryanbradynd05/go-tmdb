@@ -320,6 +320,19 @@ func (tmdb *TMDb) GetTvOnTheAir(options map[string]string) (*TvPagedResults, err
 	return result.(*TvPagedResults), err
 }
 
+// GetTvPopular gets the list of popular TV shows
+// http://docs.themoviedb.apiary.io/#reference/tv/tvpopular/get
+func (tmdb *TMDb) GetTvPopular(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":     {},
+		"language": {}}
+	var onAir TvPagedResults
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/popular?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &onAir)
+	return result.(*TvPagedResults), err
+}
+
 // GetTvSimilar gets the similar TV shows for a specific tv show id
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidsimilar/get
 func (tmdb *TMDb) GetTvSimilar(id int, options map[string]string) (*TvPagedResults, error) {
