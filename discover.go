@@ -39,23 +39,24 @@ func (tmdb *TMDb) DiscoverMovie(options map[string]string) (*MoviePagedResults, 
 	return result.(*MoviePagedResults), err
 }
 
-// // DiscoverTV discovers TV shows by different types of data like average rating, number of votes, genres, the network they aired on and air dates
-// // http://docs.themoviedb.apiary.io/#reference/discover/discovertv/get
-// func (tmdb *TMDb) DiscoverTV(options map[string]string) (*TvPagedResults, error) {
-// 	var availableOptions = map[string]struct{}{
-// 		"page":                {},
-// 		"language":            {},
-// 		"sort_by":             {},
-// 		"first_air_date_year": {},
-// 		"first_air_date.gte":  {},
-// 		"first_air_date.lte":  {},
-// 		"vote_count.gte":      {},
-// 		"vote_average.gte":    {},
-// 		"with_genres":         {},
-// 		"with_networks":       {}}
-// 	optionsString := getOptionsString(options, availableOptions)
-// 	var results TvPagedResults
-// 	uri := fmt.Sprintf("%s/discover/tv?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-// 	result, err := getTmdb(uri, &results)
-// 	return result.(*TvPagedResults), err
-// }
+// DiscoverTV discovers TV shows by different types of data like average rating, number of votes, genres, the network they aired on and air dates
+// http://docs.themoviedb.apiary.io/#reference/discover/discovertv/get
+func (tmdb *TMDb) DiscoverTV(options map[string]string) (*TvPagedResults, error) {
+	var availableOptions = map[string]struct{}{
+		"page":                {},
+		"language":            {},
+		"sort_by":             {},
+		"first_air_date_year": {},
+		"first_air_date.gte":  {},
+		"first_air_date.lte":  {},
+		"vote_count.gte":      {},
+		"vote_average.gte":    {},
+		"with_genres":         {},
+		"with_networks":       {}}
+	optionsString := getOptionsString(options, availableOptions)
+	var results TvPagedResults
+	uri := fmt.Sprintf("%s/discover/tv?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &results)
+	fmt.Printf("%v\n", uri)
+	return result.(*TvPagedResults), err
+}
