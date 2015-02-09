@@ -122,17 +122,18 @@ type MovieAlternativeTitles struct {
 		Iso3166_1 string `json:"iso_3166_1"`
 		Title     string
 	}
-	Credits      *MovieCredits      `json:",omitempty"`
-	Images       *MovieImages       `json:",omitempty"`
-	Keywords     *MovieKeywords     `json:",omitempty"`
-	Releases     *MovieReleases     `json:",omitempty"`
-	Videos       *MovieVideos       `json:",omitempty"`
-	Translations *MovieTranslations `json:",omitempty"`
-	Similar      *MoviePagedResults `json:",omitempty"`
-	Reviews      *MovieReviews      `json:",omitempty"`
-	Lists        *MovieLists        `json:",omitempty"`
-	Changes      *MovieChanges      `json:",omitempty"`
-	Rating       *MovieRating       `json:",omitempty"`
+	AccountStates *MovieAccountState `json:"account_states,omitempty"`
+	Credits       *MovieCredits      `json:",omitempty"`
+	Images        *MovieImages       `json:",omitempty"`
+	Keywords      *MovieKeywords     `json:",omitempty"`
+	Releases      *MovieReleases     `json:",omitempty"`
+	Videos        *MovieVideos       `json:",omitempty"`
+	Translations  *MovieTranslations `json:",omitempty"`
+	Similar       *MoviePagedResults `json:",omitempty"`
+	Reviews       *MovieReviews      `json:",omitempty"`
+	Lists         *MovieLists        `json:",omitempty"`
+	Changes       *MovieChanges      `json:",omitempty"`
+	Rating        *MovieRating       `json:",omitempty"`
 }
 
 // MovieChanges struct
@@ -360,14 +361,14 @@ func (tmdb *TMDb) GetMovieInfo(id int, options map[string]string) (*Movie, error
 	return result.(*Movie), err
 }
 
-// // GetMovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
-// // http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
-// func (tmdb *TMDb) GetMovieAccountStates(id int) (*MovieAccountState, error) {
-// 	// TODO
-// 	var state MovieAccountState
-// 	var err error
-// 	return &state, err
-// }
+// GetMovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
+// http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
+func (tmdb *TMDb) GetMovieAccountStates(id int, sessionId string) (*MovieAccountState, error) {
+	var state MovieAccountState
+	uri := fmt.Sprintf("%s/movie/%v/account_states?api_key=%s&session_id=%s", baseURL, id, tmdb.apiKey, sessionId)
+	result, err := getTmdb(uri, &state)
+	return result.(*MovieAccountState), err
+}
 
 // GetMovieAlternativeTitles for a specific movie id
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidalternativetitles/get

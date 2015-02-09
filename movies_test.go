@@ -15,7 +15,7 @@ func (s *TmdbSuite) TestGetMovieInfo(c *C) {
 	c.Assert(result.ID, Equals, fightClubID)
 
 	var options = make(map[string]string)
-	options["append_to_response"] = "account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,changes,ratings"
+	options["append_to_response"] = "alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,changes,ratings"
 	allResult, err := s.tmdb.GetMovieInfo(fightClubID, options)
 	s.baseTest(&allResult, err, c)
 	c.Assert(allResult.Title, Equals, "Fight Club")
@@ -34,9 +34,11 @@ func (s *TmdbSuite) TestGetMovieInfo(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieAccountStates(c *C) {
-	// result, err := s.tmdb.GetMovieAccountStates(takenThreeID)
-	// s.baseTest(&result, err, c)
-	// TODO
+	result, err := s.tmdb.GetMovieAccountStates(fightClubID, session)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, fightClubID)
+	c.Assert(result.Favorite, Equals, false)
+	c.Assert(result.Watchlist, Equals, false)
 }
 
 func (s *TmdbSuite) TestGetMovieAlternativeTitles(c *C) {
