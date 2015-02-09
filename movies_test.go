@@ -36,7 +36,6 @@ func (s *TmdbSuite) TestGetMovieInfo(c *C) {
 func (s *TmdbSuite) TestGetMovieAccountStates(c *C) {
 	result, err := s.tmdb.GetMovieAccountStates(fightClubID, session)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, fightClubID)
 }
 
 func (s *TmdbSuite) TestGetMovieAlternativeTitles(c *C) {

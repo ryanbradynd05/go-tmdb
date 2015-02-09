@@ -39,7 +39,6 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 func (s *TmdbSuite) TestGetTvAccountStates(c *C) {
 	result, err := s.tmdb.GetTvAccountStates(gameOfThronesID, session)
 	s.baseTest(&result, err, c)
-	c.Assert(result.ID, Equals, gameOfThronesID)
 }
 
 func (s *TmdbSuite) TestGetTvAiringToday(c *C) {

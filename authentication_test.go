@@ -10,6 +10,7 @@ const (
 	pw           string = ""
 	session      string = ""
 	guestSession string = ""
+	accountID    int    = 0
 )
 
 func (s *TmdbSuite) TestGetAuthToken(c *C) {
