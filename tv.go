@@ -226,14 +226,14 @@ func (tmdb *TMDb) GetTvInfo(id int, options map[string]string) (*TV, error) {
 	return result.(*TV), err
 }
 
-// // GetTvAccountStates gets the status of whether or not the TV show has been rated or added to their favourite or watch lists
-// // http://docs.themoviedb.apiary.io/#reference/tv/tvidaccountstates/get
-// func (tmdb *TMDb) GetTvAccountStates(id int) (*TvAccountState, error) {
-//  // TODO
-//  var state TvAccountState
-//  var err error
-//  return &state, err
-// }
+// GetTvAccountStates gets the status of whether or not the TV show has been rated or added to their favourite or watch lists
+// http://docs.themoviedb.apiary.io/#reference/tv/tvidaccountstates/get
+func (tmdb *TMDb) GetTvAccountStates(id int, sessionID string) (*TvAccountState, error) {
+	var state TvAccountState
+	uri := fmt.Sprintf("%s/tv/%v/account_states?api_key=%s&session_id=%s", baseURL, id, tmdb.apiKey, sessionID)
+	result, err := getTmdb(uri, &state)
+	return result.(*TvAccountState), err
+}
 
 // GetTvAiringToday gets the list of TV shows that air today
 // http://docs.themoviedb.apiary.io/#reference/tv/tvairingtoday/get
