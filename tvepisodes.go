@@ -34,6 +34,22 @@ type TvEpisode struct {
 	VoteCount      uint32  `json:"vote_count"`
 }
 
+// TvEpisodeExternalIds struct
+type TvEpisodeExternalIds struct {
+	ID          int
+	ImdbID      string `json:"imdb_id"`
+	FreebaseID  string `json:"freebase_id"`
+	FreebaseMid string `json:"freebase_mid"`
+	TvdbID      int    `json:"tvdb_id"`
+	TvrageID    int    `json:"tvrage_id"`
+}
+
+// TvEpisodeImages struct
+type TvEpisodeImages struct {
+	ID     int
+	Stills []TvImage
+}
+
 // GetTvEpisodeInfo gets the primary information about a TV episode by combination of a season and episode number
 // http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumber/get
 func (tmdb *TMDb) GetTvEpisodeInfo(showID, seasonNum, episodeNum int, options map[string]string) (*TvEpisode, error) {
@@ -45,4 +61,59 @@ func (tmdb *TMDb) GetTvEpisodeInfo(showID, seasonNum, episodeNum int, options ma
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v?api_key=%s%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &episode)
 	return result.(*TvEpisode), err
+}
+
+// GetTvEpisodeChanges gets a TV episode's changes by episode ID
+// http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvepisodeidchanges/get
+func (tmdb *TMDb) GetTvEpisodeChanges(id int, options map[string]string) (*TvChanges, error) {
+	var availableOptions = map[string]struct{}{
+		"start_date": {},
+		"end_date":   {}}
+	var changes TvChanges
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/episode/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &changes)
+	return result.(*TvChanges), err
+}
+
+// GetTvEpisodeCredits gets the TV episode credits by combination of season and episode number
+// http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumbercredits/get
+func (tmdb *TMDb) GetTvEpisodeCredits(showID, seasonNum, episodeNum int) (*TvCredits, error) {
+	var credits TvCredits
+	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v/credits?api_key=%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey)
+	result, err := getTmdb(uri, &credits)
+	return result.(*TvCredits), err
+}
+
+// GetTvEpisodeExternalIds gets the external ids for a TV episode by comabination of a season and episode number
+// http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumberexternalids/get
+func (tmdb *TMDb) GetTvEpisodeExternalIds(showID, seasonNum, episodeNum int, options map[string]string) (*TvEpisodeExternalIds, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {}}
+	var ids TvEpisodeExternalIds
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v/external_ids?api_key=%s%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &ids)
+	return result.(*TvEpisodeExternalIds), err
+}
+
+// GetTvEpisodeImages gets the images (episode stills) for a TV episode by combination of a season and episode number
+// http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumberimages/get
+func (tmdb *TMDb) GetTvEpisodeImages(showID, seasonNum, episodeNum int) (*TvEpisodeImages, error) {
+	var images TvEpisodeImages
+	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v/images?api_key=%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey)
+	result, err := getTmdb(uri, &images)
+	return result.(*TvEpisodeImages), err
+}
+
+// GetTvEpisodeVideos gets the videos that have been added to a TV episode
+// http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumbervideos/get
+func (tmdb *TMDb) GetTvEpisodeVideos(showID, seasonNum, episodeNum int, options map[string]string) (*TvVideos, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {}}
+	var videos TvVideos
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v/videos?api_key=%s%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &videos)
+	return result.(*TvVideos), err
 }
