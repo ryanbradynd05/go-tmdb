@@ -363,9 +363,9 @@ func (tmdb *TMDb) GetMovieInfo(id int, options map[string]string) (*Movie, error
 
 // GetMovieAccountStates gets the status of whether or not the movie has been rated or added to their favourite or movie watch list
 // http://docs.themoviedb.apiary.io/#reference/movies/movieidaccountstates/get
-func (tmdb *TMDb) GetMovieAccountStates(id int, sessionId string) (*MovieAccountState, error) {
+func (tmdb *TMDb) GetMovieAccountStates(id int, sessionID string) (*MovieAccountState, error) {
 	var state MovieAccountState
-	uri := fmt.Sprintf("%s/movie/%v/account_states?api_key=%s&session_id=%s", baseURL, id, tmdb.apiKey, sessionId)
+	uri := fmt.Sprintf("%s/movie/%v/account_states?api_key=%s&session_id=%s", baseURL, id, tmdb.apiKey, sessionID)
 	result, err := getTmdb(uri, &state)
 	return result.(*MovieAccountState), err
 }
