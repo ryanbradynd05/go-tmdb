@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const baseURL string = "http://api.themoviedb.org/3"
+const baseURL string = "https://api.themoviedb.org/3"
 
 // TMDb container struct for global properties
 type TMDb struct {
