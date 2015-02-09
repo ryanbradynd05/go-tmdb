@@ -144,6 +144,16 @@ type TvCredits struct {
 	Videos            *TvVideos            `json:",omitempty"`
 }
 
+// TvExternalIds struct
+type TvExternalIds struct {
+	ID          int
+	ImdbID      string `json:"imdb_id"`
+	FreebaseID  string `json:"freebase_id"`
+	FreebaseMid string `json:"freebase_mid"`
+	TvdbID      int    `json:"tvdb_id"`
+	TvrageID    int    `json:"tvrage_id"`
+}
+
 // TvImage struct
 type TvImage struct {
 	FilePath    string `json:"file_path"`

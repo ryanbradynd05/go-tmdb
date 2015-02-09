@@ -34,16 +34,6 @@ type TvEpisode struct {
 	VoteCount      uint32  `json:"vote_count"`
 }
 
-// TvEpisodeExternalIds struct
-type TvEpisodeExternalIds struct {
-	ID          int
-	ImdbID      string `json:"imdb_id"`
-	FreebaseID  string `json:"freebase_id"`
-	FreebaseMid string `json:"freebase_mid"`
-	TvdbID      int    `json:"tvdb_id"`
-	TvrageID    int    `json:"tvrage_id"`
-}
-
 // TvEpisodeImages struct
 type TvEpisodeImages struct {
 	ID     int
@@ -87,14 +77,14 @@ func (tmdb *TMDb) GetTvEpisodeCredits(showID, seasonNum, episodeNum int) (*TvCre
 
 // GetTvEpisodeExternalIds gets the external ids for a TV episode by comabination of a season and episode number
 // http://docs.themoviedb.apiary.io/#reference/tv-episodes/tvidseasonseasonnumberepisodeepisodenumberexternalids/get
-func (tmdb *TMDb) GetTvEpisodeExternalIds(showID, seasonNum, episodeNum int, options map[string]string) (*TvEpisodeExternalIds, error) {
+func (tmdb *TMDb) GetTvEpisodeExternalIds(showID, seasonNum, episodeNum int, options map[string]string) (*TvExternalIds, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}
-	var ids TvEpisodeExternalIds
+	var ids TvExternalIds
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/episode/%v/external_ids?api_key=%s%s", baseURL, showID, seasonNum, episodeNum, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &ids)
-	return result.(*TvEpisodeExternalIds), err
+	return result.(*TvExternalIds), err
 }
 
 // GetTvEpisodeImages gets the images (episode stills) for a TV episode by combination of a season and episode number
