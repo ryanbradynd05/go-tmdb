@@ -26,6 +26,16 @@ type Person struct {
 	TaggedImages    *PersonTaggedImages    `json:"tagged_images,omitempty"`
 }
 
+// PersonShort struct
+type PersonShort struct {
+	Adult       bool
+	ID          int
+	Name        string
+	Popularity  float32
+	ProfilePath string       `json:"profile_path"`
+	KnownFor    []MovieShort `json:"known_for"`
+}
+
 // PersonChanges struct
 type PersonChanges struct {
 	Changes []struct {
@@ -126,14 +136,7 @@ type PersonPopular struct {
 	Page         int
 	TotalPages   int `json:"total_pages"`
 	TotalResults int `json:"total_results"`
-	Results      []struct {
-		Adult       bool
-		ID          int
-		Name        string
-		Popularity  float32
-		ProfilePath string       `json:"profile_path"`
-		KnownFor    []MovieShort `json:"known_for"`
-	}
+	Results      []PersonShort
 }
 
 // PersonTaggedImages struct

@@ -116,8 +116,6 @@ func (s *TmdbSuite) TestGetPersonPopular(c *C) {
 	s.baseTest(&page2Result, err, c)
 	c.Assert(page2Result.Page, Equals, 2)
 	c.Assert(page2Result.Results, HasLen, 20)
-	c.Assert(page2Result.TotalPages, Equals, result.TotalPages)
-	c.Assert(page2Result.TotalResults, Equals, result.TotalResults)
 }
 
 func (s *TmdbSuite) TestGetPersonLatest(c *C) {
