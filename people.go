@@ -131,21 +131,8 @@ type PersonPopular struct {
 		ID          int
 		Name        string
 		Popularity  float32
-		ProfilePath string `json:"profile_path"`
-		KnownFor    []struct {
-			Adult         bool
-			BackdropPath  string `json:"backdrop_path"`
-			ID            int
-			OriginalTitle string `json:"original_title"`
-			ReleaseDate   string `json:"release_date"`
-			PosterPath    string `json:"poster_path"`
-			Popularity    float32
-			Title         string
-			Video         bool
-			VoteAverage   float32 `json:"vote_average"`
-			VoteCount     int     `json:"vote_count"`
-			MediaType     string  `json:"media_type"`
-		} `json:"known_for"`
+		ProfilePath string       `json:"profile_path"`
+		KnownFor    []MovieShort `json:"known_for"`
 	}
 }
 
