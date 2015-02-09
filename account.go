@@ -49,8 +49,6 @@ func (tmdb *TMDb) GetAccountLists(id int, sessionID string, options map[string]s
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/lists?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &lists)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*MovieLists), err
 }
 
@@ -65,8 +63,6 @@ func (tmdb *TMDb) GetAccountFavoriteMovies(id int, sessionID string, options map
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/favorite/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedMovieResults), err
 }
 
@@ -81,8 +77,6 @@ func (tmdb *TMDb) GetAccountFavoriteTv(id int, sessionID string, options map[str
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/favorite/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedTvResults), err
 }
 
@@ -97,8 +91,6 @@ func (tmdb *TMDb) GetAccountRatedMovies(id int, sessionID string, options map[st
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/rated/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedMovieResults), err
 }
 
@@ -113,8 +105,6 @@ func (tmdb *TMDb) GetAccountRatedTv(id int, sessionID string, options map[string
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/rated/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedTvResults), err
 }
 
@@ -129,8 +119,6 @@ func (tmdb *TMDb) GetAccountWatchlistMovies(id int, sessionID string, options ma
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/watchlist/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedMovieResults), err
 }
 
@@ -145,7 +133,5 @@ func (tmdb *TMDb) GetAccountWatchlistTv(id int, sessionID string, options map[st
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/watchlist/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
 	result, err := getTmdb(uri, &favorites)
-	json, _ := ToJSON(result)
-	fmt.Printf("%v\n%v\n", uri, json)
 	return result.(*AccountPagedTvResults), err
 }

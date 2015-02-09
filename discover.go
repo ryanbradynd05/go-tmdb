@@ -57,6 +57,5 @@ func (tmdb *TMDb) DiscoverTV(options map[string]string) (*TvPagedResults, error)
 	var results TvPagedResults
 	uri := fmt.Sprintf("%s/discover/tv?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &results)
-	fmt.Printf("%v\n", uri)
 	return result.(*TvPagedResults), err
 }
