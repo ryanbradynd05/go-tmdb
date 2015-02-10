@@ -1,11 +1,15 @@
 # go-tmdb
 
+![TheMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/logos/var_8_0_tmdb-logo-2_Bree.svg "The Movie Database")
+
 [GoDoc](https://godoc.org/github.com/ryanbradynd05/go-tmdb)  --  [Code Coverage Report](http://rawgit.com/ryanbradynd05/go-tmdb/master/coverage/coverage_report.html)
 =================================
 
 A Go Wrapper for the API of [The Movie DB](http://www.themoviedb.org/). Complete [documentation](https://godoc.org/github.com/ryanbradynd05/go-tmdb) and [test suite](http://rawgit.com/ryanbradynd05/go-tmdb/master/coverage/coverage_report.html) are included.
 
 An **api_key** is needed to use the API. Register for one at [themoviedb.org](https://www.themoviedb.org/documentation/api).
+
+Note: This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 ## How to install
 
