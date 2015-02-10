@@ -10,8 +10,6 @@ import (
 	"testing"
 )
 
-const testKey string = "b12bd26ee15e6972f2f4c03363b74fa2"
-
 func Test(t *testing.T) { TestingT(t) }
 
 type TmdbSuite struct {
@@ -38,6 +36,7 @@ func (s *TmdbSuite) SetUpSuite(c *C) {
 	s.guestSession, _ = config.Get("guestSession")
 	accountID, _ := config.Get("accountID")
 	s.accountID, _ = strconv.Atoi(accountID)
+	testKey, _ := config.Get("testKey")
 	s.tmdb = Init(testKey)
 }
 
