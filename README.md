@@ -65,7 +65,7 @@ Create a local.yml file in the root directory that mirrors the local.yml.example
 
 ## Available methods
 
-All themoviedb.org API v3 methods that don't require authentication are included. The POST and DELETE APIs are not included yet. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
+All themoviedb.org API v3 GET methods are included. The POST and DELETE APIs are not included yet. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
 
 ## License 
 
