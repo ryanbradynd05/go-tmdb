@@ -5,6 +5,6 @@ import (
 )
 
 func (s *TmdbSuite) TestGetGuestSessionRatedMovies(c *C) {
-	result, err := s.tmdb.GetGuestSessionRatedMovies(guestSession, nil)
+	result, err := s.tmdb.GetGuestSessionRatedMovies(s.guestSession, nil)
 	s.baseTest(&result, err, c)
 }

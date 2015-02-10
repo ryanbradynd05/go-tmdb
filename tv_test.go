@@ -37,7 +37,7 @@ func (s *TmdbSuite) TestGetTvInfo(c *C) {
 }
 
 func (s *TmdbSuite) TestGetTvAccountStates(c *C) {
-	result, err := s.tmdb.GetTvAccountStates(gameOfThronesID, session)
+	result, err := s.tmdb.GetTvAccountStates(gameOfThronesID, s.session)
 	s.baseTest(&result, err, c)
 }
 

@@ -34,7 +34,7 @@ func (s *TmdbSuite) TestGetMovieInfo(c *C) {
 }
 
 func (s *TmdbSuite) TestGetMovieAccountStates(c *C) {
-	result, err := s.tmdb.GetMovieAccountStates(fightClubID, session)
+	result, err := s.tmdb.GetMovieAccountStates(fightClubID, s.session)
 	s.baseTest(&result, err, c)
 }
 
