@@ -55,6 +55,10 @@ All functions return Go structs. To return JSON, use the ToJSON function:
 fightClubJson, err := TMDb.ToJSON(fightClubInfo)
 ```
 
+## How to test
+
+Create a local.yml file in the root directory that mirrors the local.yml.example file. Then, either run go test to simply run the tests or run the coverage.sh file to run the tests with coverage info.
+
 ## Available methods
 
 All themoviedb.org API v3 methods that don't require authentication are included. The POST and DELETE APIs are not included yet. For examples on how to call each function, refer to that function's tests. For documentation of the TheMovieDB's API, see their [documentation](http://docs.themoviedb.apiary.io/).
