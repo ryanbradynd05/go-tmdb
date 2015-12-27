@@ -160,6 +160,14 @@ type MovieCredits struct {
 		Order       int
 		ProfilePath string `json:"profile_path"`
 	}
+	Crew []struct {
+		CreditID    string `json:"credit_id"`
+		Department  string
+		ID          int
+		Job         string
+		Name        string
+		ProfilePath string `json:"profile_path"`
+	}
 	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
 	Images            *MovieImages            `json:",omitempty"`
 	Keywords          *MovieKeywords          `json:",omitempty"`
