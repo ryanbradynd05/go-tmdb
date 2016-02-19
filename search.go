@@ -73,6 +73,7 @@ type MultiSearchResults struct {
 		BackdropPath  string `json:"backdrop_path"`
 		ID            int
 		OriginalName  string   `json:"original_name"`
+		OriginalTitle string   `json:"original_title"`
 		FirstAirDate  string   `json:"first_air_date"`
 		OriginCountry []string `json:"origin_country"`
 		PosterPath    string   `json:"poster_path"`
