@@ -74,6 +74,7 @@ type MultiSearchResults struct {
 		ID            int
 		OriginalName  string   `json:"original_name"`
 		OriginalTitle string   `json:"original_title"`
+		Overview      string   `json:"overview"`
 		FirstAirDate  string   `json:"first_air_date"`
 		OriginCountry []string `json:"origin_country"`
 		PosterPath    string   `json:"poster_path"`
