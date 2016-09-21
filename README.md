@@ -9,7 +9,7 @@ An **api_key** is needed to use the API. Register for one at [themoviedb.org](ht
 
 Note: This product uses the TMDb API but is not endorsed or certified by TMDb.
 
-<img src="https://d3a8mw37cqal2z.cloudfront.net/images/logos/var_8_0_tmdb-logo-2_Bree.svg" alt="The Movie DB"  width="200" height="200"/>
+<img src="https://assets.tmdb.org/images/logos/var_7_0_tmdb-logo-2_Antitled.svg" alt="The Movie DB" width="200" height="200" />
 
 ## How to install
 
