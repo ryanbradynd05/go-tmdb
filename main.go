@@ -56,7 +56,7 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 		iReset, err := strconv.ParseInt(reset, 10, 64)
 		if err == nil {
 			// Set the reset time here, the next request will trip it
-			rateLimitReset = time.Unix(iReset, 0)
+			rateLimitReset = time.Unix(iReset+1, 0)
 		}
 	}
 
