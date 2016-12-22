@@ -138,11 +138,19 @@ type TvCredits struct {
 	}
 	AlternativeTitles *TvAlternativeTitles `json:"alternative_titles,omitempty"`
 	Changes           *TvChanges           `json:",omitempty"`
-	Images            *TvImages            `json:",omitempty"`
-	Keywords          *TvKeywords          `json:",omitempty"`
-	Similar           *TvPagedResults      `json:",omitempty"`
-	Translations      *TvTranslations      `json:",omitempty"`
-	Videos            *TvVideos            `json:",omitempty"`
+	Crew              []struct {
+		CreditID    string `json:"credit_id"`
+		Department  string
+		ID          int
+		Name        string
+		Job         string
+		ProfilePath string `json:"profile_path"`
+	}
+	Images       *TvImages       `json:",omitempty"`
+	Keywords     *TvKeywords     `json:",omitempty"`
+	Similar      *TvPagedResults `json:",omitempty"`
+	Translations *TvTranslations `json:",omitempty"`
+	Videos       *TvVideos       `json:",omitempty"`
 }
 
 // TvExternalIds struct
