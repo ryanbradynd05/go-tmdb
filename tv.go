@@ -284,6 +284,18 @@ func (tmdb *TMDb) GetTvCredits(id int, options map[string]string) (*TvCredits, e
 	return result.(*TvCredits), err
 }
 
+// GetTvExternalIds gets the external ids for a TV series
+// https://developers.themoviedb.org/3/tv/get-tv-external-ids
+func (tmdb *TMDb) GetTvExternalIds(showID int, options map[string]string) (*TvExternalIds, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {}}
+	var ids TvExternalIds
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/tv/%v/external_ids?api_key=%s%s", baseURL, showID, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &ids)
+	return result.(*TvExternalIds), err
+}
+
 // GetTvImages gets the images for a TV series
 // http://docs.themoviedb.apiary.io/#reference/tv/tvidimages/get
 func (tmdb *TMDb) GetTvImages(id int, options map[string]string) (*TvImages, error) {

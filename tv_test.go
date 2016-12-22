@@ -86,6 +86,13 @@ func (s *TmdbSuite) TestGetTvCredits(c *C) {
 	c.Assert(result.Cast[0].Name, Equals, "Peter Dinklage")
 }
 
+func (s *TmdbSuite) TestGetTvExternalIds(c *C) {
+	result, err := s.tmdb.GetTvExternalIds(gameOfThronesID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, gameOfThronesID)
+	c.Assert(result.TvdbID, Equals, 121361)
+}
+
 func (s *TmdbSuite) TestGetTvImages(c *C) {
 	result, err := s.tmdb.GetTvImages(gameOfThronesID, nil)
 	s.baseTest(&result, err, c)
