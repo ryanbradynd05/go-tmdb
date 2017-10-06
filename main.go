@@ -66,7 +66,7 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 	if err != nil { // Failed to read body
 		return payload, err
 	}
-	defer rsp.Body.Close()
+	defer res.Body.Close()
 
 	if res.StatusCode >= 200 && res.StatusCode < 300 { // Success!
 		json.Unmarshal(body, &payload)
