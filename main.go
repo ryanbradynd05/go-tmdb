@@ -51,6 +51,10 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 	}
 
 	res, err := http.Get(url)
+	if err != nil { // HTTP connection error
+		return payload, err
+	}
+
 	if res.Header.Get(`x-ratelimit-remaining`) == `0` { // Out of requests for this period
 		reset := res.Header.Get(`x-ratelimit-reset`)
 		iReset, err := strconv.ParseInt(reset, 10, 64)
@@ -58,10 +62,6 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 			// Set the reset time here, the next request will trip it
 			rateLimitReset = time.Unix(iReset+1, 0)
 		}
-	}
-
-	if err != nil { // HTTP connection error
-		return payload, err
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
