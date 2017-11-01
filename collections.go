@@ -20,6 +20,13 @@ type Collection struct {
 	}
 }
 
+type CollectionShort struct {
+	ID           int
+	Name         string
+	PosterPath   string
+	BackdropPath string
+}
+
 // CollectionImage struct
 type CollectionImage struct {
 	AspectRatio float32 `json:"aspect_ratio"`
