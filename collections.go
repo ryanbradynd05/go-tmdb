@@ -23,8 +23,8 @@ type Collection struct {
 type CollectionShort struct {
 	ID           int
 	Name         string
-	PosterPath   string
-	BackdropPath string
+	PosterPath   string `json:"poster_path"`
+	BackdropPath string `json:"backdrop_path"`
 }
 
 // CollectionImage struct
