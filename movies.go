@@ -6,9 +6,10 @@ import (
 
 // Movie struct
 type Movie struct {
-	Adult               bool
-	BackdropPath        string `json:"backdrop_path"`
-	BelongsToCollection bool   `json:"belongs_to_collection"`
+	Adult        bool
+	BackdropPath string `json:"backdrop_path"`
+	// BelongsToCollection bool   `json:"belongs_to_collection"`
+	BelongsToCollection CollectionShort `json:"belongs_to_collection"`
 	Budget              uint32
 	Genres              []struct {
 		ID   int
