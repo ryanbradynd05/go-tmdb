@@ -65,11 +65,12 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 			rateLimitReset = time.Unix(iReset+1, 0)
 		}
 	}
-
+  
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil { // Failed to read body
 		return payload, err
 	}
+	defer res.Body.Close()
 
 	if res.StatusCode >= 200 && res.StatusCode < 300 { // Success!
 		json.Unmarshal(body, &payload)
