@@ -55,6 +55,8 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 		return payload, err
 	}
 
+	defer res.Body.Close()  //Clean up
+
 	if res.Header.Get(`x-ratelimit-remaining`) == `0` { // Out of requests for this period
 		reset := res.Header.Get(`x-ratelimit-reset`)
 		iReset, err := strconv.ParseInt(reset, 10, 64)
