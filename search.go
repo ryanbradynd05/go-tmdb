@@ -118,7 +118,7 @@ func (MultiSearchTvInfo)interfaceMarkerMethod() {return }
 type MultiSearchPersonInfo struct {
 	ProfilePath  	 string `json:"profile_path"`
 	Adult		 bool
-	KnownFor	 MultiSearchResultsInfo
+	KnownFor	 MultiSearchResultsInfo `json:"known_for"`
 	ID         	 int
 	MediaType     	 string  `json:"media_type"`
 }
