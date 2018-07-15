@@ -5,16 +5,17 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-	"sync"
 	"time"
 )
 
 const baseURL string = "https://api.themoviedb.org/3"
 
+const MAX_REQUEST_PER_SECOND = 4
+
 var (
-	requestMutex   = &sync.Mutex{}
-	rateLimitReset time.Time
+	// hack: add some millisecond for dont get 429 error
+	rate = time.Second / MAX_REQUEST_PER_SECOND + time.Millisecond * 20
+	throttle = time.Tick(rate)
 )
 
 // TMDb container struct for global properties
@@ -40,15 +41,7 @@ func ToJSON(payload interface{}) (string, error) {
 }
 
 func getTmdb(url string, payload interface{}) (interface{}, error) {
-	// Go single-threaded so we can deal with the rate limit
-	requestMutex.Lock()
-	defer requestMutex.Unlock()
-
-	now := time.Now()
-	if rateLimitReset.After(now) { // We have a reset time in the future, so we're out of requests
-		// Wait for rate limiter to be reset
-		<-time.After(rateLimitReset.Sub(now))
-	}
+	<-throttle
 
 	res, err := http.Get(url)
 	if err != nil { // HTTP connection error
@@ -56,21 +49,11 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 	}
 
 	defer res.Body.Close()  //Clean up
-
-	if res.Header.Get(`x-ratelimit-remaining`) == `0` { // Out of requests for this period
-		reset := res.Header.Get(`x-ratelimit-reset`)
-		iReset, err := strconv.ParseInt(reset, 10, 64)
-		if err == nil {
-			// Set the reset time here, the next request will trip it
-			rateLimitReset = time.Unix(iReset+1, 0)
-		}
-	}
   
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil { // Failed to read body
 		return payload, err
 	}
-	defer res.Body.Close()
 
 	if res.StatusCode >= 200 && res.StatusCode < 300 { // Success!
 		json.Unmarshal(body, &payload)
