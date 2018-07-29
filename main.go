@@ -5,21 +5,46 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-	"sync"
 	"time"
+	"net/url"
 )
 
 const baseURL string = "https://api.themoviedb.org/3"
 
+const MAX_REQUEST_PER_SECOND = 4
+
 var (
-	requestMutex   = &sync.Mutex{}
-	rateLimitReset time.Time
+	// hack: add some millisecond for don`t get 429 error
+	rate     = time.Second/MAX_REQUEST_PER_SECOND + time.Millisecond*20
+	throttle = time.Tick(rate)
 )
+
+type Config struct {
+	ApiKey   string
+	UseProxy bool
+	Proxies  []Proxy
+}
+
+type Proxy struct {
+	Host     string
+	Port     string
+	Login    string
+	Password string
+	Auth     bool
+	throttle <-chan time.Time
+}
 
 // TMDb container struct for global properties
 type TMDb struct {
 	apiKey string
+}
+
+var internalConfig tmdbConfig
+
+type tmdbConfig struct {
+	useProxy   bool
+	proxies    []Proxy
+	roundRobin roundRobin
 }
 
 type apiStatus struct {
@@ -28,49 +53,57 @@ type apiStatus struct {
 }
 
 // Init setup the apiKey
-func Init(apiKey string) *TMDb {
-	return &TMDb{apiKey: apiKey}
+func Init(config Config) *TMDb {
+	internalConfig := new(tmdbConfig)
+	if config.UseProxy == true && len(config.Proxies) > 1 {
+		internalConfig.useProxy = config.UseProxy
+		internalConfig.proxies = prepareProxies(config.Proxies)
+		internalConfig.roundRobin = InitRoundRobin(len(internalConfig.proxies))
+	}
+
+	return &TMDb{apiKey: config.ApiKey}
 }
 
 // ToJSON converts from struct to JSON
 func ToJSON(payload interface{}) (string, error) {
-	jsonRes := []byte("{}") //Default value in case of error
+	jsonRes := []byte("{}") // Default value in case of error
 	jsonRes, err := json.MarshalIndent(payload, "", "  ")
 	return string(jsonRes), err
 }
 
 func getTmdb(url string, payload interface{}) (interface{}, error) {
-	// Go single-threaded so we can deal with the rate limit
-	requestMutex.Lock()
-	defer requestMutex.Unlock()
+	var httpRequest http.Client
+	var blocker <-chan time.Time
 
-	now := time.Now()
-	if rateLimitReset.After(now) { // We have a reset time in the future, so we're out of requests
-		// Wait for rate limiter to be reset
-		<-time.After(rateLimitReset.Sub(now))
+	if internalConfig.useProxy {
+		roundRobin := internalConfig.roundRobin.GetTicker()
+		proxy := internalConfig.proxies[roundRobin]
+
+		if proxy.Host == "localhost" {
+			httpRequest = getHttpClient()
+		} else {
+			httpRequest = getHttpClientWithProxy(proxy)
+		}
+
+		blocker = proxy.throttle
+	} else {
+		httpRequest = getHttpClient()
+		blocker = throttle
 	}
 
-	res, err := http.Get(url)
+	<-blocker
+
+	res, err := httpRequest.Get(url)
 	if err != nil { // HTTP connection error
 		return payload, err
 	}
 
-	defer res.Body.Close()  //Clean up
+	defer res.Body.Close() // Clean up
 
-	if res.Header.Get(`x-ratelimit-remaining`) == `0` { // Out of requests for this period
-		reset := res.Header.Get(`x-ratelimit-reset`)
-		iReset, err := strconv.ParseInt(reset, 10, 64)
-		if err == nil {
-			// Set the reset time here, the next request will trip it
-			rateLimitReset = time.Unix(iReset+1, 0)
-		}
-	}
-  
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil { // Failed to read body
 		return payload, err
 	}
-	defer res.Body.Close()
 
 	if res.StatusCode >= 200 && res.StatusCode < 300 { // Success!
 		json.Unmarshal(body, &payload)
@@ -95,4 +128,52 @@ func getOptionsString(options map[string]string, availableOptions map[string]str
 		}
 	}
 	return optionsString
+}
+
+func prepareProxies(proxies []Proxy) []Proxy {
+	preparedProxies := make([]Proxy, len(proxies))
+	for i, proxy := range proxies {
+		proxy.throttle = time.Tick(rate)
+		preparedProxies[i] = proxy
+	}
+
+	return preparedProxies
+}
+
+func getHttpClient() http.Client {
+	return http.Client{
+		Transport: &http.Transport{},
+	}
+}
+
+func getHttpClientWithProxy(proxy Proxy) http.Client {
+	return http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyURL(makeProxyUrl(proxy)),
+
+		},
+	}
+}
+
+func makeProxyUrl(proxy Proxy) (*url.URL) {
+	proxyUrl := ""
+	if proxy.Auth {
+		proxyUrl = fmt.Sprintf("https://%s:%s@%s:%s",
+			proxy.Login,
+			proxy.Password,
+			proxy.Host,
+			proxy.Port)
+	} else {
+		proxyUrl = fmt.Sprintf("https://%s:%s",
+			proxy.Host,
+			proxy.Port)
+	}
+
+	proxyUrlInterface, err := url.Parse(proxyUrl)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return proxyUrlInterface
 }

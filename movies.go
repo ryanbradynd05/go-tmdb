@@ -316,8 +316,13 @@ type MovieTranslations struct {
 	ID           int
 	Translations []struct {
 		Iso639_1    string `json:"iso_639_1"`
-		Name        string
+		Name        string `json:"name"`
 		EnglishName string `json:"english_name"`
+		Data struct{
+			Title string `json:"title,omitempty"`
+			Overview string `json:"overview,omitempty"`
+			Homepage string `json:"homepage,omitempty"`
+		} `json:"data"`
 	}
 	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
 	Credits           *MovieCredits           `json:",omitempty"`
