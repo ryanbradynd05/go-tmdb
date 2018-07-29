@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	"net/url"
 )
 
 const baseURL string = "https://api.themoviedb.org/3"
@@ -13,14 +14,37 @@ const baseURL string = "https://api.themoviedb.org/3"
 const MAX_REQUEST_PER_SECOND = 4
 
 var (
-	// hack: add some millisecond for dont get 429 error
-	rate = time.Second / MAX_REQUEST_PER_SECOND + time.Millisecond * 20
+	// hack: add some millisecond for don`t get 429 error
+	rate     = time.Second/MAX_REQUEST_PER_SECOND + time.Millisecond*20
 	throttle = time.Tick(rate)
 )
+
+type Config struct {
+	ApiKey   string
+	UseProxy bool
+	Proxies  []Proxy
+}
+
+type Proxy struct {
+	Host     string
+	Port     string
+	Login    string
+	Password string
+	Auth     bool
+	throttle <-chan time.Time
+}
 
 // TMDb container struct for global properties
 type TMDb struct {
 	apiKey string
+}
+
+var internalConfig tmdbConfig
+
+type tmdbConfig struct {
+	useProxy   bool
+	proxies    []Proxy
+	roundRobin roundRobin
 }
 
 type apiStatus struct {
@@ -29,27 +53,53 @@ type apiStatus struct {
 }
 
 // Init setup the apiKey
-func Init(apiKey string) *TMDb {
-	return &TMDb{apiKey: apiKey}
+func Init(config Config) *TMDb {
+	internalConfig := new(tmdbConfig)
+	if config.UseProxy == true && len(config.Proxies) > 1 {
+		internalConfig.useProxy = config.UseProxy
+		internalConfig.proxies = prepareProxies(config.Proxies)
+		internalConfig.roundRobin = InitRoundRobin(len(internalConfig.proxies))
+	}
+
+	return &TMDb{apiKey: config.ApiKey}
 }
 
 // ToJSON converts from struct to JSON
 func ToJSON(payload interface{}) (string, error) {
-	jsonRes := []byte("{}") //Default value in case of error
+	jsonRes := []byte("{}") // Default value in case of error
 	jsonRes, err := json.MarshalIndent(payload, "", "  ")
 	return string(jsonRes), err
 }
 
 func getTmdb(url string, payload interface{}) (interface{}, error) {
-	<-throttle
+	var httpRequest http.Client
+	var blocker <-chan time.Time
 
-	res, err := http.Get(url)
+	if internalConfig.useProxy {
+		roundRobin := internalConfig.roundRobin.GetTicker()
+		proxy := internalConfig.proxies[roundRobin]
+
+		if proxy.Host == "localhost" {
+			httpRequest = getHttpClient()
+		} else {
+			httpRequest = getHttpClientWithProxy(proxy)
+		}
+
+		blocker = proxy.throttle
+	} else {
+		httpRequest = getHttpClient()
+		blocker = throttle
+	}
+
+	<-blocker
+
+	res, err := httpRequest.Get(url)
 	if err != nil { // HTTP connection error
 		return payload, err
 	}
 
-	defer res.Body.Close()  //Clean up
-  
+	defer res.Body.Close() // Clean up
+
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil { // Failed to read body
 		return payload, err
@@ -78,4 +128,52 @@ func getOptionsString(options map[string]string, availableOptions map[string]str
 		}
 	}
 	return optionsString
+}
+
+func prepareProxies(proxies []Proxy) []Proxy {
+	preparedProxies := make([]Proxy, len(proxies))
+	for i, proxy := range proxies {
+		proxy.throttle = time.Tick(rate)
+		preparedProxies[i] = proxy
+	}
+
+	return preparedProxies
+}
+
+func getHttpClient() http.Client {
+	return http.Client{
+		Transport: &http.Transport{},
+	}
+}
+
+func getHttpClientWithProxy(proxy Proxy) http.Client {
+	return http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyURL(makeProxyUrl(proxy)),
+
+		},
+	}
+}
+
+func makeProxyUrl(proxy Proxy) (*url.URL) {
+	proxyUrl := ""
+	if proxy.Auth {
+		proxyUrl = fmt.Sprintf("https://%s:%s@%s:%s",
+			proxy.Login,
+			proxy.Password,
+			proxy.Host,
+			proxy.Port)
+	} else {
+		proxyUrl = fmt.Sprintf("https://%s:%s",
+			proxy.Host,
+			proxy.Port)
+	}
+
+	proxyUrlInterface, err := url.Parse(proxyUrl)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return proxyUrlInterface
 }
