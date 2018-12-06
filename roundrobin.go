@@ -4,21 +4,24 @@ import (
 	"sync"
 )
 
-type roundRobin struct {
+// RoundRobin struct
+type RoundRobin struct {
 	currentTicker int
-	maxAllowed int
-	mu sync.Mutex
+	maxAllowed    int
+	mu            sync.Mutex
 }
 
-func InitRoundRobin(maxAllowed int) (roundRobin) {
-	return roundRobin{
-		maxAllowed: maxAllowed,
+// InitRoundRobin func
+func InitRoundRobin(maxAllowed int) RoundRobin {
+	return RoundRobin{
+		maxAllowed:    maxAllowed,
 		currentTicker: 0,
-		mu: sync.Mutex{},
+		mu:            sync.Mutex{},
 	}
 }
 
-func (r *roundRobin) GetTicker() int  {
+// GetTicker func
+func (r *RoundRobin) GetTicker() int {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -33,7 +36,8 @@ func (r *roundRobin) GetTicker() int  {
 	return ticker
 }
 
-func (r *roundRobin) Next()  {
+// Next func
+func (r *RoundRobin) Next() {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 

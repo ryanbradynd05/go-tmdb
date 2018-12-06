@@ -20,6 +20,7 @@ type Collection struct {
 	}
 }
 
+// CollectionShort struct
 type CollectionShort struct {
 	ID           int
 	Name         string

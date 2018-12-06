@@ -5,26 +5,28 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
 	"net/url"
+	"time"
 )
 
 const baseURL string = "https://api.themoviedb.org/3"
 
-const MAX_REQUEST_PER_SECOND = 4
+const maxRequestPerSecond = 4
 
 var (
 	// hack: add some millisecond for don`t get 429 error
-	rate     = time.Second/MAX_REQUEST_PER_SECOND + time.Millisecond*20
+	rate     = time.Second/maxRequestPerSecond + time.Millisecond*20
 	throttle = time.Tick(rate)
 )
 
+// Config struct
 type Config struct {
-	ApiKey   string
+	APIKey   string
 	UseProxy bool
 	Proxies  []Proxy
 }
 
+// Proxy struct
 type Proxy struct {
 	Host     string
 	Port     string
@@ -44,7 +46,7 @@ var internalConfig tmdbConfig
 type tmdbConfig struct {
 	useProxy   bool
 	proxies    []Proxy
-	roundRobin roundRobin
+	roundRobin RoundRobin
 }
 
 type apiStatus struct {
@@ -61,7 +63,7 @@ func Init(config Config) *TMDb {
 		internalConfig.roundRobin = InitRoundRobin(len(internalConfig.proxies))
 	}
 
-	return &TMDb{apiKey: config.ApiKey}
+	return &TMDb{apiKey: config.APIKey}
 }
 
 // ToJSON converts from struct to JSON
@@ -80,14 +82,14 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 		proxy := internalConfig.proxies[roundRobin]
 
 		if proxy.Host == "localhost" {
-			httpRequest = getHttpClient()
+			httpRequest = getHTTPClient()
 		} else {
-			httpRequest = getHttpClientWithProxy(proxy)
+			httpRequest = getHTTPClientWithProxy(proxy)
 		}
 
 		blocker = proxy.throttle
 	} else {
-		httpRequest = getHttpClient()
+		httpRequest = getHTTPClient()
 		blocker = throttle
 	}
 
@@ -140,40 +142,39 @@ func prepareProxies(proxies []Proxy) []Proxy {
 	return preparedProxies
 }
 
-func getHttpClient() http.Client {
+func getHTTPClient() http.Client {
 	return http.Client{
 		Transport: &http.Transport{},
 	}
 }
 
-func getHttpClientWithProxy(proxy Proxy) http.Client {
+func getHTTPClientWithProxy(proxy Proxy) http.Client {
 	return http.Client{
 		Transport: &http.Transport{
-			Proxy: http.ProxyURL(makeProxyUrl(proxy)),
-
+			Proxy: http.ProxyURL(makeProxyURL(proxy)),
 		},
 	}
 }
 
-func makeProxyUrl(proxy Proxy) (*url.URL) {
-	proxyUrl := ""
+func makeProxyURL(proxy Proxy) *url.URL {
+	proxyURL := ""
 	if proxy.Auth {
-		proxyUrl = fmt.Sprintf("https://%s:%s@%s:%s",
+		proxyURL = fmt.Sprintf("https://%s:%s@%s:%s",
 			proxy.Login,
 			proxy.Password,
 			proxy.Host,
 			proxy.Port)
 	} else {
-		proxyUrl = fmt.Sprintf("https://%s:%s",
+		proxyURL = fmt.Sprintf("https://%s:%s",
 			proxy.Host,
 			proxy.Port)
 	}
 
-	proxyUrlInterface, err := url.Parse(proxyUrl)
+	proxyURLInterface, err := url.Parse(proxyURL)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return proxyUrlInterface
+	return proxyURLInterface
 }
