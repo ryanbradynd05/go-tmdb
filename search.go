@@ -1,13 +1,14 @@
 package tmdb
 
 import (
-	"fmt"
-	"net/url"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"net/url"
 )
 
-var ErrUnknownMediaType  = errors.New("Unknown media type. Unable to unmarhal to MultiSearchResultsInfo")
+// ErrUnknownMediaType var
+var ErrUnknownMediaType = errors.New("Unknown media type. Unable to unmarhal to MultiSearchResultsInfo")
 
 // CollectionSearchResults struct
 type CollectionSearchResults struct {
@@ -70,97 +71,105 @@ type MovieSearchResults struct {
 	TotalResults int `json:"total_results"`
 }
 
+// MultiSearchBase interface
 type MultiSearchBase interface {
-	interfaceMarkerMethod()  // We need a method to be
+	interfaceMarkerMethod() // We need a method to be
 }
 
+// MultiSearchMovieInfo struct
 type MultiSearchMovieInfo struct {
-	PosterPath		string  	`json:"poster_path"`
-	Adult			bool
-	Overview        	string  	`json:"overview"`
-	ReleaseDate		string 		`json:"release_date"`
-	OriginalTitle  		string  	`json:"original_title"`
-	GenreIDs		[]uint32 	`json:"ganre_ids"`
-	OriginalLanguage 	string   	`json:"original_language"`
-	Title  			string  	`json:"title"`
-	BackdropPath  		string 		`json:"backdrop_path"`
-	Popularity    		float32
-	VoteCount     		uint32  	`json:"vote_count"`
-	Video			bool
-	VoteAverage 		float32  	`json:"vote_average"`
-	ID         	 int
-	MediaType     	 string  `json:"media_type"`
+	PosterPath       string `json:"poster_path"`
+	Adult            bool
+	Overview         string   `json:"overview"`
+	ReleaseDate      string   `json:"release_date"`
+	OriginalTitle    string   `json:"original_title"`
+	GenreIDs         []uint32 `json:"ganre_ids"`
+	OriginalLanguage string   `json:"original_language"`
+	Title            string   `json:"title"`
+	BackdropPath     string   `json:"backdrop_path"`
+	Popularity       float32
+	VoteCount        uint32 `json:"vote_count"`
+	Video            bool
+	VoteAverage      float32 `json:"vote_average"`
+	ID               int
+	MediaType        string `json:"media_type"`
 }
 
-func (MultiSearchMovieInfo)interfaceMarkerMethod() {return }
+func (MultiSearchMovieInfo) interfaceMarkerMethod() { return }
 
+// MultiSearchTvInfo struct
 type MultiSearchTvInfo struct {
-	BackdropPath  	 string `json:"backdrop_path"`
-	OriginalName  	 string   `json:"original_name"`
-	OriginalTitle 	 string   `json:"original_title"`
-	OriginalLanguage string   	`json:"original_language"`
-	Overview      	 string   `json:"overview"`
+	BackdropPath     string   `json:"backdrop_path"`
+	OriginalName     string   `json:"original_name"`
+	OriginalTitle    string   `json:"original_title"`
+	OriginalLanguage string   `json:"original_language"`
+	Overview         string   `json:"overview"`
 	FirstAirDate     string   `json:"first_air_date"`
-	OriginCountry 	 []string `json:"origin_country"`
-	GenreIDs      	 []uint32 `json:"ganre_ids"`
+	OriginCountry    []string `json:"origin_country"`
+	GenreIDs         []uint32 `json:"ganre_ids"`
 	PosterPath       string   `json:"poster_path"`
-	Popularity    	 float32
-	Name          	 string
-	VoteAverage   	 float32 `json:"vote_average"`
-	VoteCount     	 uint32  `json:"vote_count"`
-	ID         	 int
-	MediaType     	 string  `json:"media_type"`
-
+	Popularity       float32
+	Name             string
+	VoteAverage      float32 `json:"vote_average"`
+	VoteCount        uint32  `json:"vote_count"`
+	ID               int
+	MediaType        string `json:"media_type"`
 }
 
-func (MultiSearchTvInfo)interfaceMarkerMethod() {return }
+func (MultiSearchTvInfo) interfaceMarkerMethod() { return }
 
+// MultiSearchPersonInfo struct
 type MultiSearchPersonInfo struct {
-	ProfilePath  	 string `json:"profile_path"`
-	Adult		 bool
-	KnownFor	 MultiSearchResultsInfo `json:"known_for"`
-	ID         	 int
-	MediaType     	 string  `json:"media_type"`
+	ProfilePath string `json:"profile_path"`
+	Adult       bool
+	KnownFor    MultiSearchResultsInfo `json:"known_for"`
+	ID          int
+	MediaType   string `json:"media_type"`
 }
 
-func (MultiSearchPersonInfo) interfaceMarkerMethod() {return }
+func (MultiSearchPersonInfo) interfaceMarkerMethod() { return }
 
+// GetMoviesKnownFor func
 func (res MultiSearchPersonInfo) GetMoviesKnownFor() (movieResults []MultiSearchMovieInfo) {
-	movieResults = make([]MultiSearchMovieInfo,0);
+	movieResults = make([]MultiSearchMovieInfo, 0)
 
-	for i := 0; i < len(res.KnownFor);i++ {
-		var base interface{}= res.KnownFor[i]
-		if casted,ok := base.(*MultiSearchMovieInfo); ok {
+	for i := 0; i < len(res.KnownFor); i++ {
+		var base interface{} = res.KnownFor[i]
+		if casted, ok := base.(*MultiSearchMovieInfo); ok {
 			movieResults = append(movieResults, *casted)
 		}
 	}
 
-	return;
+	return
 }
 
+// GetTvKnownFor func
 func (res MultiSearchPersonInfo) GetTvKnownFor() (tvResults []MultiSearchTvInfo) {
-	tvResults = make([]MultiSearchTvInfo,0);
+	tvResults = make([]MultiSearchTvInfo, 0)
 
-	for i := 0; i < len(res.KnownFor);i++ {
-		var base interface{}= res.KnownFor[i]
-		if casted,ok := base.(*MultiSearchTvInfo); ok {
+	for i := 0; i < len(res.KnownFor); i++ {
+		var base interface{} = res.KnownFor[i]
+		if casted, ok := base.(*MultiSearchTvInfo); ok {
 			tvResults = append(tvResults, *casted)
 		}
 	}
 
-	return;
+	return
 }
+
+// MultiSearchResultsInfo type
 type MultiSearchResultsInfo []MultiSearchBase
 
+// UnmarshalJSON func splits up the JSON array into the raw JSON
+// for each object then unamrshal into a map to check the "type"
+// field and unmarshal again into the correct type.
 func (v *MultiSearchResultsInfo) UnmarshalJSON(data []byte) error {
-	//splits up the JSON array into the raw JSON for each object
 	var raw []json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
 		return err
 	}
 	for _, r := range raw {
-		// unamrshal into a map to check the "type" field
 		var obj map[string]interface{}
 		err := json.Unmarshal(r, &obj)
 		if err != nil {
@@ -172,7 +181,6 @@ func (v *MultiSearchResultsInfo) UnmarshalJSON(data []byte) error {
 			mediaType = t
 		}
 
-		// unmarshal again into the correct type
 		var actual MultiSearchBase
 		switch mediaType {
 		case "movie":
@@ -191,55 +199,56 @@ func (v *MultiSearchResultsInfo) UnmarshalJSON(data []byte) error {
 		}
 		*v = append(*v, actual)
 	}
-	return nil;
+	return nil
 }
+
 // MultiSearchResults struct
 type MultiSearchResults struct {
-	Page    int
-	Results MultiSearchResultsInfo
+	Page         int
+	Results      MultiSearchResultsInfo
 	TotalPages   int `json:"total_pages"`
 	TotalResults int `json:"total_results"`
 }
 
-
-
+// GetMoviesResults func
 func (res MultiSearchResults) GetMoviesResults() (movieResults []MultiSearchMovieInfo) {
 
-	for i := 0; i < len(res.Results);i++ {
-		var base interface{}= res.Results[i]
-		if casted,ok := base.(*MultiSearchMovieInfo); ok {
+	for i := 0; i < len(res.Results); i++ {
+		var base interface{} = res.Results[i]
+		if casted, ok := base.(*MultiSearchMovieInfo); ok {
 			movieResults = append(movieResults, *casted)
 		}
 	}
 
-	return;
+	return
 }
 
+// GetTvResults func
 func (res MultiSearchResults) GetTvResults() (tvResults []MultiSearchTvInfo) {
 
-	for i := 0; i < len(res.Results);i++ {
-		var base interface{}= res.Results[i]
+	for i := 0; i < len(res.Results); i++ {
+		var base interface{} = res.Results[i]
 
-		if casted,ok := base.(*MultiSearchTvInfo); ok {
+		if casted, ok := base.(*MultiSearchTvInfo); ok {
 			tvResults = append(tvResults, *casted)
 		}
 	}
 
-	return;
+	return
 }
 
+// GetPersonResults func
 func (res MultiSearchResults) GetPersonResults() (personResults []MultiSearchPersonInfo) {
 
-	for i := 0; i < len(res.Results);i++ {
-		var base interface{}= res.Results[i]
-		if casted,ok := base.(*MultiSearchPersonInfo); ok {
+	for i := 0; i < len(res.Results); i++ {
+		var base interface{} = res.Results[i]
+		if casted, ok := base.(*MultiSearchPersonInfo); ok {
 			personResults = append(personResults, *casted)
 		}
 	}
 
-	return;
+	return
 }
-
 
 // PersonSearchResults struct
 type PersonSearchResults struct {
