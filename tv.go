@@ -63,9 +63,7 @@ type TV struct {
 
 // TvShort struct
 type TvShort struct {
-	Adult         bool     `json:"adult"`
 	BackdropPath  string   `json:"backdrop_path"`
-	ID            int      `json:"id"`
 	OriginalName  string   `json:"original_name"`
 	GenreIDs      []int32  `json:"genre_ids"`
 	OriginCountry []string `json:"origin_country"`
