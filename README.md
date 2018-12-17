@@ -25,24 +25,26 @@ Import the library
 import "github.com/ryanbradynd05/go-tmdb"
 ```
     
-Create a container struct for global properties
+Create a var for global properties
 ```go
-type TMDb struct {
-  apiKey string
-}
+var tmdbAPI *tmdb.TMDb
 ```
 
 Initialize the library using your api_key
 ```go
-func Init(apiKey string) *TMDb {
-  return &TMDb{apiKey: apiKey}
-}
+config := tmdb.Config{
+		APIKey:   "YOUR_KEY",
+		Proxies:  nil,
+		UseProxy: false,
+	}
+
+	tmdbAPI = tmdb.Init(config)
 ```
 
 Use the api methods as you want, for example:
 
 ```go
-fightClubInfo, err := TMDb.GetMovieInfo(550, nil)
+fightClubInfo, err := tmdbAPI.GetMovieInfo(550, nil)
 ```
 
 To use optional parameters, pass in a map[string]string of options and values:
@@ -50,13 +52,13 @@ To use optional parameters, pass in a map[string]string of options and values:
 ```go
 var options = make(map[string]string)
 options["language"] = "es"
-spanishFightClub, err := TMDb.GetMovieInfo(550, options)
+spanishFightClub, err := tmdbAPI.GetMovieInfo(550, options)
 ```
 
 All functions return Go structs. To return JSON, use the ToJSON function:
 
 ```go
-fightClubJson, err := TMDb.ToJSON(fightClubInfo)
+fightClubJson, err := tmdb.ToJSON(fightClubInfo)
 ```
 
 ## How to test
