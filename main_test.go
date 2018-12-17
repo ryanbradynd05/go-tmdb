@@ -2,12 +2,13 @@ package tmdb
 
 import (
 	"fmt"
-	"github.com/kylelemons/go-gypsy/yaml"
-	. "gopkg.in/check.v1"
 	"os"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/kylelemons/go-gypsy/yaml"
+	. "gopkg.in/check.v1"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -36,7 +37,7 @@ func (s *TmdbSuite) SetUpSuite(c *C) {
 	s.guestSession, _ = config.Get("guestSession")
 	accountID, _ := config.Get("accountID")
 	s.accountID, _ = strconv.Atoi(accountID)
-	testKey, _ := config.Get("testKey")
+	testKey, _ := config.Get("testKey") // TODO: Fix this issue
 	s.tmdb = Init(testKey)
 }
 

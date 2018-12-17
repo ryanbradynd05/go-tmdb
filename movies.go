@@ -61,14 +61,16 @@ type Movie struct {
 // MovieShort struct
 type MovieShort struct {
 	Adult         bool
-	BackdropPath  string `json:"backdrop_path"`
-	ID            int
-	OriginalTitle string `json:"original_title"`
-	Popularity    float32
-	PosterPath    string `json:"poster_path"`
-	ReleaseDate   string `json:"release_date"`
-	Title         string
-	Video         bool
+	BackdropPath  string  `json:"backdrop_path"`
+	ID            int     `json:"id"`
+	OriginalTitle string  `json:"original_title"`
+	GenresID      []int32 `json:"genres_id"`
+	Popularity    float32 `json:"popularity"`
+	PosterPath    string  `json:"poster_path"`
+	ReleaseDate   string  `json:"release_date"`
+	Title         string  `json:"title"`
+	Overview      string  `json:"overview"`
+	Video         bool    `json:"video"`
 	VoteAverage   float32 `json:"vote_average"`
 	VoteCount     uint32  `json:"vote_count"`
 }
@@ -318,8 +320,8 @@ type MovieTranslations struct {
 		Iso639_1    string `json:"iso_639_1"`
 		Name        string `json:"name"`
 		EnglishName string `json:"english_name"`
-		Data struct{
-			Title string `json:"title,omitempty"`
+		Data        struct {
+			Title    string `json:"title,omitempty"`
 			Overview string `json:"overview,omitempty"`
 			Homepage string `json:"homepage,omitempty"`
 		} `json:"data"`

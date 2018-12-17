@@ -64,17 +64,19 @@ type TV struct {
 // TvShort struct
 type TvShort struct {
 	Adult         bool
-	BackdropPath  string `json:"backdrop_path"`
-	ID            int
+	BackdropPath  string   `json:"backdrop_path"`
+	ID            int      `json:"id"`
 	OriginalName  string   `json:"original_name"`
+	GenresID      []int32  `json:"genres_id"`
 	OriginCountry []string `json:"origin_country"`
-	Popularity    float32
-	PosterPath    string `json:"poster_path"`
-	FirstAirDate  string `json:"first_air_date"`
-	Name          string
-	Video         bool
-	VoteAverage   float32 `json:"vote_average"`
-	VoteCount     uint32  `json:"vote_count"`
+	Popularity    float32  `json:"popularity"`
+	PosterPath    string   `json:"poster_path"`
+	FirstAirDate  string   `json:"first_air_date"`
+	Name          string   `json:"name"`
+	Overview      string   `json:"overview"`
+	Video         bool     `json:"video"`
+	VoteAverage   float32  `json:"vote_average"`
+	VoteCount     uint32   `json:"vote_count"`
 }
 
 // TvPagedResults struct
