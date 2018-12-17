@@ -25,6 +25,16 @@ type TmdbSuite struct {
 
 var _ = Suite(&TmdbSuite{})
 
+func (s *TmdbSuite) KeyConfig(apiKey string) Config {
+	testKeyConfig := Config{
+		APIKey:   apiKey,
+		Proxies:  nil,
+		UseProxy: false,
+	}
+
+	return testKeyConfig
+}
+
 func (s *TmdbSuite) SetUpSuite(c *C) {
 	pwd, _ := os.Getwd()
 	basedir := strings.SplitAfter(pwd, "ryanbradynd05/go-tmdb")
@@ -37,7 +47,8 @@ func (s *TmdbSuite) SetUpSuite(c *C) {
 	s.guestSession, _ = config.Get("guestSession")
 	accountID, _ := config.Get("accountID")
 	s.accountID, _ = strconv.Atoi(accountID)
-	testKey, _ := config.Get("testKey") // TODO: Fix this issue
+	key, _ := config.Get("testKey")
+	testKey := s.KeyConfig(key)
 	s.tmdb = Init(testKey)
 }
 

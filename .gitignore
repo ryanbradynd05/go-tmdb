@@ -26,3 +26,4 @@ _testmain.go
 local.yml
 
 \.idea/
+\.vscode/
