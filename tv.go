@@ -163,6 +163,9 @@ type TvExternalIds struct {
 	FreebaseMid string `json:"freebase_mid"`
 	TvdbID      int    `json:"tvdb_id"`
 	TvrageID    int    `json:"tvrage_id"`
+	FacebookID  string `json:"facebook_id"`
+	InstagramID string `json:"instagram_id"`
+	TwitterID   string `json:"twitter_id"`
 }
 
 // TvImage struct
