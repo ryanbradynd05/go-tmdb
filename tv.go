@@ -210,13 +210,13 @@ type TvRecommendations struct {
 		FirstAirDate     string   `json:"first_air_date"`
 		GenreIDs         []int    `json:"genre_ids"`
 		ID               int      `json:"id"`
-		Name             string   `json:"name"`
-		OriginCountry    []string `json:"origin_country"`
 		OriginalLanguage string   `json:"original_language"`
+		OriginalName     string   `json:"original_name"`
 		Overview         string   `json:"overview"`
+		OriginCountry    []string `json:"origin_country"`
 		PosterPath       string   `json:"poster_path"`
-		VoteAverage      float32  `json:"vote_average"`
-		VoteCount        uint32   `json:"vote_count"`
+		Popularity       float32  `json:"popularity"`
+		Name             string   `json:"name"`
 		Networks         []struct {
 			ID   int `json:"id"`
 			Logo struct {
@@ -225,8 +225,9 @@ type TvRecommendations struct {
 			} `json:"logo"`
 			Name          string `json:"name"`
 			OriginCountry string `json:"origin_country"`
-		}
-		Popularity float32 `json:"popularity"`
+		} `json:"networks"`
+		VoteAverage float32 `json:"vote_average"`
+		VoteCount   uint32  `json:"vote_count"`
 	} `json:"results"`
 	TotalPages   int `json:"total_pages"`
 	TotalResults int `json:"total_results"`
@@ -365,16 +366,16 @@ func (tmdb *TMDb) GetTvKeywords(id int, options map[string]string) (*TvKeywords,
 }
 
 // GetTvRecommendations gets the list of TV show recommendations by id
-// http://docs.themoviedb.apiary.io/#reference/tv/tvid/get
-func (tmdb *TMDb) GetTvRecommendations(id int, options map[string]string) (*TV, error) {
+// https://developers.themoviedb.org/3/tv/get-tv-recommendations
+func (tmdb *TMDb) GetTvRecommendations(id int, options map[string]string) (*TvRecommendations, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {},
 		"page":     {}}
 	var tvRec TvRecommendations
 	optionsString := getOptionsString(options, availableOptions)
-	uri := fmt.Sprintf("%s/tv/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	uri := fmt.Sprintf("%s/tv/%v/recommendations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &tvRec)
-	return result.(*TV), err
+	return result.(*TvRecommendations), err
 }
 
 // GetTvLatest gets the latest TV show
