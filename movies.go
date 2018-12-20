@@ -339,6 +339,29 @@ type MovieTranslations struct {
 	Rating            *MovieRating            `json:",omitempty"`
 }
 
+// MovieRecommendations struct for movie recommendations.
+type MovieRecommendations struct {
+	Page    int `json:"page"`
+	Results []struct {
+		Adult            bool    `json:"adult"`
+		BackdropPath     string  `json:"backdrop_path"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
+		OriginalLanguage string  `json:"original_language"`
+		OriginalTitle    string  `json:"original_title"`
+		Overview         string  `json:"overview"`
+		ReleaseDate      string  `json:"release_date"`
+		PosterPath       string  `json:"poster_path"`
+		Popularity       float32 `json:"popularity"`
+		Title            string  `json:"title"`
+		Video            bool    `json:"video"`
+		VoteAverage      float32 `json:"vote_average"`
+		VoteCount        uint32  `json:"vote_count"`
+	} `json:"results"`
+	TotalPages   int `json:"total_pages"`
+	TotalResults int `json:"total_results"`
+}
+
 // MovieVideos struct
 type MovieVideos struct {
 	ID      int
@@ -562,6 +585,19 @@ func (tmdb *TMDb) GetMovieTranslations(id int, options map[string]string) (*Movi
 	uri := fmt.Sprintf("%s/movie/%v/translations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
 	result, err := getTmdb(uri, &translations)
 	return result.(*MovieTranslations), err
+}
+
+// GetMovieRecommendations gets a list of recommended movies for a movie by id
+// https://developers.themoviedb.org/3/movies/get-movie-recommendations
+func (tmdb *TMDb) GetMovieRecommendations(id int, options map[string]string) (*MovieRecommendations, error) {
+	var availableOptions = map[string]struct{}{
+		"language": {},
+		"page":     {}}
+	var movieRec MovieRecommendations
+	optionsString := getOptionsString(options, availableOptions)
+	uri := fmt.Sprintf("%s/movie/%v/recommendations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
+	result, err := getTmdb(uri, &movieRec)
+	return result.(*MovieRecommendations), err
 }
 
 // GetMovieVideos for a specific movie id
