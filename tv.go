@@ -59,6 +59,7 @@ type TV struct {
 	Similar           *TvPagedResults      `json:",omitempty"`
 	Translations      *TvTranslations      `json:",omitempty"`
 	Videos            *TvVideos            `json:",omitempty"`
+	ExternalIDs       *TvExternalIds       `json:"external_ids,omitempty"`
 }
 
 // TvShort struct

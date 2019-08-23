@@ -56,6 +56,7 @@ type Movie struct {
 	Lists             *MovieLists             `json:",omitempty"`
 	Changes           *MovieChanges           `json:",omitempty"`
 	Rating            *MovieRating            `json:",omitempty"`
+	ExternalIDs       *MovieExternalIds       `json:"external_ids,omitempty"`
 }
 
 // MovieShort struct
@@ -182,6 +183,15 @@ type MovieCredits struct {
 	Lists             *MovieLists             `json:",omitempty"`
 	Changes           *MovieChanges           `json:",omitempty"`
 	Rating            *MovieRating            `json:",omitempty"`
+}
+
+// MovieExternalIds struct
+type MovieExternalIds struct {
+	ID          int
+	ImdbID      string `json:"imdb_id"`
+	FacebookID  string `json:"facebook_id"`
+	InstagramID string `json:"instagram_id"`
+	TwitterID   string `json:"twitter_id"`
 }
 
 // MovieImage struct
