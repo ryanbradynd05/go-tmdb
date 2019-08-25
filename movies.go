@@ -161,12 +161,14 @@ type MovieCredits struct {
 		CreditID    string `json:"credit_id"`
 		ID          int
 		Name        string
+		Gender      int `json:"gender"`
 		Order       int
 		ProfilePath string `json:"profile_path"`
 	}
 	Crew []struct {
 		CreditID    string `json:"credit_id"`
 		Department  string
+		Gender      int `json:"gender"`
 		ID          int
 		Job         string
 		Name        string

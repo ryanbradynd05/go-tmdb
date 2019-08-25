@@ -136,6 +136,7 @@ type TvCredits struct {
 		CreditID    string `json:"credit_id"`
 		ID          int
 		Name        string
+		Gender      int `json:"gender"`
 		Order       int
 		ProfilePath string `json:"profile_path"`
 	}
@@ -144,6 +145,7 @@ type TvCredits struct {
 	Crew              []struct {
 		CreditID    string `json:"credit_id"`
 		Department  string
+		Gender      int `json:"gender"`
 		ID          int
 		Name        string
 		Job         string
