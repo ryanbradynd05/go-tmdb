@@ -240,9 +240,15 @@ type TvRecommendations struct {
 type TvTranslations struct {
 	ID           int
 	Translations []struct {
+		Iso3166_1   string `json:"iso_3166_1"`
 		Iso639_1    string `json:"iso_639_1"`
-		Name        string
+		Name        string `json:"name"`
 		EnglishName string `json:"english_name"`
+		Data        struct {
+			Name     string `json:"name,omitempty"`
+			Overview string `json:"overview,omitempty"`
+			Homepage string `json:"homepage,omitempty"`
+		} `json:"data"`
 	}
 }
 
