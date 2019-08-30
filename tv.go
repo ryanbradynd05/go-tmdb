@@ -25,8 +25,10 @@ type TV struct {
 	LastAirDate  string `json:"last_air_date"`
 	Name         string
 	Networks     []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	}
 	NumberOfEpisodes    int      `json:"number_of_episodes"`
 	NumberOfSeasons     int      `json:"number_of_seasons"`
@@ -37,8 +39,10 @@ type TV struct {
 	Popularity          float32
 	PosterPath          string `json:"poster_path"`
 	ProductionCompanies []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	} `json:"production_companies"`
 	Seasons []struct {
 		AirDate      string `json:"air_date"`

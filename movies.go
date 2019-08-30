@@ -24,8 +24,10 @@ type Movie struct {
 	Popularity          float32
 	PosterPath          string `json:"poster_path"`
 	ProductionCompanies []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	} `json:"production_companies"`
 	ProductionCountries []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
