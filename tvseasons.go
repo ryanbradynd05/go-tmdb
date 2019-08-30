@@ -13,6 +13,7 @@ type TvSeason struct {
 	PosterPath   string `json:"poster_path"`
 	SeasonNumber int    `json:"season_number"`
 	Episodes     []TvEpisode
+	Credits      *TvCredits
 	ExternalIDs  *TvSeasonExternalIds `json:"external_ids,omitempty"`
 }
 

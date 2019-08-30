@@ -45,6 +45,8 @@ type TV struct {
 		Iso3166_1 string `json:"origin_country"`
 	} `json:"production_companies"`
 	Seasons []struct {
+		Name         string
+		Overview     string
 		AirDate      string `json:"air_date"`
 		EpisodeCount int    `json:"episode_count"`
 		ID           int
