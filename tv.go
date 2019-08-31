@@ -10,6 +10,8 @@ type TV struct {
 	CreatedBy    []struct {
 		ID          int
 		Name        string
+		CreditID    string `json:"credit_id"`
+		Gender      int    `json:"gender"`
 		ProfilePath string `json:"profile_path"`
 	}
 	EpisodeRunTime []int  `json:"episode_run_time"`
