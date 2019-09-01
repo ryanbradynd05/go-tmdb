@@ -24,8 +24,10 @@ type Movie struct {
 	Popularity          float32
 	PosterPath          string `json:"poster_path"`
 	ProductionCompanies []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	} `json:"production_companies"`
 	ProductionCountries []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
@@ -161,12 +163,14 @@ type MovieCredits struct {
 		CreditID    string `json:"credit_id"`
 		ID          int
 		Name        string
+		Gender      int `json:"gender"`
 		Order       int
 		ProfilePath string `json:"profile_path"`
 	}
 	Crew []struct {
 		CreditID    string `json:"credit_id"`
 		Department  string
+		Gender      int `json:"gender"`
 		ID          int
 		Job         string
 		Name        string
@@ -327,6 +331,7 @@ type MovieReviews struct {
 type MovieTranslations struct {
 	ID           int
 	Translations []struct {
+		Iso3166_1   string `json:"iso_3166_1"`
 		Iso639_1    string `json:"iso_639_1"`
 		Name        string `json:"name"`
 		EnglishName string `json:"english_name"`

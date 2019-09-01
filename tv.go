@@ -10,6 +10,8 @@ type TV struct {
 	CreatedBy    []struct {
 		ID          int
 		Name        string
+		CreditID    string `json:"credit_id"`
+		Gender      int    `json:"gender"`
 		ProfilePath string `json:"profile_path"`
 	}
 	EpisodeRunTime []int  `json:"episode_run_time"`
@@ -25,8 +27,10 @@ type TV struct {
 	LastAirDate  string `json:"last_air_date"`
 	Name         string
 	Networks     []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	}
 	NumberOfEpisodes    int      `json:"number_of_episodes"`
 	NumberOfSeasons     int      `json:"number_of_seasons"`
@@ -37,10 +41,14 @@ type TV struct {
 	Popularity          float32
 	PosterPath          string `json:"poster_path"`
 	ProductionCompanies []struct {
-		ID   int
-		Name string
+		ID        int
+		Name      string
+		LogoPath  string `json:"logo_path"`
+		Iso3166_1 string `json:"origin_country"`
 	} `json:"production_companies"`
 	Seasons []struct {
+		Name         string
+		Overview     string
 		AirDate      string `json:"air_date"`
 		EpisodeCount int    `json:"episode_count"`
 		ID           int
@@ -136,6 +144,7 @@ type TvCredits struct {
 		CreditID    string `json:"credit_id"`
 		ID          int
 		Name        string
+		Gender      int `json:"gender"`
 		Order       int
 		ProfilePath string `json:"profile_path"`
 	}
@@ -144,6 +153,7 @@ type TvCredits struct {
 	Crew              []struct {
 		CreditID    string `json:"credit_id"`
 		Department  string
+		Gender      int `json:"gender"`
 		ID          int
 		Name        string
 		Job         string
@@ -238,9 +248,15 @@ type TvRecommendations struct {
 type TvTranslations struct {
 	ID           int
 	Translations []struct {
+		Iso3166_1   string `json:"iso_3166_1"`
 		Iso639_1    string `json:"iso_639_1"`
-		Name        string
+		Name        string `json:"name"`
 		EnglishName string `json:"english_name"`
+		Data        struct {
+			Name     string `json:"name,omitempty"`
+			Overview string `json:"overview,omitempty"`
+			Homepage string `json:"homepage,omitempty"`
+		} `json:"data"`
 	}
 }
 
