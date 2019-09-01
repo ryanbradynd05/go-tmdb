@@ -7,6 +7,8 @@ import (
 const darkKnightID int = 49026
 const fightClubID int = 550
 const takenThreeID int = 260346
+const fightClubImdbID string = "tt0137523"
+const fightClubFacebookID string = "FightClub"
 
 func (s *TmdbSuite) TestGetMovieInfo(c *C) {
 	result, err := s.tmdb.GetMovieInfo(fightClubID, nil)
@@ -255,4 +257,12 @@ func (s *TmdbSuite) TestSetMovieRating(c *C) {
 	// result, err := s.tmdb.SetMovieRating(takenThreeID)
 	// s.baseTest(&result, err, c)
 	// TODO
+}
+
+func (s *TmdbSuite) TestGetMovieExternalIds(c *C) {
+	result, err := s.tmdb.GetMovieExternalIds(fightClubID, nil)
+	s.baseTest(&result, err, c)
+	c.Assert(result.ID, Equals, fightClubID)
+	c.Assert(result.ImdbID, Equals, fightClubImdbID)
+	c.Assert(result.FacebookID, Equals, fightClubFacebookID)
 }

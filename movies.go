@@ -641,6 +641,16 @@ func (tmdb *TMDb) GetMovieUpcoming(options map[string]string) (*MovieDatedResult
 	return result.(*MovieDatedResults), err
 }
 
+// GetMovieExternalIds gets the external ids for a movie
+// https://developers.themoviedb.org/3/tv/get-movie-external-ids
+func (tmdb *TMDb) GetMovieExternalIds(movieID int, options map[string]string) (*MovieExternalIds, error) {
+	// currently there are not options, left it so it may be updated in the future without breaking existing code
+	var ids TvExternalIds
+	uri := fmt.Sprintf("%s/movie/%v/external_ids?api_key=%s", baseURL, movieID, tmdb.apiKey)
+	result, err := getTmdb(uri, &ids)
+	return result.(*MovieExternalIds), err
+}
+
 // // SetMovieRating lets users rate a movie
 // // http://docs.themoviedb.apiary.io/#reference/movies/movieidrating/post
 // func (tmdb *TMDb) SetMovieRating(id int) (*MovieRating, error) {
