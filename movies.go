@@ -645,7 +645,7 @@ func (tmdb *TMDb) GetMovieUpcoming(options map[string]string) (*MovieDatedResult
 // https://developers.themoviedb.org/3/tv/get-movie-external-ids
 func (tmdb *TMDb) GetMovieExternalIds(movieID int, options map[string]string) (*MovieExternalIds, error) {
 	// currently there are not options, left it so it may be updated in the future without breaking existing code
-	var ids TvExternalIds
+	var ids MovieExternalIds
 	uri := fmt.Sprintf("%s/movie/%v/external_ids?api_key=%s", baseURL, movieID, tmdb.apiKey)
 	result, err := getTmdb(uri, &ids)
 	return result.(*MovieExternalIds), err
