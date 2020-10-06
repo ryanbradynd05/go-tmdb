@@ -24,7 +24,7 @@ type ListItemStatus struct {
 }
 
 // GetListInfo gets a list by id
-// http://docs.themoviedb.apiary.io/#reference/lists/listid/get
+// https://developers.themoviedb.org/3/lists/get-list-details
 func (tmdb *TMDb) GetListInfo(id string) (*ListInfo, error) {
 	var listInfo ListInfo
 	uri := fmt.Sprintf("%s/list/%v?api_key=%s", baseURL, id, tmdb.apiKey)
@@ -33,13 +33,13 @@ func (tmdb *TMDb) GetListInfo(id string) (*ListInfo, error) {
 }
 
 // DeleteList deletes a list by id
-// http://docs.themoviedb.apiary.io/#reference/lists/listid/delete
+// https://developers.themoviedb.org/3/lists/delete-list
 // func (tmdb *TMDb) DeleteList(id string) {
 // TODO
 // }
 
 // GetListItemStatus checks to see if a movie ID is already added to a list
-// http://docs.themoviedb.apiary.io/#reference/lists/listiditemstatus/get
+// hhttps://developers.themoviedb.org/3/lists/check-item-status
 func (tmdb *TMDb) GetListItemStatus(id string, movieID int) (*ListItemStatus, error) {
 	var itemStatus ListItemStatus
 	uri := fmt.Sprintf("%s/list/%v/item_status?api_key=%s&movie_id=%v", baseURL, id, tmdb.apiKey, movieID)
@@ -48,19 +48,19 @@ func (tmdb *TMDb) GetListItemStatus(id string, movieID int) (*ListItemStatus, er
 }
 
 // PostListAddItem lets users add new movies to a list that they created
-// http://docs.themoviedb.apiary.io/#reference/lists/listidadditem/post
+// https://developers.themoviedb.org/3/lists/add-movie
 // func (tmdb *TMDb) PostListAddItem(id string) {
 // TODO
 // }
 
 // PostListRemoveItem lets users remove movies from a list that they created
-// http://docs.themoviedb.apiary.io/#reference/lists/listidremoveitem/post
+// https://developers.themoviedb.org/3/lists/remove-movie
 // func (tmdb *TMDb) PostListRemoveItem(id string) {
 // TODO
 // }
 
 // PostListClear clears all of the items in a list
-// http://docs.themoviedb.apiary.io/#reference/lists/listidclear/post
+// https://developers.themoviedb.org/3/lists/clear-list
 // func (tmdb *TMDb) PostListRemoveItem(id string) {
 // TODO
 // }

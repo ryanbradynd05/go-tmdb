@@ -11,7 +11,7 @@ type Keyword struct {
 }
 
 // GetKeywordInfo gets the basic information for a specific keyword id
-// http://docs.themoviedb.apiary.io/#reference/keywords/keywordid/get
+// https://developers.themoviedb.org/3/keywords/get-keyword-details
 func (tmdb *TMDb) GetKeywordInfo(id int) (*Keyword, error) {
 	var keywordInfo Keyword
 	uri := fmt.Sprintf("%s/keyword/%v?api_key=%s", baseURL, id, tmdb.apiKey)
@@ -20,7 +20,7 @@ func (tmdb *TMDb) GetKeywordInfo(id int) (*Keyword, error) {
 }
 
 // GetKeywordMovies gets the list of movies for a particular keyword by id
-// http://docs.themoviedb.apiary.io/#reference/keywords/keywordidmovies/get
+// https://developers.themoviedb.org/3/keywords/get-movies-by-keyword
 func (tmdb *TMDb) GetKeywordMovies(id int, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {},

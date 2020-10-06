@@ -18,7 +18,7 @@ var changeOptions = map[string]struct{}{
 	"end_date":   {}}
 
 // GetChangesMovie gets a list of movie ids that have been edited
-// http://docs.themoviedb.apiary.io/#reference/changes/moviechanges/get
+// https://developers.themoviedb.org/3/changes/get-movie-change-list
 func (tmdb *TMDb) GetChangesMovie(options map[string]string) (*Changes, error) {
 	var movieChanges Changes
 	optionsString := getOptionsString(options, changeOptions)
@@ -28,7 +28,7 @@ func (tmdb *TMDb) GetChangesMovie(options map[string]string) (*Changes, error) {
 }
 
 // GetChangesPerson gets a list of people ids that have been edited
-// http://docs.themoviedb.apiary.io/#reference/changes/personchanges/get
+// https://developers.themoviedb.org/3/changes/get-person-change-list
 func (tmdb *TMDb) GetChangesPerson(options map[string]string) (*Changes, error) {
 	var personChanges Changes
 	optionsString := getOptionsString(options, changeOptions)
@@ -38,7 +38,7 @@ func (tmdb *TMDb) GetChangesPerson(options map[string]string) (*Changes, error) 
 }
 
 // GetChangesTv gets a list of tv show ids that have been edited
-// http://docs.themoviedb.apiary.io/#reference/changes/tvchanges/get
+// https://developers.themoviedb.org/3/changes/get-tv-change-list
 func (tmdb *TMDb) GetChangesTv(options map[string]string) (*Changes, error) {
 	var tvChanges Changes
 	optionsString := getOptionsString(options, changeOptions)

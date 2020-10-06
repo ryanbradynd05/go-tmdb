@@ -13,7 +13,7 @@ type Genre struct {
 }
 
 // GetMovieGenres gets the list of movie genres
-// http://docs.themoviedb.apiary.io/#reference/genres/genremovielist/get
+// https://developers.themoviedb.org/3/genres/get-movie-list
 func (tmdb *TMDb) GetMovieGenres(options map[string]string) (*Genre, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}
@@ -25,7 +25,7 @@ func (tmdb *TMDb) GetMovieGenres(options map[string]string) (*Genre, error) {
 }
 
 // GetTvGenres gets the list of TV genres
-// http://docs.themoviedb.apiary.io/#reference/genres/genretvlist/get
+// https://developers.themoviedb.org/3/genres/get-tv-list
 func (tmdb *TMDb) GetTvGenres(options map[string]string) (*Genre, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}

@@ -15,7 +15,7 @@ type AccountInfo struct {
 }
 
 // GetAccountInfo gets the basic information for an account
-// http://docs.themoviedb.apiary.io/#reference/account/account/get
+// https://developers.themoviedb.org/3/account/get-account-details
 func (tmdb *TMDb) GetAccountInfo(sessionID string) (*AccountInfo, error) {
 	var account AccountInfo
 	uri := fmt.Sprintf("%s/account?api_key=%s&session_id=%s", baseURL, tmdb.apiKey, sessionID)
@@ -24,7 +24,7 @@ func (tmdb *TMDb) GetAccountInfo(sessionID string) (*AccountInfo, error) {
 }
 
 // GetAccountLists gets the lists that you have created and marked as a favorite
-// http://docs.themoviedb.apiary.io/#reference/account/accountidlists/get
+// https://developers.themoviedb.org/3/account/get-created-lists
 func (tmdb *TMDb) GetAccountLists(id int, sessionID string, options map[string]string) (*MovieLists, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -37,7 +37,7 @@ func (tmdb *TMDb) GetAccountLists(id int, sessionID string, options map[string]s
 }
 
 // GetAccountFavoriteMovies gets the list of favorite movies for an account
-// http://docs.themoviedb.apiary.io/#reference/account/accountidfavoritemovies/get
+// https://developers.themoviedb.org/3/account/get-favorite-movies
 func (tmdb *TMDb) GetAccountFavoriteMovies(id int, sessionID string, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -51,7 +51,7 @@ func (tmdb *TMDb) GetAccountFavoriteMovies(id int, sessionID string, options map
 }
 
 // GetAccountFavoriteTv gets the list of favorite movies for an account
-// http://docs.themoviedb.apiary.io/#reference/account/accountidfavoritetv/get
+// https://developers.themoviedb.org/3/account/get-favorite-tv-shows
 func (tmdb *TMDb) GetAccountFavoriteTv(id int, sessionID string, options map[string]string) (*TvPagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -65,7 +65,7 @@ func (tmdb *TMDb) GetAccountFavoriteTv(id int, sessionID string, options map[str
 }
 
 // GetAccountRatedMovies gets the list of rated movies (and associated rating) for an account
-// http://docs.themoviedb.apiary.io/#reference/account/accountidratedmovies/get
+// https://developers.themoviedb.org/3/account/get-rated-movies
 func (tmdb *TMDb) GetAccountRatedMovies(id int, sessionID string, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -79,7 +79,7 @@ func (tmdb *TMDb) GetAccountRatedMovies(id int, sessionID string, options map[st
 }
 
 // GetAccountRatedTv gets the list of rated TV shows (and associated rating) for an account
-// http://docs.themoviedb.apiary.io/#reference/account/accountidratedtv/get
+// https://developers.themoviedb.org/3/account/get-rated-tv-shows
 func (tmdb *TMDb) GetAccountRatedTv(id int, sessionID string, options map[string]string) (*TvPagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -93,7 +93,7 @@ func (tmdb *TMDb) GetAccountRatedTv(id int, sessionID string, options map[string
 }
 
 // GetAccountWatchlistMovies gets the list of movies on an accounts watchlist
-// http://docs.themoviedb.apiary.io/#reference/account/accountidwatchlistmovies/get
+// https://developers.themoviedb.org/3/account/get-movie-watchlist
 func (tmdb *TMDb) GetAccountWatchlistMovies(id int, sessionID string, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -107,7 +107,7 @@ func (tmdb *TMDb) GetAccountWatchlistMovies(id int, sessionID string, options ma
 }
 
 // GetAccountWatchlistTv gets the list of TV series on an accounts watchlist
-// http://docs.themoviedb.apiary.io/#reference/account/accountidwatchlisttv/get
+// https://developers.themoviedb.org/3/account/get-tv-show-watchlist
 func (tmdb *TMDb) GetAccountWatchlistTv(id int, sessionID string, options map[string]string) (*TvPagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},

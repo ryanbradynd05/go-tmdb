@@ -33,7 +33,7 @@ type TvSeasonImages struct {
 }
 
 // GetTvSeasonInfo the primary information about a TV season by its season number
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvidseasonseasonnumber/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
 func (tmdb *TMDb) GetTvSeasonInfo(showID, seasonID int, options map[string]string) (*TvSeason, error) {
 	var availableOptions = map[string]struct{}{
 		"language":           {},
@@ -46,7 +46,7 @@ func (tmdb *TMDb) GetTvSeasonInfo(showID, seasonID int, options map[string]strin
 }
 
 // GetTvSeasonChanges gets a TV season's changes by season ID
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvseasonidchanges/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-changes
 func (tmdb *TMDb) GetTvSeasonChanges(id int, options map[string]string) (*TvChanges, error) {
 	var availableOptions = map[string]struct{}{
 		"start_date": {},
@@ -59,7 +59,7 @@ func (tmdb *TMDb) GetTvSeasonChanges(id int, options map[string]string) (*TvChan
 }
 
 // GetTvSeasonCredits gets the cast & crew credits for a TV season by season number
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvidseasonseasonnumbercredits/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-credits
 func (tmdb *TMDb) GetTvSeasonCredits(showID, seasonNum int) (*TvCredits, error) {
 	var credits TvCredits
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/credits?api_key=%s", baseURL, showID, seasonNum, tmdb.apiKey)
@@ -68,7 +68,7 @@ func (tmdb *TMDb) GetTvSeasonCredits(showID, seasonNum int) (*TvCredits, error) 
 }
 
 // GetTvSeasonExternalIds gets the external ids for a TV season by season number
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvidseasonseasonnumberexternalids/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-external-ids
 func (tmdb *TMDb) GetTvSeasonExternalIds(showID, seasonNum int, options map[string]string) (*TvExternalIds, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}
@@ -80,7 +80,7 @@ func (tmdb *TMDb) GetTvSeasonExternalIds(showID, seasonNum int, options map[stri
 }
 
 // GetTvSeasonImages gets the images (posters) that we have stored for a TV season by season number
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvidseasonseasonnumberimages/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-images
 func (tmdb *TMDb) GetTvSeasonImages(showID, seasonNum int, options map[string]string) (*TvSeasonImages, error) {
 	var availableOptions = map[string]struct{}{
 		"language":               {},
@@ -93,7 +93,7 @@ func (tmdb *TMDb) GetTvSeasonImages(showID, seasonNum int, options map[string]st
 }
 
 // GetTvSeasonVideos gets the videos that have been added to a TV season
-// http://docs.themoviedb.apiary.io/#reference/tv-seasons/tvidseasonseasonnumbervideos/get
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-videos
 func (tmdb *TMDb) GetTvSeasonVideos(showID, seasonNum int, options map[string]string) (*TvVideos, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}

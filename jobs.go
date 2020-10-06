@@ -13,7 +13,7 @@ type Job struct {
 }
 
 // GetJobList gets a list of valid jobs
-// http://docs.themoviedb.apiary.io/#reference/jobs/joblist/get
+// https://developers.themoviedb.org/3/configuration/get-jobs
 func (tmdb *TMDb) GetJobList() (*Job, error) {
 	var jobList Job
 	uri := fmt.Sprintf("%s/job/list?api_key=%s", baseURL, tmdb.apiKey)

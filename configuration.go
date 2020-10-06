@@ -19,7 +19,7 @@ type Configuration struct {
 }
 
 // GetConfiguration gets the system wide configuration information
-// http://docs.themoviedb.apiary.io/#reference/configuration/configuration/get
+// https://developers.themoviedb.org/3/configuration/get-api-configuration
 func (tmdb *TMDb) GetConfiguration() (*Configuration, error) {
 	var config Configuration
 	uri := fmt.Sprintf("%s/configuration?api_key=%s", baseURL, tmdb.apiKey)

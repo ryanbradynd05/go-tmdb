@@ -30,7 +30,7 @@ type FindResults struct {
 }
 
 // GetFind makes it easy to search for objects in our database by an external id
-// http://docs.themoviedb.apiary.io/#reference/find/findid/get
+// https://developers.themoviedb.org/3/find/find-by-id
 func (tmdb *TMDb) GetFind(id, source string, options map[string]string) (*FindResults, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}

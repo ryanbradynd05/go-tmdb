@@ -14,7 +14,7 @@ type Certification struct {
 }
 
 // GetCertificationsMovieList for movies
-// http://docs.themoviedb.apiary.io/#reference/certifications/certificationmovielist/get
+// https://developers.themoviedb.org/3/certifications/get-movie-certifications
 func (tmdb *TMDb) GetCertificationsMovieList() (*Certification, error) {
 	var movieCert Certification
 	uri := fmt.Sprintf("%s/certification/movie/list?api_key=%s", baseURL, tmdb.apiKey)
@@ -23,7 +23,7 @@ func (tmdb *TMDb) GetCertificationsMovieList() (*Certification, error) {
 }
 
 // GetCertificationsTvList for tv shows
-// http://docs.themoviedb.apiary.io/#reference/certifications/certificationtvlist/get
+// https://developers.themoviedb.org/3/certifications/get-tv-certifications
 func (tmdb *TMDb) GetCertificationsTvList() (*Certification, error) {
 	var tvCert Certification
 	uri := fmt.Sprintf("%s/certification/tv/list?api_key=%s", baseURL, tmdb.apiKey)
