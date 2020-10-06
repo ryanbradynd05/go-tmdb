@@ -37,7 +37,7 @@ type Credit struct {
 }
 
 // GetCreditInfo gets the detailed information about a particular credit record
-// http://docs.themoviedb.apiary.io/#reference/credits/creditcreditid/get
+// https://developers.themoviedb.org/3/credits/get-credit-details
 func (tmdb *TMDb) GetCreditInfo(id string, options map[string]string) (*Credit, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {}}

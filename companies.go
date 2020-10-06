@@ -21,7 +21,7 @@ type Company struct {
 }
 
 // GetCompanyInfo gets all of the basic information about a company
-// http://docs.themoviedb.apiary.io/#reference/companies/companyid/get
+// https://developers.themoviedb.org/3/companies/get-company-details
 func (tmdb *TMDb) GetCompanyInfo(id int, options map[string]string) (*Company, error) {
 	var availableOptions = map[string]struct{}{
 		"append_to_response": {}}
@@ -33,7 +33,7 @@ func (tmdb *TMDb) GetCompanyInfo(id int, options map[string]string) (*Company, e
 }
 
 // GetCompanyMovies gets the list of movies associated with a particular company
-// http://docs.themoviedb.apiary.io/#reference/companies/companyidmovies/get
+// No current documentation exists for this endpoint
 func (tmdb *TMDb) GetCompanyMovies(id int, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":               {},

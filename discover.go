@@ -5,7 +5,7 @@ import (
 )
 
 // DiscoverMovie discovers movies by different types of data like average rating, number of votes, genres and certifications
-// http://docs.themoviedb.apiary.io/#reference/discover/discovermovie/get
+// https://developers.themoviedb.org/3/discover/movie-discover
 func (tmdb *TMDb) DiscoverMovie(options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"certification_country":    {},
@@ -40,7 +40,7 @@ func (tmdb *TMDb) DiscoverMovie(options map[string]string) (*MoviePagedResults, 
 }
 
 // DiscoverTV discovers TV shows by different types of data like average rating, number of votes, genres, the network they aired on and air dates
-// http://docs.themoviedb.apiary.io/#reference/discover/discovertv/get
+// https://developers.themoviedb.org/3/discover/tv-discover
 func (tmdb *TMDb) DiscoverTV(options map[string]string) (*TvPagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":                {},

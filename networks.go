@@ -11,7 +11,7 @@ type Network struct {
 }
 
 // GetNetworkInfo gets the basic information about a TV network
-// http://docs.themoviedb.apiary.io/#reference/networks/networkid/get
+// https://developers.themoviedb.org/3/networks/get-network-details
 func (tmdb *TMDb) GetNetworkInfo(id int) (*Network, error) {
 	var networkInfo Network
 	uri := fmt.Sprintf("%s/network/%v?api_key=%s", baseURL, id, tmdb.apiKey)

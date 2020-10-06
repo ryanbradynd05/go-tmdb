@@ -17,7 +17,7 @@ type Review struct {
 }
 
 // GetReviewInfo gets the full details of a review by ID
-// http://docs.themoviedb.apiary.io/#reference/reviews/reviewid/get
+// https://developers.themoviedb.org/3/reviews/get-review-details
 func (tmdb *TMDb) GetReviewInfo(id string) (*Review, error) {
 	var reviewInfo Review
 	uri := fmt.Sprintf("%s/review/%v?api_key=%s", baseURL, id, tmdb.apiKey)

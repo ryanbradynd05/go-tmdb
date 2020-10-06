@@ -213,7 +213,7 @@ type PersonTvCredits struct {
 }
 
 // GetPersonInfo gets the general person information for a specific id
-// http://docs.themoviedb.apiary.io/#reference/people/personid/get
+// https://developers.themoviedb.org/3/people/get-person-details
 func (tmdb *TMDb) GetPersonInfo(id int, options map[string]string) (*Person, error) {
 	var availableOptions = map[string]struct{}{
 		"append_to_response": {}}
@@ -225,7 +225,7 @@ func (tmdb *TMDb) GetPersonInfo(id int, options map[string]string) (*Person, err
 }
 
 // GetPersonChanges for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidchanges/get
+// https://developers.themoviedb.org/3/people/get-person-changes
 func (tmdb *TMDb) GetPersonChanges(id int, options map[string]string) (*PersonChanges, error) {
 	var availableOptions = map[string]struct{}{
 		"start_date": {},
@@ -238,7 +238,7 @@ func (tmdb *TMDb) GetPersonChanges(id int, options map[string]string) (*PersonCh
 }
 
 // GetPersonCombinedCredits gets the combined (movie and TV) credits for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidcombinedcredits/get
+// https://developers.themoviedb.org/3/people/get-person-combined-credits
 func (tmdb *TMDb) GetPersonCombinedCredits(id int, options map[string]string) (*PersonCombinedCredits, error) {
 	var availableOptions = map[string]struct{}{
 		"language":           {},
@@ -251,7 +251,7 @@ func (tmdb *TMDb) GetPersonCombinedCredits(id int, options map[string]string) (*
 }
 
 // GetPersonExternalIds gets the external ids for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidexternalids/get
+// https://developers.themoviedb.org/3/people/get-person-external-ids
 func (tmdb *TMDb) GetPersonExternalIds(id int) (*TvExternalIds, error) {
 	var ids TvExternalIds
 	uri := fmt.Sprintf("%s/person/%v/external_ids?api_key=%s", baseURL, id, tmdb.apiKey)
@@ -260,7 +260,7 @@ func (tmdb *TMDb) GetPersonExternalIds(id int) (*TvExternalIds, error) {
 }
 
 // GetPersonImages gets the images for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidimages/get
+// https://developers.themoviedb.org/3/people/get-person-images
 func (tmdb *TMDb) GetPersonImages(id int) (*PersonImages, error) {
 	var images PersonImages
 	uri := fmt.Sprintf("%s/person/%v/images?api_key=%s", baseURL, id, tmdb.apiKey)
@@ -269,7 +269,7 @@ func (tmdb *TMDb) GetPersonImages(id int) (*PersonImages, error) {
 }
 
 // GetPersonLatest gets the latest person id
-// http://docs.themoviedb.apiary.io/#reference/people/personlatest/get
+// https://developers.themoviedb.org/3/people/get-latest-person
 func (tmdb *TMDb) GetPersonLatest() (*PersonLatest, error) {
 	var latest PersonLatest
 	uri := fmt.Sprintf("%s/person/latest?api_key=%s", baseURL, tmdb.apiKey)
@@ -278,7 +278,7 @@ func (tmdb *TMDb) GetPersonLatest() (*PersonLatest, error) {
 }
 
 // GetPersonMovieCredits gets the movie credits for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidmoviecredits/get
+// https://developers.themoviedb.org/3/people/get-person-movie-credits
 func (tmdb *TMDb) GetPersonMovieCredits(id int, options map[string]string) (*PersonMovieCredits, error) {
 	var availableOptions = map[string]struct{}{
 		"language":           {},
@@ -291,7 +291,7 @@ func (tmdb *TMDb) GetPersonMovieCredits(id int, options map[string]string) (*Per
 }
 
 // GetPersonPopular gets the list of popular people on The Movie Database
-// http://docs.themoviedb.apiary.io/#reference/people/personpopular/get
+// https://developers.themoviedb.org/3/people/get-popular-people
 func (tmdb *TMDb) GetPersonPopular(options map[string]string) (*PersonPopular, error) {
 	var availableOptions = map[string]struct{}{
 		"page": {}}
@@ -303,7 +303,7 @@ func (tmdb *TMDb) GetPersonPopular(options map[string]string) (*PersonPopular, e
 }
 
 // GetPersonTaggedImages gets the images that have been tagged with a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidtaggedimages/get
+// https://developers.themoviedb.org/3/people/get-tagged-images
 func (tmdb *TMDb) GetPersonTaggedImages(id int, options map[string]string) (*PersonTaggedImages, error) {
 	var availableOptions = map[string]struct{}{
 		"language": {},
@@ -316,7 +316,7 @@ func (tmdb *TMDb) GetPersonTaggedImages(id int, options map[string]string) (*Per
 }
 
 // GetPersonTvCredits gets the TV credits for a specific person id
-// http://docs.themoviedb.apiary.io/#reference/people/personidtvcredits/get
+// https://developers.themoviedb.org/3/people/get-person-tv-credits
 func (tmdb *TMDb) GetPersonTvCredits(id int, options map[string]string) (*PersonTvCredits, error) {
 	var availableOptions = map[string]struct{}{
 		"language":           {},

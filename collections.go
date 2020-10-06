@@ -47,7 +47,7 @@ type CollectionImages struct {
 }
 
 // GetCollectionInfo gets the basic collection information for a specific collection id
-// http://docs.themoviedb.apiary.io/#reference/collections/collectionid/get
+// https://developers.themoviedb.org/3/collections/get-collection-details
 func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collection, error) {
 	var availableOptions = map[string]struct{}{
 		"language":           {},
@@ -60,7 +60,7 @@ func (tmdb *TMDb) GetCollectionInfo(id int, options map[string]string) (*Collect
 }
 
 // GetCollectionImages gets a list of people ids that have been edited
-// http://docs.themoviedb.apiary.io/#reference/collections/collectionidimages/get
+// https://developers.themoviedb.org/3/collections/get-collection-images
 func (tmdb *TMDb) GetCollectionImages(id int, options map[string]string) (*CollectionImages, error) {
 	var availableOptions = map[string]struct{}{
 		"language":               {},

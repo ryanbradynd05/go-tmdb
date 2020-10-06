@@ -8,7 +8,7 @@ import (
 type Timezones []map[string][]string
 
 // GetTimezonesList gets the list of supported timezones
-// http://docs.themoviedb.apiary.io/#reference/timezones/timezoneslist/get
+// https://developers.themoviedb.org/3/configuration/get-timezones
 func (tmdb *TMDb) GetTimezonesList() (*Timezones, error) {
 	var timezoneList Timezones
 	uri := fmt.Sprintf("%s/timezones/list?api_key=%s", baseURL, tmdb.apiKey)

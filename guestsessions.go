@@ -5,7 +5,7 @@ import (
 )
 
 // GetGuestSessionRatedMovies gets the list of rated movies for a specific guest session id
-// http://docs.themoviedb.apiary.io/#reference/guest-sessions/guestsessionguestsessionidratedmovies/get
+// https://developers.themoviedb.org/3/guest-sessions/get-guest-session-rated-movies
 func (tmdb *TMDb) GetGuestSessionRatedMovies(sessionID string, options map[string]string) (*MoviePagedResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":       {},

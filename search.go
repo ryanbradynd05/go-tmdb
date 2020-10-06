@@ -297,7 +297,7 @@ type TvSearchResults struct {
 }
 
 // SearchCollection searches for collections by name
-// http://docs.themoviedb.apiary.io/#reference/search/searchcollection/get
+// https://developers.themoviedb.org/3/search/search-collections
 func (tmdb *TMDb) SearchCollection(name string, options map[string]string) (*CollectionSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":     {},
@@ -311,7 +311,7 @@ func (tmdb *TMDb) SearchCollection(name string, options map[string]string) (*Col
 }
 
 // SearchCompany searches for companies by name
-// http://docs.themoviedb.apiary.io/#reference/search/searchcompany/get
+// https://developers.themoviedb.org/3/search/search-companies
 func (tmdb *TMDb) SearchCompany(name string, options map[string]string) (*CompanySearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page": {}}
@@ -324,7 +324,7 @@ func (tmdb *TMDb) SearchCompany(name string, options map[string]string) (*Compan
 }
 
 // SearchKeyword searches for keywords by name
-// http://docs.themoviedb.apiary.io/#reference/search/searchkeyword/get
+// https://developers.themoviedb.org/3/search/search-keywords
 func (tmdb *TMDb) SearchKeyword(name string, options map[string]string) (*KeywordSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page": {}}
@@ -337,7 +337,7 @@ func (tmdb *TMDb) SearchKeyword(name string, options map[string]string) (*Keywor
 }
 
 // SearchList searches for lists by name and description
-// http://docs.themoviedb.apiary.io/#reference/search/searchlist/get
+// No current documentation exists for this endpoint
 func (tmdb *TMDb) SearchList(name string, options map[string]string) (*ListSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":          {},
@@ -351,7 +351,7 @@ func (tmdb *TMDb) SearchList(name string, options map[string]string) (*ListSearc
 }
 
 // SearchMovie searches for movies by title
-// http://docs.themoviedb.apiary.io/#reference/search/searchmovie/get
+// https://developers.themoviedb.org/3/search/search-movies
 func (tmdb *TMDb) SearchMovie(name string, options map[string]string) (*MovieSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":                 {},
@@ -369,7 +369,7 @@ func (tmdb *TMDb) SearchMovie(name string, options map[string]string) (*MovieSea
 }
 
 // SearchMulti searches the movie, tv show and person collections with a single query
-// http://docs.themoviedb.apiary.io/#reference/search/searchmulti/get
+// https://developers.themoviedb.org/3/search/multi-search
 func (tmdb *TMDb) SearchMulti(name string, options map[string]string) (*MultiSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":          {},
@@ -384,7 +384,7 @@ func (tmdb *TMDb) SearchMulti(name string, options map[string]string) (*MultiSea
 }
 
 // SearchPerson searches for people by name
-// http://docs.themoviedb.apiary.io/#reference/search/searchperson/get
+// https://developers.themoviedb.org/3/search/search-people
 func (tmdb *TMDb) SearchPerson(name string, options map[string]string) (*PersonSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":          {},
@@ -399,7 +399,7 @@ func (tmdb *TMDb) SearchPerson(name string, options map[string]string) (*PersonS
 }
 
 // SearchTv searches for TV shows by title
-// http://docs.themoviedb.apiary.io/#reference/search/searchtv/get
+// https://developers.themoviedb.org/3/search/search-tv-shows
 func (tmdb *TMDb) SearchTv(name string, options map[string]string) (*TvSearchResults, error) {
 	var availableOptions = map[string]struct{}{
 		"page":                {},
