@@ -20,6 +20,18 @@ type TV struct {
 		ID   int
 		Name string
 	}
+	NextEpisodeToAir []struct {
+		AirDate        string `json:"air_date"`
+		EpisodeNumber  int    `json:"episode_number"`
+		ID             int
+		Name           string
+		Overview       string
+		ProductionCode string `json:"production_code"`
+		SeasonNumber   int    `json:"season_number"`
+		StillPath      string `json:"still_path"`
+		VoteAverage    int    `json:"vote_average"`
+		VoteCount      int    `json:"vote_count"`
+	} `json:"next_episode_to_air"`
 	Homepage     string
 	ID           int
 	InProduction bool `json:"in_production"`
