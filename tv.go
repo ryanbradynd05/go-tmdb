@@ -20,7 +20,7 @@ type TV struct {
 		ID   int
 		Name string
 	}
-	NextEpisodeToAir []struct {
+	NextEpisodeToAir struct {
 		AirDate        string `json:"air_date"`
 		EpisodeNumber  int    `json:"episode_number"`
 		ID             int
