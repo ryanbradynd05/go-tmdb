@@ -214,6 +214,7 @@ type MovieImages struct {
 	ID                int
 	Backdrops         []MovieImage
 	Posters           []MovieImage
+	Logos		  []MovieImage
 	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
 	Credits           *MovieCredits           `json:",omitempty"`
 	Keywords          *MovieKeywords          `json:",omitempty"`
