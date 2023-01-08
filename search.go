@@ -254,12 +254,12 @@ func (res MultiSearchResults) GetPersonResults() (personResults []MultiSearchPer
 type PersonSearchResults struct {
 	Page    int
 	Results []struct {
-		Adult      bool
-		ID         int
-		Name       string
-		Popularity float32
-		PosterPath string `json:"poster_path"`
-		KnownFor   []struct {
+		Adult       bool
+		ID          int
+		Name        string
+		Popularity  float32
+		ProfilePath string `json:"profile_path"`
+		KnownFor    []struct {
 			Adult         bool
 			BackdropPath  string `json:"backdrop_path"`
 			ID            int
