@@ -67,6 +67,15 @@ func (tmdb *TMDb) GetTvSeasonCredits(showID, seasonNum int) (*TvCredits, error) 
 	return result.(*TvCredits), err
 }
 
+// GetTvSeasonAggregateCredits gets all the cast & crew credits for a TV season by season number
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-aggregate-credits
+func (tmdb *TMDb) GetTvSeasonAggregateCredits(showID, seasonNum int) (*TvCredits, error) {
+	var credits TvCredits
+	uri := fmt.Sprintf("%s/tv/%v/season/%v/aggregate_credits?api_key=%s", baseURL, showID, seasonNum, tmdb.apiKey)
+	result, err := getTmdb(uri, &credits)
+	return result.(*TvCredits), err
+}
+
 // GetTvSeasonExternalIds gets the external ids for a TV season by season number
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-external-ids
 func (tmdb *TMDb) GetTvSeasonExternalIds(showID, seasonNum int, options map[string]string) (*TvExternalIds, error) {
