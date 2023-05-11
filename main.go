@@ -56,11 +56,10 @@ type apiStatus struct {
 
 // Init setup the apiKey
 func Init(config Config) *TMDb {
-	internalConfig := new(tmdbConfig)
 	if config.UseProxy == true && len(config.Proxies) > 1 {
 		internalConfig.useProxy = config.UseProxy
 		internalConfig.proxies = prepareProxies(config.Proxies)
-		internalConfig.roundRobin = InitRoundRobin(len(internalConfig.proxies))
+		internalConfig.roundRobin = InitRoundRobin(len(internalConfig.proxies) - 1)
 	}
 
 	return &TMDb{apiKey: config.APIKey}
